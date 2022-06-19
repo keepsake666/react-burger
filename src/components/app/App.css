@@ -1,7 +1,4 @@
 .App {
   max-width: 1240px;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  align-content: center;
+  margin: 0 auto;
 }
