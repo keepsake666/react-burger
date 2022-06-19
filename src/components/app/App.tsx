@@ -1,10 +1,10 @@
 import React from 'react';
+import AppHeader from '../AppHeader/AppHeader'
 import './App.css';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 function App() {
   return (
-    <div className="App">
-      <Logo />
+    <div className='App'>
+      <AppHeader />
     </div>
   );
 }

@@ -1,7 +1,6 @@
-.App {
-  max-width: 1240px;
+.header {
+  max-width: 1280px;
   display: flex;
-  text-align: center;
   align-items: center;
   align-content: center;
 }
