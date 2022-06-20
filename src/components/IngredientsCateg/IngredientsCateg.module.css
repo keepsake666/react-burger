@@ -1,18 +1,13 @@
-.item {
-  max-width: 272px;
-  display: grid;
-  position: relative;
-  text-align: center;
-}
-
 .list {
   list-style-type: none;
   padding: 0;
+  height: 700px;
+  margin: 0;
   overflow-y: scroll;
-  height: 500px;
 }
 
 .list_item {
+  margin: 0 0 40px;
   list-style-type: none;
   padding: 0;
   display: grid;
@@ -21,9 +16,16 @@
   column-gap: 24px;
 }
 
-.title {}
+.list::-webkit-scrollbar {
+  width: 8px;
+}
 
-.item__name {
-  margin: 8px auto;
-  display: flex;
+.list::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+  height: 492px;
+  background-clip: content-box;
+  background-color: #8585AD;
 }

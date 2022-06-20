@@ -1,74 +1,36 @@
 import React from 'react';
 import IngredientsItem from '../IngredientsItem/IngredientsItem'
 import styles from './IngredientsCateg.module.css'
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { data } from '../utils/data'
 
 function IngredientsCateg() {
-
+  const main = data.filter((elem) => elem.type === 'main')
+  const bun = data.filter((elem) => elem.type === 'bun')
+  const sauce = data.filter((elem) => elem.type === 'sauce')
   return (
     <ul className={styles.list}>
       <li>
-        <h2 className="text text_type_main-medium">Булки</h2>
+        <h2 className="text text_type_main-medium mb-4">Булка</h2>
         <ul className={styles.list_item}>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
+          {bun.map((elem) => (
+            <IngredientsItem key={elem._id} name={elem.name} image={elem.image} price={elem.price} />
+          ))}
         </ul>
       </li>
       <li>
-        <h2 className="text text_type_main-medium">Булки</h2>
+        <h2 className="text text_type_main-medium mb-4">Соусы</h2>
         <ul className={styles.list_item}>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
-          <li className={styles.item}>
-            <img src="https://code.s3.yandex.net/react/code/bun-02.png" alt="" className="ml-4" />
-            <Counter count={2} size="default" />
-            <div className={styles.item__name}>
-              <p className="text text_type_digits-default">23</p>
-              <CurrencyIcon type="primary" />
-            </div>
-            <p className="text text_type_main-default">Краторная булка N-200i</p>
-          </li>
+          {sauce.map((elem) => (
+            <IngredientsItem key={elem._id} name={elem.name} image={elem.image} price={elem.price} />
+          ))}
+        </ul>
+      </li>
+      <li>
+        <h2 className="text text_type_main-medium mb-4">Начинка</h2>
+        <ul className={styles.list_item}>
+          {main.map((elem) => (
+            <IngredientsItem key={elem._id} name={elem.name} image={elem.image} price={elem.price} />
+          ))}
         </ul>
       </li>
     </ul>
