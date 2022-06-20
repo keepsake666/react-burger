@@ -1,0 +1,29 @@
+.item {
+  max-width: 272px;
+  display: grid;
+  position: relative;
+  text-align: center;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  overflow-y: scroll;
+  height: 500px;
+}
+
+.list_item {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 32px;
+  column-gap: 24px;
+}
+
+.title {}
+
+.item__name {
+  margin: 8px auto;
+  display: flex;
+}
