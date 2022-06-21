@@ -41,13 +41,6 @@
   margin-right: 24px;
 }
 
-.item {
-  display: flex;
-  gap: 13.5px;
-  align-items: center;
-  align-content: center;
-}
-
 .price {
   display: flex;
   margin-right: 40px;

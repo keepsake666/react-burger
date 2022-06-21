@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IngredientsItem from '../IngredientsItem/IngredientsItem'
 import styles from './IngredientsCateg.module.css'
-import { data } from '../../utils/data'
 
-function IngredientsCateg() {
+function IngredientsCateg(props) {
+  const data = props.data;
   const main = data.filter((elem) => elem.type === 'main')
   const bun = data.filter((elem) => elem.type === 'bun')
   const sauce = data.filter((elem) => elem.type === 'sauce')
@@ -37,3 +38,7 @@ function IngredientsCateg() {
   )
 }
 export default IngredientsCateg;
+
+IngredientsCateg.propTypes = {
+  data: PropTypes.array.isRequired
+}; 

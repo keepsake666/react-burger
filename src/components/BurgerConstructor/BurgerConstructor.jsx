@@ -1,10 +1,14 @@
 import React from 'react';
+import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem';
+import styles from './BurgerConstructor.module.css';
+import PropTypes from 'prop-types';
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './BurgerConstructor.module.css'
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
-export default function BurgerConstructor() {
-
+export default function BurgerConstructor(props) {
+  const data = props.data
+  const ingredient = data.filter((item) => item.type !== 'bun'
+  )
   return (
     <section className={styles.section}>
       <div className='ml-9'>
@@ -17,62 +21,9 @@ export default function BurgerConstructor() {
         />
       </div>
       <ul className={styles.section__block}>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
-        <li className={styles.item}>
-          <DragIcon />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          />
-        </li>
+        {ingredient.map((elem) => (
+          <BurgerConstructorItem key={elem._id} text={elem.name} image={elem.image} price={elem.price} />
+        ))}
       </ul>
       <div className='ml-9'>
         <ConstructorElement
@@ -95,3 +46,7 @@ export default function BurgerConstructor() {
     </section >
   )
 }
+
+BurgerConstructor.propTypes = {
+  data:PropTypes.array.isRequired
+}; 

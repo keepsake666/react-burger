@@ -1,10 +1,13 @@
 .header {
   background-color: #1C1C21;
+  max-width: 1920px;
+  width: 100%;
 }
 
 .header__container {
   margin: 0 auto;
   max-width: 1240px;
+  width: 100%;
   display: flex;
   align-items: center;
   align-content: center;
@@ -17,4 +20,8 @@
 
 .block {
   display: flex;
+}
+
+.logo {
+  margin-right: 178px;
 }

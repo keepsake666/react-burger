@@ -17,7 +17,9 @@ function AppHeader() {
             <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
           </div>
         </div>
+        <div className={styles.logo}>
         <Logo />
+        </div>
         <div style ={{display:'flex'}} className='mb-4 mt-4 pb-4 pt-4 pl-5'>
           <ProfileIcon type="secondary" />
           <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет </p>
