@@ -36,7 +36,7 @@ export default function BurgerConstructor(props) {
       </div>
       <div className={styles.button__block}>
         <div className={styles.price}>
-          <p style={{ marginRight: '9.5px' }} className="text text_type_digits-medium">200</p>
+          <p className="text text_type_digits-medium mr-2">200</p>
           <CurrencyIcon />
         </div>
         <Button type="primary" size="medium">
@@ -48,5 +48,5 @@ export default function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  data:PropTypes.array.isRequired
+  data: PropTypes.array.isRequired
 }; 

@@ -9,7 +9,7 @@ function IngredientsItem(props) {
       <img src={props.image} alt={props.name} className="ml-4" />
       <Counter count={0} size="default" />
       <div className={styles.item__name}>
-        <p style={{ marginRight: '9.5px' }} className="text text_type_digits-default">{props.price}</p>
+        <p className="text text_type_digits-default mr-2">{props.price}</p>
         <CurrencyIcon type="primary" />
       </div>
       <p className="text text_type_main-default">{props.name}</p>
