@@ -1,7 +1,7 @@
 import React from 'react';
 import IngredientsItem from '../IngredientsItem/IngredientsItem'
 import styles from './IngredientsCateg.module.css'
-import { data } from '../utils/data'
+import { data } from '../../utils/data'
 
 function IngredientsCateg() {
   const main = data.filter((elem) => elem.type === 'main')
