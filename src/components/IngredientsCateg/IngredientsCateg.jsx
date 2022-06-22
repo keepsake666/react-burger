@@ -5,7 +5,7 @@ import styles from './IngredientsCateg.module.css'
 
 function IngredientsCateg(props) {
   const data = props.data;
-  const main = data.filter((elem) => elem.type === 'main')
+  const main =  data.filter((elem) => elem.type === 'main')
   const bun = data.filter((elem) => elem.type === 'bun')
   const sauce = data.filter((elem) => elem.type === 'sauce')
   return (

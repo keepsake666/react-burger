@@ -9,6 +9,7 @@ export default function BurgerConstructor(props) {
   const data = props.data
   const ingredient = data.filter((item) => item.type !== 'bun'
   )
+  
   return (
     <section className={styles.section}>
       <div className='ml-9'>
