@@ -1,0 +1,25 @@
+import React from 'react';
+import styles from './IngredientsItem.module.css'
+import PropTypes from 'prop-types';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+function IngredientsItem(props) {
+
+  return (
+    <li className={styles.item}>
+      <img src={props.image} alt={props.name} className="ml-4" />
+      <Counter count={0} size="default" />
+      <div className={styles.item__name}>
+        <p className="text text_type_digits-default mr-2">{props.price}</p>
+        <CurrencyIcon type="primary" />
+      </div>
+      <p className="text text_type_main-default">{props.name}</p>
+    </li>
+  )
+}
+export default IngredientsItem;
+
+IngredientsItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired
+}; 

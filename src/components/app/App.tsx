@@ -1,10 +1,18 @@
 import React from 'react';
-import './App.css';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import AppHeader from '../AppHeader/AppHeader'
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
+import styles from './App.module.css'
+import { data } from '../../utils/data'
+
 function App() {
   return (
-    <div className="App">
-      <Logo />
+    <div className= {styles.page}>
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerIngredients data={data} />
+        <BurgerConstructor data={data} />
+      </main>
     </div>
   );
 }
