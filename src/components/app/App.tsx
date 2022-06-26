@@ -4,6 +4,8 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Modal from '../Modal/Modal';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import styles from './App.module.css'
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
@@ -43,8 +45,8 @@ function App() {
         <BurgerIngredients data={dataState} />
         <BurgerConstructor data={dataState} />
       </main>
-      <ModalOverlay> 
-        <Modal>   </Modal>
+      <ModalOverlay>
+        <Modal title={'Детали ингредиента'}> <IngredientDetails /> </Modal>
       </ModalOverlay>
     </div>
 
