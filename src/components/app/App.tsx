@@ -2,13 +2,17 @@ import React from 'react';
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
+import Modal from '../Modal/Modal';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './App.module.css'
+
+const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const [dataState, setDataStae] = React.useState([])
 
   function apiData() {
-    fetch('https://norma.nomoreparties.space/api/ingredients', {
+    fetch(url, {
       headers: {
         'Content-Type': 'aplication.json'
       }
@@ -39,7 +43,11 @@ function App() {
         <BurgerIngredients data={dataState} />
         <BurgerConstructor data={dataState} />
       </main>
+      <ModalOverlay> 
+        <Modal>   </Modal>
+      </ModalOverlay>
     </div>
+
   );
 }
 
