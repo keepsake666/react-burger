@@ -2,17 +2,18 @@ import React from 'react';
 import styles from './IngredientsItem.module.css'
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-function IngredientsItem(props) {
+
+function IngredientsItem({name, price, image, setModalAtive, value}) {
 
   return (
     <li className={styles.item}>
-      <img src={props.image} alt={props.name} className="ml-4" />
+      <img src={image} alt={name} className={styles.item_image}  onClick={(e) => `${setModalAtive(true)} ${value(e.target.src)}` }/>
       <Counter count={0} size="default" />
       <div className={styles.item__name}>
-        <p className="text text_type_digits-default mr-2">{props.price}</p>
+        <p className="text text_type_digits-default mr-2">{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className="text text_type_main-default">{props.name}</p>
+      <p className="text text_type_main-default">{name}</p>
     </li>
   )
 }

@@ -12,6 +12,9 @@ const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const [dataState, setDataStae] = React.useState([])
+  const [modatOrderActive, setModalOrderAtive] = React.useState(false)
+  const [modalIngredientActive, setmodalIngredientActive] = React.useState(false)
+  const [targetValue, setTargetValue] = React.useState()
 
   function apiData() {
     fetch(url, {
@@ -42,14 +45,16 @@ function App() {
     <div className={styles.page}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={dataState} />
-        <BurgerConstructor data={dataState} />
+        <BurgerIngredients data={dataState} setModalAtive={setmodalIngredientActive} value={setTargetValue} />
+        <BurgerConstructor data={dataState} setModalAtive={setModalOrderAtive} />
       </main>
-      <ModalOverlay>
-        <Modal title={'Детали ингредиента'}> <IngredientDetails /> </Modal>
+      <ModalOverlay active={modatOrderActive} setActive={setModalOrderAtive}>
+        <Modal title={''} setModalAtive={setModalOrderAtive}> <OrderDetails /> </Modal>
+      </ModalOverlay>
+      <ModalOverlay active={modalIngredientActive} setActive={setmodalIngredientActive}>
+        <Modal title={'Детали ингредиента'} setModalAtive={setmodalIngredientActive}> <IngredientDetails data={dataState} value={targetValue} /> </Modal>
       </ModalOverlay>
     </div>
-
   );
 }
 

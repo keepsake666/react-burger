@@ -4,9 +4,8 @@ import IngredientsCateg from '../IngredientsCateg/IngredientsCateg'
 import styles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients({data, setModalAtive , value}) {
   const [current, setCurrent] = React.useState('bun')
-  const data = props.data;
   return (
     <section className={styles.section}>
       <h2 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h2>
@@ -21,7 +20,7 @@ export default function BurgerIngredients(props) {
           Начинки
         </Tab>
       </div>
-      <IngredientsCateg data={data} />
+      <IngredientsCateg data={data} setModalAtive= {setModalAtive} value = {value}/>
     </section>
   )
 }

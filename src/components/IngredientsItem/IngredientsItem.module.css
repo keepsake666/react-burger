@@ -19,3 +19,8 @@
   position: relative;
   text-align: center;
 }
+
+.item_image {
+  cursor: pointer;
+  margin-left: 16px;
+}
