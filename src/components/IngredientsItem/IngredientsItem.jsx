@@ -22,5 +22,7 @@ export default IngredientsItem;
 IngredientsItem.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired
+  image: PropTypes.string.isRequired,
+  setModalAtive: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired,
 }; 

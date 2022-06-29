@@ -4,9 +4,7 @@ import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-
 export default function BurgerConstructor({ data, setModalAtive }) {
-
   const ingredient = data.filter((item) => item.type !== 'bun')
 
   return (
@@ -48,5 +46,6 @@ export default function BurgerConstructor({ data, setModalAtive }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  setModalAtive: PropTypes.func.isRequired,
 }; 

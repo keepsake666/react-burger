@@ -4,7 +4,7 @@ import IngredientsCateg from '../IngredientsCateg/IngredientsCateg'
 import styles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerIngredients({data, setModalAtive , value}) {
+export default function BurgerIngredients({data, setModalAtive, value}) {
   const [current, setCurrent] = React.useState('bun')
   return (
     <section className={styles.section}>
@@ -26,5 +26,7 @@ export default function BurgerIngredients({data, setModalAtive , value}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  setModalAtive:PropTypes.func.isRequired,
+  value:PropTypes.func.isRequired,
 }; 

@@ -39,5 +39,7 @@ function IngredientsCateg({ data, setModalAtive, value }) {
 export default IngredientsCateg;
 
 IngredientsCateg.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  setModalAtive: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired,
 }; 

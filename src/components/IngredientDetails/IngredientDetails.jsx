@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './IngredientDetails.module.css'
+import PropTypes from 'prop-types';
 
 export default function IngredientDetails({ data, value }) {
   const ingredient = data.filter(item => item.image === value)
@@ -31,3 +32,8 @@ export default function IngredientDetails({ data, value }) {
       : <div></div>
   )
 }
+
+IngredientDetails.propTypes = {
+  data: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired
+}; 

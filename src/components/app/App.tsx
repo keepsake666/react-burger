@@ -14,7 +14,7 @@ function App() {
   const [dataState, setDataStae] = React.useState([])
   const [modatOrderActive, setModalOrderAtive] = React.useState(false)
   const [modalIngredientActive, setmodalIngredientActive] = React.useState(false)
-  const [targetValue, setTargetValue] = React.useState()
+  const [targetValue, setTargetValue] = React.useState('')
 
   function apiData() {
     fetch(url, {
