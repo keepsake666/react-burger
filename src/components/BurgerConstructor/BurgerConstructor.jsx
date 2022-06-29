@@ -3,12 +3,11 @@ import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorIte
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { propData } from '../../utils/propTypesBurger'
 
+export default function BurgerConstructor({ data, setModalAtive }) {
+  const ingredient = data.filter((item) => item.type !== 'bun')
 
-export default function BurgerConstructor(props) {
-  const data = props.data
-  const ingredient = data.filter((item) => item.type !== 'bun'
-  )
   return (
     <section className={styles.section}>
       <div className='ml-9'>
@@ -39,7 +38,7 @@ export default function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">200</p>
           <CurrencyIcon />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={() => setModalAtive(true)}>
           Оформить заказ
         </Button>
       </div>
@@ -48,5 +47,6 @@ export default function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired
+  data: propData,
+  setModalAtive: PropTypes.func.isRequired,
 }; 

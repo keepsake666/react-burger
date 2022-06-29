@@ -25,3 +25,7 @@
 .logo {
   margin-right: 178px;
 }
+
+.container {
+  display: flex;
+}

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import IngredientsCateg from '../IngredientsCateg/IngredientsCateg'
 import styles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { propData } from '../../utils/propTypesBurger'
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients({data, setModalAtive, value}) {
   const [current, setCurrent] = React.useState('bun')
-  const data = props.data;
   return (
     <section className={styles.section}>
       <h2 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h2>
@@ -21,11 +21,13 @@ export default function BurgerIngredients(props) {
           Начинки
         </Tab>
       </div>
-      <IngredientsCateg data={data} />
+      <IngredientsCateg data={data} setModalAtive= {setModalAtive} value = {value}/>
     </section>
   )
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array.isRequired
+  data: propData,
+  setModalAtive:PropTypes.func.isRequired,
+  value:PropTypes.func.isRequired,
 }; 
