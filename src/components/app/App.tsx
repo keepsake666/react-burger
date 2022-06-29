@@ -7,33 +7,25 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import styles from './App.module.css'
-
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+import { checkResponse, config } from '../../utils/burger-api'
 
 function App() {
-  const [dataState, setDataStae] = React.useState([])
+  const [dataIngredienState, setDdataIngredienState] = React.useState([])
   const [modatOrderActive, setModalOrderAtive] = React.useState(false)
   const [modalIngredientActive, setmodalIngredientActive] = React.useState(false)
   const [targetValue, setTargetValue] = React.useState('')
+  const [errState, setErrState] = React.useState()
 
   function apiData() {
-    fetch(url, {
-      headers: {
-        'Content-Type': 'aplication.json'
-      }
+    fetch(config.baseUrl + '/ingredients', {
+      headers: config.headers
     })
+      .then(checkResponse)
       .then((res) => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          return Promise.reject(`Ошибка: code ${res.status}`)
-        }
-      })
-      .then((res) => {
-        setDataStae(res.data)
+        setDdataIngredienState(res.data)
       })
       .catch(err => {
-        console.log(err)
+        setErrState(err)
       })
   }
 
@@ -45,14 +37,14 @@ function App() {
     <div className={styles.page}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={dataState} setModalAtive={setmodalIngredientActive} value={setTargetValue} />
-        <BurgerConstructor data={dataState} setModalAtive={setModalOrderAtive} />
+        <BurgerIngredients data={dataIngredienState} setModalAtive={setmodalIngredientActive} value={setTargetValue} />
+        <BurgerConstructor data={dataIngredienState} setModalAtive={setModalOrderAtive} />
       </main>
       <ModalOverlay active={modatOrderActive} setActive={setModalOrderAtive}>
         <Modal title={''} setModalAtive={setModalOrderAtive}> <OrderDetails /> </Modal>
       </ModalOverlay>
       <ModalOverlay active={modalIngredientActive} setActive={setmodalIngredientActive}>
-        <Modal title={'Детали ингредиента'} setModalAtive={setmodalIngredientActive}> <IngredientDetails data={dataState} value={targetValue} /> </Modal>
+        <Modal title={'Детали ингредиента'} setModalAtive={setmodalIngredientActive}> <IngredientDetails data={dataIngredienState} value={targetValue} /> </Modal>
       </ModalOverlay>
     </div>
   );

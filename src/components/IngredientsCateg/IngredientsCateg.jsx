@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IngredientsItem from '../IngredientsItem/IngredientsItem'
 import styles from './IngredientsCateg.module.css'
+import { propData } from '../../utils/propTypesBurger';
 
 function IngredientsCateg({ data, setModalAtive, value }) {
   const main = data.filter((elem) => elem.type === 'main')
@@ -39,7 +40,7 @@ function IngredientsCateg({ data, setModalAtive, value }) {
 export default IngredientsCateg;
 
 IngredientsCateg.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: propData,
   setModalAtive: PropTypes.func.isRequired,
   value: PropTypes.func.isRequired,
 }; 

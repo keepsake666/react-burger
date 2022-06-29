@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './IngredientDetails.module.css'
+import styles from './IngredientDetails.module.css';
 import PropTypes from 'prop-types';
+import { propData } from '../../utils/propTypesBurger';
 
 export default function IngredientDetails({ data, value }) {
   const ingredient = data.filter(item => item.image === value)
@@ -34,6 +35,6 @@ export default function IngredientDetails({ data, value }) {
 }
 
 IngredientDetails.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: propData,
   value: PropTypes.string.isRequired
 }; 

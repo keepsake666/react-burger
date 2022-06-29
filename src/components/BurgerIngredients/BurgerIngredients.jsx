@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import IngredientsCateg from '../IngredientsCateg/IngredientsCateg'
 import styles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { propData } from '../../utils/propTypesBurger'
 
 export default function BurgerIngredients({data, setModalAtive, value}) {
   const [current, setCurrent] = React.useState('bun')
@@ -26,7 +27,7 @@ export default function BurgerIngredients({data, setModalAtive, value}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: propData,
   setModalAtive:PropTypes.func.isRequired,
   value:PropTypes.func.isRequired,
 }; 
