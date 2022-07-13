@@ -1,28 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DataApiContext } from '../../context/dataApiContext';
+import { DataApiContext } from '../../services/dataApiContext';
 
 export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder }) {
-  const [totalPrice, setTotlPrice] = React.useState(null)
+  const [totalPrice, setTotlPrice] = useState(null)
   const { dataIngredienState } = useContext(DataApiContext)
-  const ingredient = dataIngredienState.filter((item) => item.type !== 'bun')
-  const bunBottom = dataIngredienState.filter((item) => item.type === 'bun').slice(-1)
-  const bunTop = dataIngredienState.filter((item) => item.type === 'bun').slice(-1)
-  const totapPriceIngredients = ingredient.reduce((total, item) => total + item.price, 0)
-  const totalPriceBun = dataIngredienState.length >= 1 ? bunTop[0].price + bunBottom[0].price : 0
-  const order = dataIngredienState.map(item => item._id)
+  const ingredient = useMemo(() => dataIngredienState.filter((item) => item.type !== 'bun'), [dataIngredienState])
+  const bun = useMemo(() => dataIngredienState.filter((item) => item.type === 'bun').slice(-1), [dataIngredienState])
+  const totapPriceIngredients = useMemo(() => ingredient.reduce((total, item) => total + item.price, 0), [dataIngredienState])
+  const totalPriceBun = useMemo(() => dataIngredienState.length >= 1 ? bun[0].price * 2 : 0, [dataIngredienState])
 
-  React.useMemo(() => setOrder(order), [dataIngredienState])
-  React.useMemo(() => setTotlPrice(totapPriceIngredients + totalPriceBun), [dataIngredienState])
+  useEffect(() => {
+    const order = dataIngredienState.map(item => item._id)
+    setOrder(order)
+    setTotlPrice(totapPriceIngredients + totalPriceBun)
+  }, [dataIngredienState])
+
+
+
+  function creatOrderAndSetModal() {
+    creatOrder()
+    setModalAtive(true)
+  }
 
   return (
     <section className={styles.section}>
       <div className='ml-9'>
-        {bunTop.map((elem) => (
-          <ConstructorElement type="top" isLocked={true} key={elem._id} text={`${elem.name} (верх)`} thumbnail={elem.image} price={elem.price} />
+        {bun.map((elem, index) => (
+          <ConstructorElement type="top" isLocked={true} key={index} text={`${elem.name} (верх)`} thumbnail={elem.image} price={elem.price} />
         ))}
       </div>
       <ul className={styles.section__block}>
@@ -31,8 +39,8 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
         ))}
       </ul>
       <div className='ml-9'>
-        {bunBottom.map((elem) => (
-          <ConstructorElement type="bottom" isLocked={true} key={elem._id} text={`${elem.name} (низ)`} thumbnail={elem.image} price={elem.price} />
+        {bun.map((elem, index) => (
+          <ConstructorElement type="bottom" isLocked={true} key={index} text={`${elem.name} (низ)`} thumbnail={elem.image} price={elem.price} />
         ))}
       </div>
       <div className={styles.button__block}>
@@ -40,7 +48,7 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
           <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon />
         </div>
-        <Button type="primary" size="medium" onClick={() => `${creatOrder()} ${setModalAtive(true)} `} >
+        <Button type="primary" size="medium" onClick={() => creatOrderAndSetModal()} >
           Оформить заказ
         </Button>
       </div>
