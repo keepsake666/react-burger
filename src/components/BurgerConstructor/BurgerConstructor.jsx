@@ -50,4 +50,6 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
 
 BurgerConstructor.propTypes = {
   setModalAtive: PropTypes.func.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  creatOrder: PropTypes.func.isRequired
 }; 

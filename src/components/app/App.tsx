@@ -17,7 +17,7 @@ function App() {
   const [targetValue, setTargetValue] = React.useState('')
   const [errApiData, setErrApiData] = React.useState()
   const [errCreatOrder, setErrCreatOrde] = React.useState()
-  const [numberOrder, setNumberOrder] = React.useState(null)
+  const [numberOrder, setNumberOrder] = React.useState(0)
   const [order, setOrder] = React.useState(null)
 
 
