@@ -3,7 +3,6 @@ import AppHeader from '../AppHeader/AppHeader'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import Modal from '../Modal/Modal';
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import styles from './App.module.css'
