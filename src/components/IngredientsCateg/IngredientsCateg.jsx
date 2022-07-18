@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import IngredientsItem from '../IngredientsItem/IngredientsItem'
-import styles from './IngredientsCateg.module.css'
-import { propData } from '../../utils/propTypesBurger';
+import IngredientsItem from '../IngredientsItem/IngredientsItem';
+import styles from './IngredientsCateg.module.css';
+import { DataApiContext } from '../../services/dataApiContext';
 
-function IngredientsCateg({ data, setModalAtive, value }) {
-  const main = data.filter((elem) => elem.type === 'main')
-  const bun = data.filter((elem) => elem.type === 'bun')
-  const sauce = data.filter((elem) => elem.type === 'sauce')
+function IngredientsCateg({ setModalAtive, value }) {
+  const { dataIngredienState } = useContext(DataApiContext)
+  const main = dataIngredienState.filter((elem) => elem.type === 'main')
+  const bun = dataIngredienState.filter((elem) => elem.type === 'bun')
+  const sauce = dataIngredienState.filter((elem) => elem.type === 'sauce')
   return (
     <ul className={styles.list}>
       <li>
@@ -40,7 +41,6 @@ function IngredientsCateg({ data, setModalAtive, value }) {
 export default IngredientsCateg;
 
 IngredientsCateg.propTypes = {
-  data: propData,
   setModalAtive: PropTypes.func.isRequired,
   value: PropTypes.func.isRequired,
 }; 

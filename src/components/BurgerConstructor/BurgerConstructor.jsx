@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { propData } from '../../utils/propTypesBurger'
+import { DataApiContext } from '../../services/dataApiContext';
 
-export default function BurgerConstructor({ data, setModalAtive }) {
-  const ingredient = data.filter((item) => item.type !== 'bun')
+export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder }) {
+  const [totalPrice, setTotlPrice] = useState(null)
+  const { dataIngredienState } = useContext(DataApiContext)
+  const ingredient = useMemo(() => dataIngredienState.filter((item) => item.type !== 'bun'), [dataIngredienState])
+  const bun = useMemo(() => dataIngredienState.filter((item) => item.type === 'bun').slice(-1), [dataIngredienState])
+  const totapPriceIngredients = useMemo(() => ingredient.reduce((total, item) => total + item.price, 0), [dataIngredienState])
+  const totalPriceBun = useMemo(() => dataIngredienState.length >= 1 ? bun[0].price * 2 : 0, [dataIngredienState])
+
+  useEffect(() => {
+    const order = dataIngredienState.map(item => item._id)
+    setOrder(order)
+    setTotlPrice(totapPriceIngredients + totalPriceBun)
+  }, [dataIngredienState])
+
+
+
+  function creatOrderAndSetModal() {
+    creatOrder()
+    setModalAtive(true)
+  }
 
   return (
     <section className={styles.section}>
       <div className='ml-9'>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-        />
+        {bun.map((elem, index) => (
+          <ConstructorElement type="top" isLocked={true} key={index} text={`${elem.name} (верх)`} thumbnail={elem.image} price={elem.price} />
+        ))}
       </div>
       <ul className={styles.section__block}>
         {ingredient.map((elem) => (
@@ -25,20 +39,16 @@ export default function BurgerConstructor({ data, setModalAtive }) {
         ))}
       </ul>
       <div className='ml-9'>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-        />
+        {bun.map((elem, index) => (
+          <ConstructorElement type="bottom" isLocked={true} key={index} text={`${elem.name} (низ)`} thumbnail={elem.image} price={elem.price} />
+        ))}
       </div>
       <div className={styles.button__block}>
         <div className={styles.price}>
-          <p className="text text_type_digits-medium mr-2">200</p>
+          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon />
         </div>
-        <Button type="primary" size="medium" onClick={() => setModalAtive(true)}>
+        <Button type="primary" size="medium" onClick={() => creatOrderAndSetModal()} >
           Оформить заказ
         </Button>
       </div>
@@ -47,6 +57,7 @@ export default function BurgerConstructor({ data, setModalAtive }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: propData,
   setModalAtive: PropTypes.func.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  creatOrder: PropTypes.func.isRequired
 }; 
