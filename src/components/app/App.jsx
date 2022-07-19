@@ -8,6 +8,8 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import styles from './App.module.css'
 import { DataApiContext } from '../../services/dataApiContext';
 import { apiData, apiOrder } from '../../utils/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/action/action'
 
 function App() {
   const [dataIngredienState, setDdataIngredienState] = useState([])
@@ -18,6 +20,13 @@ function App() {
   const [numberOrder, setNumberOrder] = useState(0)
   const [order, setOrder] = useState(null)
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch])
+  const { ingredients } = useSelector(store => store.BurgerReducer)
+  console.log(ingredients)
 
   function creatOrder() {
     setNumberOrder(0)
