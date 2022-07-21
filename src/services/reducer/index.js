@@ -1,20 +1,29 @@
 import {
+  act
+} from 'react-dom/test-utils';
+import {
   combineReducers
 } from 'redux';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
+  GET_INGREDIENTS_FAILED,
+  GET_INGREDIENTS_DETAILS,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILED
 } from '../action/action'
 
 const initialState = {
-  igredients: [],
+  burgerIgredients: [],
   igredientsRequest: false,
   igredientsFailed: false,
+  orderRequest: false,
+  orderFailed: false,
   ingredientsConstructor: [],
-  ingredientItem: {},
+  getIngredientDetails: {},
   order: {},
-  asd: "Hello"
+  numberOrder: 0
 };
 
 const BurgerReducer = (state = initialState, action) => {
@@ -23,14 +32,15 @@ const BurgerReducer = (state = initialState, action) => {
       return {
         ...state,
         igredientsFailed: false,
+        igredientsRequest: true,
       }
     }
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        igredients: action.data,
-        asd: "выполнилось",
-        igredientsRequest: true
+        igredientsRequest: false,
+        igredientsFailed: false,
+        burgerIgredients: action.ingredients,
       }
     }
     case GET_INGREDIENTS_FAILED: {
@@ -38,6 +48,34 @@ const BurgerReducer = (state = initialState, action) => {
         ...state,
         igredientsRequest: false,
         igredientsFailed: true,
+      }
+    }
+    case GET_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: true,
+      }
+    }
+    case GET_ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: false,
+        numberOrder: action.payload,
+      }
+    }
+    case GET_ORDER_FAILED: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: true,
+      }
+    }
+    case GET_INGREDIENTS_DETAILS: {
+      return {
+        ...state,
+        getIngredientDetails: action.details
       }
     }
     default: {

@@ -1,30 +1,30 @@
-import React, { useContext, useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DataApiContext } from '../../services/dataApiContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { getOrder } from '../../services/action/action'
 
 export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder }) {
   const [totalPrice, setTotlPrice] = useState(null)
-  const { dataIngredienState } = useContext(DataApiContext)
-  const ingredient = useMemo(() => dataIngredienState.filter((item) => item.type !== 'bun'), [dataIngredienState])
-  const bun = useMemo(() => dataIngredienState.filter((item) => item.type === 'bun').slice(-1), [dataIngredienState])
-  const totapPriceIngredients = useMemo(() => ingredient.reduce((total, item) => total + item.price, 0), [dataIngredienState])
-  const totalPriceBun = useMemo(() => dataIngredienState.length >= 1 ? bun[0].price * 2 : 0, [dataIngredienState])
+  const { burgerIgredients } = useSelector(store => store.BurgerReducer)
+  const ingredient = useMemo(() => burgerIgredients.filter((item) => item.type !== 'bun'), [burgerIgredients])
+  const bun = useMemo(() => burgerIgredients.filter((item) => item.type === 'bun').slice(-1), [burgerIgredients])
+  const totapPriceIngredients = useMemo(() => ingredient.reduce((total, item) => total + item.price, 0), [burgerIgredients])
+  const totalPriceBun = useMemo(() => burgerIgredients.length >= 1 ? bun[0].price * 2 : 0, [burgerIgredients])
 
   useEffect(() => {
-    const order = dataIngredienState.map(item => item._id)
+    const order = burgerIgredients.map(item => item._id)
     setOrder(order)
     setTotlPrice(totapPriceIngredients + totalPriceBun)
-  }, [dataIngredienState])
-
-
+  }, [burgerIgredients])
 
   function creatOrderAndSetModal() {
     creatOrder()
     setModalAtive(true)
   }
+
 
   return (
     <section className={styles.section}>
@@ -48,7 +48,7 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
           <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon />
         </div>
-        <Button type="primary" size="medium" onClick={() => creatOrderAndSetModal()} >
+        <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
           Оформить заказ
         </Button>
       </div>
