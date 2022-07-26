@@ -4,12 +4,20 @@ import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { GET_INGREDIENTS_DETAILS } from '../../services/action/action'
+import { useDrag } from "react-dnd";
 
 function IngredientsItem({ name, price, image, setModalAtive, id }) {
   const dispatch = useDispatch();
+  const [{ opacity }, dragRef] = useDrag({
+    type: "ingredient",
+    item: { id },
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  });
 
   return (
-    <li className={styles.item}>
+    <li className={styles.item} ref={dragRef} style={{ opacity }}>
       <img id={id} src={image} alt={name} className={styles.item_image}
         onClick={(e) => `${setModalAtive(true)}  ${dispatch({ type: GET_INGREDIENTS_DETAILS, details: e.target.id })}`} />
       <Counter count={0} size="default" />
