@@ -12,7 +12,8 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
-  ADD_ITNGREDIENTS
+  ADD_ITNGREDIENTS,
+  ADD_BUN
 } from '../action/action'
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   orderRequest: false,
   orderFailed: false,
   ingredientsConstructor: [],
+  bunConstructor: [],
   getIngredientDetails: {},
   order: {},
   numberOrder: 0
@@ -33,6 +35,12 @@ const BurgerReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsConstructor: [...state.ingredientsConstructor, ...action.addIngredient]
+      }
+    }
+    case ADD_BUN: {
+      return {
+        ...state,
+        bunConstructor: action.addBun
       }
     }
     case GET_INGREDIENTS_REQUEST: {

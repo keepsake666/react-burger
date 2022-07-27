@@ -16,7 +16,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
         <h2 className="text text_type_main-medium mb-4" ref={refBun} >Булка</h2>
         <ul className={styles.list_item}>
           {bun.map((elem) => (
-            <IngredientsItem key={elem._id} id={elem._id} name={elem.name} image={elem.image} price={elem.price} setModalAtive={setModalAtive} />
+            <IngredientsItem type = {'bun'} key={elem._id} id={elem._id} name={elem.name} image={elem.image} price={elem.price} setModalAtive={setModalAtive} />
           ))}
         </ul>
       </li>

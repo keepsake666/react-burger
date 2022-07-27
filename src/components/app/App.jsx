@@ -36,9 +36,9 @@ function App() {
     <div className={styles.page}>
       <AppHeader />
       <main className={styles.main}>
-      <DndProvider backend={HTML5Backend}>
-        <BurgerIngredients setModalAtive={setmodalIngredientActive} />
-        <BurgerConstructor creatOrder={creatOrder} setOrder={setOrder} setModalAtive={setModalOrderAtive} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients setModalAtive={setmodalIngredientActive} />
+          <BurgerConstructor creatOrder={creatOrder} setOrder={setOrder} setModalAtive={setModalOrderAtive} />
         </DndProvider>
       </main>
       <Modal active={modatOrderActive} title={''} setActive={setModalOrderAtive}  >
