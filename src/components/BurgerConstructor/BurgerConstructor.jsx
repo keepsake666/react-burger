@@ -32,6 +32,7 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
         })
       }
     },
+
   });
 
   useEffect(() => {
@@ -53,9 +54,9 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
         ))}
       </div>
       {ingredient.length >= 1 ?
-        <ul className={styles.section__block}>
-          {ingredient.map((elem, index) => (
-            <BurgerConstructorItem key={index} text={elem.name} image={elem.image} price={elem.price} />
+        <ul className={styles.section__block} >
+          {ingredientsConstructor.map((elem, index) => (
+            <BurgerConstructorItem key={index} text={elem.name} image={elem.image} price={elem.price} id={elem._id} indexItem={index} />
           ))}
         </ul>
         : <h1>Dobavte ing</h1>

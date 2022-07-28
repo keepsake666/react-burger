@@ -12,6 +12,8 @@ export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export const ADD_ITNGREDIENTS = 'ADD_ITNGREDIENTS';
 export const ADD_BUN = 'ADD_BUN';
+export const DELETE_INGREDIEN = 'DELETE_INGREDIEN';
+export const DROP_INGREDIENTS = 'DROP_INGREDIENTS';
 
 export function getIngredients() {
   return function (dispatch) {

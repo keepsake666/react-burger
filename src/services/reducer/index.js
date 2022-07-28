@@ -1,7 +1,4 @@
 import {
-  act
-} from 'react-dom/test-utils';
-import {
   combineReducers
 } from 'redux';
 import {
@@ -13,7 +10,9 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
   ADD_ITNGREDIENTS,
-  ADD_BUN
+  ADD_BUN,
+  DELETE_INGREDIEN,
+  DROP_INGREDIENTS
 } from '../action/action'
 
 const initialState = {
@@ -35,6 +34,25 @@ const BurgerReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsConstructor: [...state.ingredientsConstructor, ...action.addIngredient]
+      }
+    }
+    case DELETE_INGREDIEN: {
+      const index = action.deleteItem
+      return {
+        ...state,
+        ingredientsConstructor: [...state.ingredientsConstructor.slice(0, index), ...state.ingredientsConstructor.slice(index + 1)]
+      }
+    }
+    case DROP_INGREDIENTS: {
+      const moveCard = [...state.ingredientsConstructor];
+      moveCard.splice(
+        action.dragIndex,
+        0,
+        moveCard.splice(action.hoverIndex, 1)[0]
+      );
+      return {
+        ...state,
+        ingredientsConstructor: moveCard
       }
     }
     case ADD_BUN: {
