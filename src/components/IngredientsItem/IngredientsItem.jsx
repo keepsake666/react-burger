@@ -3,12 +3,12 @@ import styles from './IngredientsItem.module.css'
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_INGREDIENTS_DETAILS } from '../../services/action/action'
+import { GET_INGREDIENTS_DETAILS } from '../../services/action/ingredientDetails'
 import { useDrag } from "react-dnd";
 
 function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
   const dispatch = useDispatch();
-  const { ingredientsConstructor, bunConstructor } = useSelector(store => store.BurgerReducer)
+  const { ingredientsConstructor, bunConstructor } = useSelector(store => store.BurgerConstructorReducer)
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: { id },
@@ -17,8 +17,8 @@ function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
     })
   });
 
-  const countIngredient = ingredientsConstructor.filter(item => item._id === id).length
-  const countBun = bunConstructor.filter(item => item._id === id).length
+  const countIngredient = useMemo(() => ingredientsConstructor.filter(item => item._id === id).length, [id, ingredientsConstructor])
+  const countBun = useMemo(() => bunConstructor.filter(item => item._id === id).length, [bunConstructor, id])
 
   return (
     <li className={styles.item} ref={dragRef} style={{ opacity }}>
@@ -40,4 +40,6 @@ IngredientsItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   setModalAtive: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };

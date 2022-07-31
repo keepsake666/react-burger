@@ -4,17 +4,19 @@ import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrder } from '../../services/action/action'
+import { getOrder } from '../../services/action/orderBurger'
 import { useDrop } from "react-dnd";
-import { ADD_ITNGREDIENTS, ADD_BUN } from '../../services/action/action';
+import { ADD_ITNGREDIENTS, ADD_BUN } from '../../services/action/burgerConstructor';
 
-export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder }) {
+export default function BurgerConstructor({ setModalAtive }) {
   const [totalPrice, setTotlPrice] = useState(null)
   const dispatch = useDispatch();
-  const { burgerIgredients, ingredientsConstructor, bunConstructor } = useSelector(store => store.BurgerReducer)
-  const ingredient = useMemo(() => ingredientsConstructor.filter((item) => item.type !== 'bun'), [ingredientsConstructor])
-  const totapPriceIngredients = useMemo(() => ingredient.reduce((total, item) => total + item.price, 0), [ingredientsConstructor])
+  const { burgerIgredients } = useSelector(store => store.BurgerIngredientsReducer)
+  const { ingredientsConstructor, bunConstructor } = useSelector(store => store.BurgerConstructorReducer)
+  const totapPriceIngredients = useMemo(() => ingredientsConstructor.reduce((total, item) => total + item.price, 0), [ingredientsConstructor])
   const totalPriceBun = useMemo(() => bunConstructor.length >= 1 ? bunConstructor[0].price * 2 : 0, [bunConstructor])
+  const orderIngredients = useMemo(() => ingredientsConstructor.map(item => item._id), [ingredientsConstructor])
+  const orderBun = useMemo(() => bunConstructor.map(item => item._id), [bunConstructor])
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
@@ -32,34 +34,33 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
         })
       }
     },
-
   });
 
   useEffect(() => {
-    const order = burgerIgredients.map(item => item._id)
-    setOrder(order)
     setTotlPrice(totapPriceIngredients + totalPriceBun)
-  }, [ingredientsConstructor, bunConstructor])
+  }, [ingredientsConstructor, bunConstructor, burgerIgredients, totapPriceIngredients, totalPriceBun])
 
   function creatOrderAndSetModal() {
-    creatOrder()
     setModalAtive(true)
+    dispatch(getOrder(orderIngredients, orderBun))
   }
 
   return (
     <section className={styles.section} ref={dropTarget}>
-      <div className='ml-9'>
-        {bunConstructor.map((elem, index) => (
-          <ConstructorElement type="top" isLocked={true} key={index} text={`${elem.name} (верх)`} thumbnail={elem.image} price={elem.price} />
-        ))}
-      </div>
-      {ingredient.length >= 1 ?
+      {bunConstructor.length >= 1 ?
+        <div className='ml-9'>
+          {bunConstructor.map((elem, index) => (
+            <ConstructorElement type="top" isLocked={true} key={index} text={`${elem.name} (верх)`} thumbnail={elem.image} price={elem.price} />
+          ))}
+        </div>
+        : <h2 className="text text_type_digits-medium">Добавте булку</h2>}
+      {ingredientsConstructor.length >= 1 ?
         <ul className={styles.section__block} >
           {ingredientsConstructor.map((elem, index) => (
             <BurgerConstructorItem key={index} text={elem.name} image={elem.image} price={elem.price} id={elem._id} indexItem={index} />
           ))}
         </ul>
-        : <h1>Dobavte ing</h1>
+        : <h2 className="text text_type_digits-medium">Добавте ингредиент</h2>
       }
       <div className='ml-9' >
         {bunConstructor.map((elem, index) => (
@@ -71,9 +72,13 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
           <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon />
         </div>
-        <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
-          Оформить заказ
-        </Button>
+        {bunConstructor.length >= 1 && ingredientsConstructor.length >= 1 ?
+          <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
+            Оформить заказ
+          </Button> : <Button type="primary" size="medium" disabled={true}>
+            Оформить заказ
+          </Button>
+        }
       </div>
     </section >
   )
@@ -81,6 +86,4 @@ export default function BurgerConstructor({ setModalAtive, setOrder, creatOrder 
 
 BurgerConstructor.propTypes = {
   setModalAtive: PropTypes.func.isRequired,
-  setOrder: PropTypes.func.isRequired,
-  creatOrder: PropTypes.func.isRequired
 }; 

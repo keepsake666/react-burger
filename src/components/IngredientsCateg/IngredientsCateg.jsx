@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import IngredientsItem from '../IngredientsItem/IngredientsItem';
 import styles from './IngredientsCateg.module.css';
 import { useSelector } from 'react-redux';
 
 function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
-  const { burgerIgredients } = useSelector(store => store.BurgerReducer)
-  const main = burgerIgredients.filter((elem) => elem.type === 'main')
-  const bun = burgerIgredients.filter((elem) => elem.type === 'bun')
-  const sauce = burgerIgredients.filter((elem) => elem.type === 'sauce')
+  const { burgerIgredients } = useSelector(store => store.BurgerIngredientsReducer)
+  const main = useMemo(() => burgerIgredients.filter((elem) => elem.type === 'main'), [burgerIgredients])
+  const bun = useMemo(() => burgerIgredients.filter((elem) => elem.type === 'bun'), [burgerIgredients])
+  const sauce = useMemo(() => burgerIgredients.filter((elem) => elem.type === 'sauce'), [burgerIgredients])
 
   return (
     <ul className={styles.list}>

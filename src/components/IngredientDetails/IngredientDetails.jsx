@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './IngredientDetails.module.css';
 import { useSelector } from 'react-redux';
 
 export default function IngredientDetails() {
-  const { burgerIgredients, getIngredientDetails } = useSelector(store => store.BurgerReducer)
-  const ingredient = burgerIgredients.filter(item => item._id === getIngredientDetails)
+  const { burgerIgredients } = useSelector(store => store.BurgerIngredientsReducer)
+  const { getIngredientDetails } = useSelector(store => store.IngredientdetailsReducer)
+  const ingredient = useMemo(() => burgerIgredients.filter(item => item._id === getIngredientDetails), [burgerIgredients, getIngredientDetails])
 
   return (
     ingredient.length >= 1 ? <div className={styles.container}>

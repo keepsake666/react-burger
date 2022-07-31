@@ -5,7 +5,7 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
 
-export default function BurgerIngredients({ setModalAtive, value }) {
+export default function BurgerIngredients({ setModalAtive }) {
   const [current, setCurrent] = useState('bun')
   const { ref: refBun, inView: bunView } = useInView();
   const { ref: refMain, inView: mainView } = useInView();
@@ -51,7 +51,7 @@ export default function BurgerIngredients({ setModalAtive, value }) {
           Начинки
         </Tab>
       </div>
-      <IngredientsCateg refBun={refBun} refMain={refMain} refSauce={refSauce} setModalAtive={setModalAtive} value={value} />
+      <IngredientsCateg refBun={refBun} refMain={refMain} refSauce={refSauce} setModalAtive={setModalAtive} />
     </section>
   )
 }
