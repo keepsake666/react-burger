@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructorItem.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch } from 'react-redux';
-import { DELETE_INGREDIEN, DROP_INGREDIENTS } from '../../services/action/burgerConstructor';
+import { DELETE_INGREDIEN } from '../../services/action/burgerConstructor';
 import { useDrag, useDrop } from "react-dnd";
 import { dporIngredient } from '../../services/action/burgerConstructor';
 export default function BurgerConstructorItem({ text, price, image, indexItem, id }) {
