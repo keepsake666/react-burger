@@ -5,7 +5,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { useDispatch } from 'react-redux';
 import { DELETE_INGREDIEN, DROP_INGREDIENTS } from '../../services/action/burgerConstructor';
 import { useDrag, useDrop } from "react-dnd";
-
+import { dporIngredient } from '../../services/action/burgerConstructor';
 export default function BurgerConstructorItem({ text, price, image, indexItem, id }) {
   const dispatch = useDispatch();
   const ref = useRef(null)
@@ -25,11 +25,7 @@ export default function BurgerConstructorItem({ text, price, image, indexItem, i
       const dragIndex = item.index;
       const hoverIndex = indexItem;
       if (dragIndex) {
-        dispatch({
-          type: DROP_INGREDIENTS,
-          dragIndex: dragIndex,
-          hoverIndex: hoverIndex
-        })
+        dispatch(dporIngredient(dragIndex, hoverIndex))
       }
       item.index = hoverIndex
     },
@@ -47,17 +43,15 @@ export default function BurgerConstructorItem({ text, price, image, indexItem, i
   drag(drop(ref))
 
   return (
-    <>
-      <li className={styles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId} >
-        <DragIcon />
-        <ConstructorElement
-          text={text}
-          price={price}
-          thumbnail={image}
-          handleClose={() => deleteIngredient(indexItem)}
-        />
-      </li>
-    </>
+    <li className={styles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId} >
+      <DragIcon />
+      <ConstructorElement
+        text={text}
+        price={price}
+        thumbnail={image}
+        handleClose={() => deleteIngredient(indexItem)}
+      />
+    </li>
   )
 }
 

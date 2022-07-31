@@ -6,16 +6,18 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrder } from '../../services/action/orderBurger'
 import { useDrop } from "react-dnd";
-import { ADD_ITNGREDIENTS, ADD_BUN } from '../../services/action/burgerConstructor';
+import { v4 as uuidv4 } from 'uuid';
+import { addIngredient, addBun } from '../../services/action/burgerConstructor';
 
 export default function BurgerConstructor({ setModalAtive }) {
   const [totalPrice, setTotlPrice] = useState(null)
   const dispatch = useDispatch();
   const { burgerIgredients } = useSelector(store => store.BurgerIngredientsReducer)
+
   const { ingredientsConstructor, bunConstructor } = useSelector(store => store.BurgerConstructorReducer)
-  const totapPriceIngredients = useMemo(() => ingredientsConstructor.reduce((total, item) => total + item.price, 0), [ingredientsConstructor])
+  const totapPriceIngredients = useMemo(() => ingredientsConstructor.reduce((total, item) => total + item[0].price, 0), [ingredientsConstructor])
   const totalPriceBun = useMemo(() => bunConstructor.length >= 1 ? bunConstructor[0].price * 2 : 0, [bunConstructor])
-  const orderIngredients = useMemo(() => ingredientsConstructor.map(item => item._id), [ingredientsConstructor])
+  const orderIngredients = useMemo(() => ingredientsConstructor.map(item => item[0]._id), [ingredientsConstructor])
   const orderBun = useMemo(() => bunConstructor.map(item => item._id), [bunConstructor])
 
   const [, dropTarget] = useDrop({
@@ -23,15 +25,11 @@ export default function BurgerConstructor({ setModalAtive }) {
     drop(itemId) {
       const typeIngredient = burgerIgredients.filter(item => item._id === itemId.id).map(item => item.type)
       if (typeIngredient[0] !== "bun") {
-        dispatch({
-          type: ADD_ITNGREDIENTS,
-          addIngredient: burgerIgredients.filter(item => item._id === itemId.id && item.type !== 'bun')
-        })
+        const ingredientItem = burgerIgredients.filter(item => item._id === itemId.id && item.type !== 'bun')
+        dispatch(addIngredient(ingredientItem, uuidv4()))
       } else if (typeIngredient[0] === "bun") {
-        dispatch({
-          type: ADD_BUN,
-          addBun: burgerIgredients.filter(item => item._id === itemId.id && item.type === 'bun')
-        })
+        const bunItem = burgerIgredients.filter(item => item._id === itemId.id && item.type === 'bun')
+        dispatch(addBun(bunItem))
       }
     },
   });
@@ -57,7 +55,7 @@ export default function BurgerConstructor({ setModalAtive }) {
       {ingredientsConstructor.length >= 1 ?
         <ul className={styles.section__block} >
           {ingredientsConstructor.map((elem, index) => (
-            <BurgerConstructorItem key={index} text={elem.name} image={elem.image} price={elem.price} id={elem._id} indexItem={index} />
+            <BurgerConstructorItem key={elem.uuid} text={elem[0].name} image={elem[0].image} price={elem[0].price} id={elem[0]._id} indexItem={index} />
           ))}
         </ul>
         : <h2 className="text text_type_digits-medium">Добавте ингредиент</h2>
