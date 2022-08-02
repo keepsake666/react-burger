@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './OrderDetails.module.css'
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export default function OrderDetails({ numberOrder }) {
+export default function OrderDetails() {
+  const { numberOrder } = useSelector(store => store.OrderBurgerReducer)
 
   return (
     <div className={styles.container}>
@@ -14,7 +15,3 @@ export default function OrderDetails({ numberOrder }) {
     </div>
   )
 }
-
-OrderDetails.propTypes = {
-  numberOrder: PropTypes.number.isRequired
-}; 

@@ -12,7 +12,7 @@ export default function ModalOverlay({ setActive }) {
     }
     window.addEventListener('keydown', close)
     return () => window.removeEventListener('keydown', close)
-  }, [])
+  }, [setActive])
 
   return (
     <div className={styles.popup} onClick={() => setActive(false)}>

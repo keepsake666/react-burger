@@ -6,54 +6,42 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import styles from './App.module.css'
-import { DataApiContext } from '../../services/dataApiContext';
-import { apiData, apiOrder } from '../../utils/api';
+import { useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/action/burgerIngredients'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { RESET_ORDER } from '../../services/action/burgerConstructor';
 
 function App() {
-  const [dataIngredienState, setDdataIngredienState] = useState([])
   const [modatOrderActive, setModalOrderAtive] = useState(false)
   const [modalIngredientActive, setmodalIngredientActive] = useState(false)
-  const [targetValue, setTargetValue] = useState('')
-  const [errApiData, setErrApiData] = useState()
-  const [numberOrder, setNumberOrder] = useState(0)
-  const [order, setOrder] = useState(null)
-
-
-  function creatOrder() {
-    setNumberOrder(0)
-    apiOrder(order)
-      .then(res => setNumberOrder(res.order.number))
-      .catch(err => {
-        setNumberOrder(err)
-      })
-  }
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    apiData()
-      .then((res) => {
-        setDdataIngredienState(res.data)
+    dispatch(getIngredients())
+    if (modatOrderActive === false) {
+      dispatch({
+        type: RESET_ORDER
       })
-      .catch(err => {
-        setErrApiData(err)
-      })
-  }, [])
+    }
+  }, [dispatch, modatOrderActive])
 
   return (
     <div className={styles.page}>
       <AppHeader />
       <main className={styles.main}>
-        <DataApiContext.Provider value={{ dataIngredienState, setDdataIngredienState }}>
-          <BurgerIngredients setModalAtive={setmodalIngredientActive} value={setTargetValue} />
-          <BurgerConstructor creatOrder={creatOrder} setOrder={setOrder} setModalAtive={setModalOrderAtive} />
-        </DataApiContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients setModalAtive={setmodalIngredientActive} />
+          <BurgerConstructor setModalAtive={setModalOrderAtive} />
+        </DndProvider>
       </main>
       <Modal active={modatOrderActive} title={''} setActive={setModalOrderAtive}  >
-        <OrderDetails numberOrder={numberOrder} />
+        <OrderDetails />
       </Modal>
       <Modal active={modalIngredientActive} setActive={setmodalIngredientActive} title={'Детали ингредиента'} >
-        <IngredientDetails data={dataIngredienState} value={targetValue} />
+        <IngredientDetails />
       </Modal>
-    </div>
+    </div >
   );
 }
 
