@@ -3,8 +3,8 @@ import {
   ADD_BUN,
   DELETE_INGREDIEN,
   DROP_INGREDIENTS,
-  RESET_ORDER
-} from '../action/burgerConstructor'
+  RESET_ORDER,
+} from "../action/burgerConstructor";
 
 const initialState = {
   ingredientsConstructor: [],
@@ -16,15 +16,18 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
     case ADD_ITNGREDIENTS: {
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor, action.item]
-      }
+        ingredientsConstructor: [...state.ingredientsConstructor, action.item],
+      };
     }
     case DELETE_INGREDIEN: {
-      const index = action.deleteItem
+      const index = action.deleteItem;
       return {
         ...state,
-        ingredientsConstructor: [...state.ingredientsConstructor.slice(0, index), ...state.ingredientsConstructor.slice(index + 1)]
-      }
+        ingredientsConstructor: [
+          ...state.ingredientsConstructor.slice(0, index),
+          ...state.ingredientsConstructor.slice(index + 1),
+        ],
+      };
     }
     case DROP_INGREDIENTS: {
       const moveCard = [...state.ingredientsConstructor];
@@ -35,24 +38,24 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
       );
       return {
         ...state,
-        ingredientsConstructor: moveCard
-      }
+        ingredientsConstructor: moveCard,
+      };
     }
     case ADD_BUN: {
       return {
         ...state,
-        bunConstructor: action.addBun
-      }
+        bunConstructor: action.addBun,
+      };
     }
     case RESET_ORDER: {
       return {
         ...state,
         ingredientsConstructor: [],
         bunConstructor: [],
-      }
+      };
     }
     default: {
-      return state
+      return state;
     }
   }
-}
+};

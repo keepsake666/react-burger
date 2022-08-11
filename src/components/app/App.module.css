@@ -11,3 +11,8 @@
   margin: 0 auto;
   min-width: 320px;
 }
+
+.main__page {
+  margin: 0 auto;
+  width: 100%;
+}

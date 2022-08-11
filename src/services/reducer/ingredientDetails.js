@@ -1,9 +1,7 @@
-import {
-  GET_INGREDIENTS_DETAILS
-} from '../action/ingredientDetails'
+import { GET_INGREDIENTS_DETAILS } from "../action/ingredientDetails";
 
 const initialState = {
-  getIngredientDetails: {}
+  getIngredientDetails: {},
 };
 
 export const IngredientdetailsReducer = (state = initialState, action) => {
@@ -11,11 +9,11 @@ export const IngredientdetailsReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_DETAILS: {
       return {
         ...state,
-        getIngredientDetails: action.details
-      }
+        getIngredientDetails: action.details,
+      };
     }
     default: {
-      return state
+      return state;
     }
   }
-}
+};
