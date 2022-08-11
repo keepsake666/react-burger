@@ -6,6 +6,8 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, NavLink } from "react-router-dom";
+
 function AppHeader() {
   return (
     <header className={styles.header}>
@@ -13,9 +15,13 @@ function AppHeader() {
         <div className={styles.block}>
           <div className={`mb-4 mt-4 pb-4 pt-4 pr-5 ${styles.container}`}>
             <BurgerIcon />
-            <p className="text text_type_main-default block ml-2">
+            <NavLink
+              to="/"
+              activeClassName={styles.link__active}
+              className={`text text_type_main-default text_color_inactive block ml-2 ${styles.link}`}
+            >
               Конструктор
-            </p>
+            </NavLink>
           </div>
           <div
             className={`mb-4 mt-4 ml-2 pb-4 pt-4 pl-5 pr-5 ${styles.container}`}
@@ -26,14 +32,20 @@ function AppHeader() {
             </p>
           </div>
         </div>
-        <div className={styles.logo}>
-          <Logo />
-        </div>
+        <Link to="/">
+          <div className={styles.logo}>
+            <Logo />
+          </div>
+        </Link>
         <div className={`mb-4 mt-4 pb-4 pt-4 pl-5 ${styles.container}`}>
           <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive ml-2">
-            Личный кабинет{" "}
-          </p>
+          <NavLink
+            to='/login'
+            activeClassName={styles.link__active}
+            className={`text text_type_main-default text_color_inactive ml-2 ${styles.link}`}
+          >
+            Личный кабинет
+          </NavLink>
         </div>
       </div>
     </header>

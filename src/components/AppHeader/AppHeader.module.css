@@ -41,3 +41,15 @@
 .container {
   display: flex;
 }
+
+.link {
+  text-decoration: none;
+}
+.link:hover {
+  opacity: 0.7;
+}
+
+
+.link__active {
+  color: red;
+}
