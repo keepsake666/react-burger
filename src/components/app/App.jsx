@@ -25,7 +25,7 @@ function App() {
   }, [dispatch, modalOrderActive]);
 
   return (
-    <Router>
+      <Router>
       <div className={styles.page}>
         <AppHeader />
         <Switch>
@@ -54,7 +54,7 @@ function App() {
           <IngredientDetails />
         </Modal>
       </div>
-    </Router>
+      </Router>
   );
 }
 
