@@ -8,9 +8,9 @@ import styles from "./Login.module.css";
 import { Link, useHistory } from 'react-router-dom';
 
 export default function Login() {
-  const [value, setValue] = useState("");
+  const [valueEmail, setValueEmail] = useState("");
   const onChangeMail = (e) => {
-    setValue(e.target.value);
+    setValueEmail(e.target.value);
   };
   const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
@@ -29,7 +29,7 @@ export default function Login() {
       </h2>
       <form className={styles.form} action="">
         <div className={"mb-6"}>
-          <EmailInput onChange={onChangeMail} value={value} name={"E-mail"} />
+          <EmailInput onChange={onChangeMail} value={valueEmail} name={"E-mail"} />
         </div>
         <div className={"mb-6"}>
           {" "}

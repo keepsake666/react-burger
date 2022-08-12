@@ -10,6 +10,8 @@ import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "../../pages/Login";
 import Home from "../../pages/Home";
+import Register from "../../pages/Register";
+import ForgotPassword from "../../pages/ForgotPassword";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -25,19 +27,25 @@ function App() {
   }, [dispatch, modalOrderActive]);
 
   return (
-      <Router>
+    <Router>
       <div className={styles.page}>
         <AppHeader />
         <Switch>
-        <Route path="/" exact={true}>
-          <Home
-            setModalIngredient={setModalIngredientActive}
-            setModalOrder={setModalOrderActive}
-          />
-        </Route>
-        <Route path="/login" exact={true}>
-          <Login />
-        </Route>
+          <Route path="/" exact={true}>
+            <Home
+              setModalIngredient={setModalIngredientActive}
+              setModalOrder={setModalOrderActive}
+            />
+          </Route>
+          <Route path="/login" exact={true}>
+            <Login />
+          </Route>
+          <Route path="/register" exact={true}>
+            <Register />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassword />
+          </Route>
         </Switch>
         <Modal
           active={modalOrderActive}
@@ -54,7 +62,7 @@ function App() {
           <IngredientDetails />
         </Modal>
       </div>
-      </Router>
+    </Router>
   );
 }
 
