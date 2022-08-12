@@ -36,7 +36,7 @@ export default function Login() {
           <PasswordInput
             onChange={onChangePassword}
             value={valuePassword}
-            name={"Пароль"}
+            name={"password"}
           />
         </div>
         <Button onClick= {onClick} type="primary" size="medium">

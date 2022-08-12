@@ -1,9 +1,7 @@
-import styles from "./Register.module.css";
+import styles from "./ForgotPassword.module.css";
 import {
   Button,
   EmailInput,
-  Input,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
@@ -21,7 +19,6 @@ export default function ForgotPassword() {
     <main className={styles.main__page}>
       <div className={styles.container}>
         <h2 className={`text text_type_main-medium mb-6`}>
-          Восстановление пароля
         </h2>
         <form className={styles.form} action="">
           <div className={"mb-6"}>

@@ -12,6 +12,8 @@ import Login from "../../pages/Login";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import ForgotPassword from "../../pages/ForgotPassword";
+import ResetPassword from "../../pages/ResetPassword";
+import Profile from "../../pages/Profile";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -45,6 +47,12 @@ function App() {
           </Route>
           <Route path="/forgot-password" exact={true}>
             <ForgotPassword />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassword />
+          </Route>
+          <Route path="/profile" exact={true}>
+            <Profile />
           </Route>
         </Switch>
         <Modal

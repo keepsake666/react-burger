@@ -14,11 +14,12 @@ function AppHeader() {
       <div className={styles.header__container}>
         <div className={styles.block}>
           <div className={`mb-4 mt-4 pb-4 pt-4 pr-5 ${styles.container}`}>
-            <BurgerIcon />
+            <BurgerIcon type="secondary" />
             <NavLink
               to="/"
+              exact
               activeClassName={styles.link__active}
-              className={`text text_type_main-default text_color_inactive block ml-2 ${styles.link}`}
+              className={`text text_type_main-default block ml-2 ${styles.link}`}
             >
               Конструктор
             </NavLink>
@@ -40,9 +41,9 @@ function AppHeader() {
         <div className={`mb-4 mt-4 pb-4 pt-4 pl-5 ${styles.container}`}>
           <ProfileIcon type="secondary" />
           <NavLink
-            to='/login'
+            to="/profile"
             activeClassName={styles.link__active}
-            className={`text text_type_main-default text_color_inactive ml-2 ${styles.link}`}
+            className={`text text_type_main-default ml-2 ${styles.link}`}
           >
             Личный кабинет
           </NavLink>
