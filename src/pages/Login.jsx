@@ -48,7 +48,7 @@ export default function Login() {
         <Link to='/register' className={styles.span}>Зарегистрироваться</Link>
       </p>
       <p className={"text text_type_main-default"}>
-        Забыли пароль?<Link to='/forgot-password ' className={styles.span}>Восстановить пароль</Link>
+        Забыли пароль?<Link to='/forgot-password' className={styles.span}>Восстановить пароль</Link>
       </p>
     </div>
       </main>
