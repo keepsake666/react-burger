@@ -14,11 +14,23 @@ import Register from "../../pages/Register";
 import ForgotPassword from "../../pages/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword";
 import Profile from "../../pages/Profile";
+import { getCookie } from "../../utils/api";
+import { getUser, newToken } from "../../services/action/authorization";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
   const dispatch = useDispatch();
+  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = getCookie("token");
+
+  useEffect(() => {
+    if (!accessToken && refreshToken) {
+      dispatch(newToken(refreshToken));
+    }
+    if (accessToken && refreshToken) dispatch(getUser(accessToken));
+  }, [accessToken, dispatch, refreshToken]);
+
   useEffect(() => {
     dispatch(getIngredients());
     if (modalOrderActive === false) {

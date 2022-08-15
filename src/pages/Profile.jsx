@@ -6,23 +6,16 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory, NavLink } from "react-router-dom";
-import {useState, useRef, useEffect} from "react";
-import {useSelector} from "react-redux";
-import {authorizationReducer} from "../services/reducer/authorization";
-import {getCookie, getProfile} from "../utils/api";
-
+import { useState} from "react";
+import { useSelector } from "react-redux";
 export default function Profile() {
-  const {user, token} = useSelector(store => store.authorizationReducer)
+  const { user } = useSelector((store) => store.authorizationReducer);
 
-  useEffect(()=> {
-    console.log(token)
-    getProfile(token).then(res => console.log(res))
-  })
   const [valueEmail, setValueEmail] = useState(`${user.email}`);
   const onChangeMail = (e) => {
     setValueEmail(e.target.value);
   };
-  const [valuePassword, setValuePassword] = useState('');
+  const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
@@ -41,16 +34,10 @@ export default function Profile() {
         >
           Профиль
         </NavLink>
-        <NavLink
-          to="/"
-          className={`text text_type_main-medium ${styles.link}`}
-        >
+        <NavLink to="/" className={`text text_type_main-medium ${styles.link}`}>
           История заказов
         </NavLink>
-        <NavLink
-          to="/"
-          className={`text text_type_main-medium ${styles.link}`}
-        >
+        <NavLink to="/" className={`text text_type_main-medium ${styles.link}`}>
           Выход
         </NavLink>
         <p className={`text text_type_main-default ${styles.text}`}>

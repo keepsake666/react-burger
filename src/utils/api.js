@@ -40,7 +40,7 @@ export function setRegistration(email, password, name) {
   }).then(checkResponse);
 }
 
-export function setLogIn (email, password) {
+export function setLogIn(email, password) {
   return fetch(config.baseUrl + "/auth/login", {
     method: "POST",
     headers: config.headers,
@@ -53,16 +53,24 @@ export function setLogIn (email, password) {
 
 export function getProfile(token) {
   return fetch(config.baseUrl + "/auth/user", {
-    headers: { 'Content-Type': 'application/json',
-    authorization: token}
+    headers: { "Content-Type": "application/json", authorization: token },
   }).then(checkResponse);
 }
 
+export function getNewToken(token) {
+  return fetch(config.baseUrl + "/auth/token", {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      token: token,
+    }),
+  }).then(checkResponse);
+}
 
 export function setCookie(name, value, props) {
   props = props || {};
   let exp = props.expires;
-  if (typeof exp == 'number' && exp) {
+  if (typeof exp == "number" && exp) {
     const d = new Date();
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
@@ -71,12 +79,12 @@ export function setCookie(name, value, props) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
-  let updatedCookie = name + '=' + value;
+  let updatedCookie = name + "=" + value;
   for (const propName in props) {
-    updatedCookie += '; ' + propName;
+    updatedCookie += "; " + propName;
     const propValue = props[propName];
     if (propValue !== true) {
-      updatedCookie += '=' + propValue;
+      updatedCookie += "=" + propValue;
     }
   }
   document.cookie = updatedCookie;
@@ -84,7 +92,11 @@ export function setCookie(name, value, props) {
 
 export function getCookie(name) {
   const matches = document.cookie.match(
-      new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }

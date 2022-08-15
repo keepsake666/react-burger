@@ -5,16 +5,23 @@ import {
   GET_LOGIN_SUCCESS,
   GET_LOGIN_REQUEST,
   GET_LOGIN_FAILED,
+  GET_TOKEN_REQUEST,
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN_FAILED, GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED,
 } from "../action/authorization";
 
 const initialState = {
+  data: {},
   authorizationFailed: false,
   authorizationRequest: false,
   logInFailed: false,
   logInRequest: false,
+  tokenFailed: false,
+  tokenRequest: false,
+  getUserRequest: false,
+  getUserFailed: false,
   isAuthenticated: false,
   user: {},
-  token: "",
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -31,9 +38,8 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         authorizationRequest: false,
         authorizationFailed: false,
-        token: action.payload.accessToken,
         user: action.payload.user,
-        isAuthenticated: true
+        isAuthenticated: true,
       };
     }
     case GET_REGISTRATION_FAILED: {
@@ -53,11 +59,11 @@ export const authorizationReducer = (state = initialState, action) => {
     case GET_LOGIN_SUCCESS: {
       return {
         ...state,
+        data: action.payload,
         logInRequest: false,
         logInFailed: false,
-        token: action.payload.accessToken,
         user: action.payload.user,
-        isAuthenticated: true
+        isAuthenticated: true,
       };
     }
     case GET_LOGIN_FAILED: {
@@ -65,6 +71,51 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         logInRequest: false,
         logInFailed: true,
+      };
+    }
+    case GET_TOKEN_REQUEST: {
+      return {
+        ...state,
+        tokenFailed: false,
+        tokenRequest: true,
+      };
+    }
+    case GET_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        tokenRequest: false,
+        tokenFailed: false,
+        isAuthenticated: true,
+      };
+    }
+    case GET_TOKEN_FAILED: {
+      return {
+        ...state,
+        tokenRequest: false,
+        tokenFailed: true,
+      };
+    }
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        getUserFailed: false,
+        getUserRequest: true,
+      };
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserFailed: false,
+        user: action.payload.user,
+        isAuthenticated: true,
+      };
+    }
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserFailed: true,
       };
     }
     default: {
