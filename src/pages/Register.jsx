@@ -6,27 +6,36 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { registration } from "../services/action/authorization";
+import { useDispatch, useSelector } from "react-redux";
+import {getCookie} from "../utils/api";
 
 export default function Register() {
+  const dispatch = useDispatch();
+  const { dataProfile } = useSelector((store) => store.authorizationReducer);
   const [valueEmail, setValueEmail] = useState("");
   const onChangeMail = (e) => {
-      setValueEmail(e.target.value);
+    setValueEmail(e.target.value);
   };
   const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
   const [valueName, setValueName] = useState("");
-  const inputRef = useRef(null);
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert("Icon Click Callback");
+  const onChangeName = (e) => {
+    setValueName(e.target.value);
   };
   const history = useHistory();
-  const onClick = () => {
-    history.replace({ pathname: "/" });
+  const onRegistration = (e) => {
+    e.preventDefault();
+    dispatch(registration(valueEmail, valuePassword, valueName));
   };
+  let coci = document.cookie
+console.log(getCookie('token'))
+  // if (dataProfile.user) {
+  //   history.replace({ pathname: "/login" });
+  // }
   return (
     <main className={styles.main__page}>
       <div className={styles.container}>
@@ -38,18 +47,20 @@ export default function Register() {
             <Input
               type={"text"}
               placeholder={"Имя"}
-              onChange={(e) => setValueName(e.target.value)}
+              onChange={onChangeName}
               value={valueName}
               name={"name"}
               error={false}
-              ref={inputRef}
-              onIconClick={onIconClick}
               errorText={"Ошибка"}
               size={"default"}
             />
           </div>
           <div className={"mb-6"}>
-            <EmailInput onChange={onChangeMail} value={valueEmail} name={"E-mail"} />
+            <EmailInput
+              onChange={onChangeMail}
+              value={valueEmail}
+              name={"E-mail"}
+            />
           </div>
           <div className={"mb-6"}>
             {" "}
@@ -59,7 +70,7 @@ export default function Register() {
               name={"Пароль"}
             />
           </div>
-          <Button onClick={onClick} type="primary" size="medium">
+          <Button onClick={onRegistration} type="primary" size="medium">
             Зарегистрироваться
           </Button>
         </form>
