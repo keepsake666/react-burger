@@ -1,7 +1,10 @@
-import { setCookie, setRegistration } from "../../utils/api";
+import {setCookie, setLogIn, setRegistration} from "../../utils/api";
 export const GET_REGISTRATION_REQUEST = "GET_REGISTRATION_REQUEST";
 export const GET_REGISTRATION_SUCCESS = "GET_REGISTRATION_SUCCESS";
 export const GET_REGISTRATION_FAILED = "GET_REGISTRATION_FAILED";
+export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
+export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
+export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
 
 export function registration(email, password, name) {
   return function (dispatch) {
@@ -16,7 +19,7 @@ export function registration(email, password, name) {
         });
         if (res) {
           // Сохраняем токен в куку token
-          setCookie("token", res.accessToken);
+          setCookie("token", res.refreshToken);
         }
       })
 
@@ -26,4 +29,30 @@ export function registration(email, password, name) {
         });
       });
   };
+}
+
+
+export function logIn(email, password) {
+    return function (dispatch) {
+        dispatch({
+            type: GET_LOGIN_REQUEST,
+        });
+        setLogIn(email, password)
+            .then((res) => {
+                dispatch({
+                    type: GET_LOGIN_SUCCESS,
+                    payload: res,
+                });
+                if (res) {
+                    // Сохраняем токен в куку token
+                    setCookie("token", res.refreshToken);
+                }
+            })
+
+            .catch(() => {
+                dispatch({
+                    type: GET_LOGIN_FAILED,
+                });
+            });
+    };
 }

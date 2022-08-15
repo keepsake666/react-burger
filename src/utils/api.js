@@ -40,6 +40,25 @@ export function setRegistration(email, password, name) {
   }).then(checkResponse);
 }
 
+export function setLogIn (email, password) {
+  return fetch(config.baseUrl + "/auth/login", {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  }).then(checkResponse);
+}
+
+export function getProfile(token) {
+  return fetch(config.baseUrl + "/auth/user", {
+    headers: { 'Content-Type': 'application/json',
+    authorization: token}
+  }).then(checkResponse);
+}
+
+
 export function setCookie(name, value, props) {
   props = props || {};
   let exp = props.expires;

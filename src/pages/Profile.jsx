@@ -6,18 +6,27 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory, NavLink } from "react-router-dom";
-import { useState, useRef } from "react";
+import {useState, useRef, useEffect} from "react";
+import {useSelector} from "react-redux";
+import {authorizationReducer} from "../services/reducer/authorization";
+import {getCookie, getProfile} from "../utils/api";
 
 export default function Profile() {
-  const [valueEmail, setValueEmail] = useState("");
+  const {user, token} = useSelector(store => store.authorizationReducer)
+
+  useEffect(()=> {
+    console.log(token)
+    getProfile(token).then(res => console.log(res))
+  })
+  const [valueEmail, setValueEmail] = useState(`${user.email}`);
   const onChangeMail = (e) => {
     setValueEmail(e.target.value);
   };
-  const [valuePassword, setValuePassword] = useState("");
+  const [valuePassword, setValuePassword] = useState('');
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
-  const [valueName, setValueName] = useState("");
+  const [valueName, setValueName] = useState(`${user.name}`);
   const onChangeName = (e) => {
     setValueName(e.target.value);
   };
