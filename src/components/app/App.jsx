@@ -7,7 +7,7 @@ import styles from "./App.module.css";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import Login from "../../pages/Login";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
@@ -26,6 +26,10 @@ function App() {
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
 
+  const location = useLocation();
+  const background = location.state?.background;
+  const history = useHistory();
+
   useEffect(() => {
     if (!accessToken && refreshToken) {
       dispatch(newToken(refreshToken));
@@ -42,52 +46,59 @@ function App() {
     }
   }, [dispatch, modalOrderActive]);
 
+  const handlerCloseModal = () => {
+    setModalIngredientActive(false);
+    history.go(-1);
+  };
+
   return (
-    <Router>
-      <div className={styles.page}>
-        <AppHeader />
-        <Switch>
-          <Route path="/" exact={true}>
-            <Home
-              setModalIngredient={setModalIngredientActive}
-              setModalOrder={setModalOrderActive}
-            />
-          </Route>
-          <Route path="/login" exact={true}>
-            <Login />
-          </Route>
-          <Route path="/register" exact={true}>
-            <Register />
-          </Route>
-          <Route path="/forgot-password" exact={true}>
-            <ForgotPassword />
-          </Route>
-          <Route path="/reset-password" exact={true}>
-            <ResetPassword />
-          </Route>
-          <ProtectedRoute path="/profile">
-            <Profile />
-          </ProtectedRoute>
-          <Route path="/ingredient">
-            <Ingredients />
-          </Route>
-        </Switch>
-        <Modal
-          active={modalOrderActive}
-          title={""}
-          setActive={setModalOrderActive}
-        >
-          <OrderDetails />
-        </Modal>
-        <Modal
-          active={modalIngredientActive}
-          setActive={setModalIngredientActive}
-          title={"Детали ингредиента"}
-        >
-          <IngredientDetails />
-        </Modal>
-      </div>
-    </Router>
+    <div className={styles.page}>
+      <AppHeader />
+      <Switch location={background || location}>
+        <Route path="/" exact={true}>
+          <Home
+            setModalIngredient={setModalIngredientActive}
+            setModalOrder={setModalOrderActive}
+          />
+        </Route>
+        <Route path="/login" exact={true}>
+          <Login />
+        </Route>
+        <Route path="/register" exact={true}>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/ingredient/:id" exact={true}>
+          <Ingredients />
+        </Route>
+      </Switch>
+      <Modal
+        active={modalOrderActive}
+        title={""}
+        setActive={setModalOrderActive}
+      >
+        <OrderDetails />
+      </Modal>
+      {background && (
+        <Route path="/ingredient/:id" exact={true}>
+          <Modal
+            active={modalIngredientActive}
+            setActive={handlerCloseModal}
+            title={"Детали ингредиента"}
+          >
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+    </div>
   );
 }
 

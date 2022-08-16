@@ -18,6 +18,7 @@ export default function Modal({ children, title, setActive, active }) {
     }
   });
 
+
   return createPortal(
     <>
       <ModalOverlay setActive={setActive} />

@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import IngredientsItem from "../IngredientsItem/IngredientsItem";
 import styles from "./IngredientsCateg.module.css";
 import { useSelector } from "react-redux";
+import {Link, useLocation} from "react-router-dom";
 
 function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
+  const location = useLocation();
+
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
@@ -29,6 +32,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
         </h2>
         <ul className={styles.list_item}>
           {bun.map((elem) => (
+           <Link to={{pathname : `/ingredient/${elem._id}`, state: { background: location }}} key={elem._id} className={styles.link}>
             <IngredientsItem
               type={"bun"}
               key={elem._id}
@@ -38,6 +42,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
               price={elem.price}
               setModalAtive={setModalAtive}
             />
+            </Link>
           ))}
         </ul>
       </li>
@@ -47,6 +52,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
         </h2>
         <ul className={styles.list_item}>
           {sauce.map((elem) => (
+              <Link to={{pathname : `/ingredient/${elem._id}`, state: { background: location }}} key={elem._id} className={styles.link}>
             <IngredientsItem
               key={elem._id}
               id={elem._id}
@@ -55,6 +61,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
               price={elem.price}
               setModalAtive={setModalAtive}
             />
+              </Link>
           ))}
         </ul>
       </li>
@@ -64,6 +71,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
         </h2>
         <ul className={styles.list_item}>
           {main.map((elem) => (
+              <Link to={{pathname : `/ingredient/${elem._id}`, state: { background: location }}} key={elem._id} className={styles.link}>
             <IngredientsItem
               key={elem._id}
               id={elem._id}
@@ -72,6 +80,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
               price={elem.price}
               setModalAtive={setModalAtive}
             />
+              </Link>
           ))}
         </ul>
       </li>

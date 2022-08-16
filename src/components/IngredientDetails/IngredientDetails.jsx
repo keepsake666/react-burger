@@ -1,17 +1,19 @@
 import React, { useMemo } from "react";
 import styles from "./IngredientDetails.module.css";
 import { useSelector } from "react-redux";
+import {useLocation} from "react-router-dom";
 
 export default function IngredientDetails() {
+  const location = useLocation()
+  const id = location.pathname.slice(12)
+
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
-  const { getIngredientDetails } = useSelector(
-    (store) => store.IngredientdetailsReducer
-  );
+
   const ingredient = useMemo(
-    () => burgerIgredients.filter((item) => item._id === getIngredientDetails),
-    [burgerIgredients, getIngredientDetails]
+    () => burgerIgredients.filter((item) => item._id === id),
+    [burgerIgredients, id]
   );
 
   return ingredient.length >= 1 ? (

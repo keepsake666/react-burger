@@ -10,7 +10,8 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { rootReducer } from "./services/reducer/index";
+import { rootReducer } from "./services/reducer";
+import { BrowserRouter as Router } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -25,9 +26,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function
