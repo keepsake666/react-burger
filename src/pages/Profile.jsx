@@ -1,15 +1,19 @@
 import styles from "./Profile.module.css";
 import {
   Button,
-  EmailInput,
-  PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory, NavLink } from "react-router-dom";
-import { useState} from "react";
-import { useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie, logOut } from "../utils/api";
+import { actionLogOut, getNewProfile } from "../services/action/authorization";
 export default function Profile() {
   const { user } = useSelector((store) => store.authorizationReducer);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = getCookie("token");
 
   const [valueEmail, setValueEmail] = useState(`${user.email}`);
   const onChangeMail = (e) => {
@@ -22,6 +26,18 @@ export default function Profile() {
   const [valueName, setValueName] = useState(`${user.name}`);
   const onChangeName = (e) => {
     setValueName(e.target.value);
+  };
+
+  const handlerLogOut = (e) => {
+    e.preventDefault();
+    dispatch(actionLogOut(refreshToken));
+    history.replace({
+      pathname: "/login",
+    });
+  };
+  const postNewProfile = (e) => {
+    e.preventDefault();
+    dispatch(getNewProfile(accessToken, valueEmail, valuePassword, valueName));
   };
 
   return (
@@ -37,9 +53,12 @@ export default function Profile() {
         <NavLink to="/" className={`text text_type_main-medium ${styles.link}`}>
           История заказов
         </NavLink>
-        <NavLink to="/" className={`text text_type_main-medium ${styles.link}`}>
+        <a
+          className={`text text_type_main-medium ${styles.link}`}
+          onClick={handlerLogOut}
+        >
           Выход
-        </NavLink>
+        </a>
         <p className={`text text_type_main-default ${styles.text}`}>
           В этом разделе вы можете изменить свои персональные данные{" "}
         </p>
@@ -86,6 +105,9 @@ export default function Profile() {
               size={"default"}
             />
           </div>
+          <Button onClick={postNewProfile} type="primary" size="medium">
+            Изменить
+          </Button>
         </form>
       </div>
     </main>

@@ -46,6 +46,7 @@
   text-decoration: none;
   color: #8585ad;
   height: 64px;
+  cursor: pointer;
 }
 .link:hover {
   opacity: 0.7;

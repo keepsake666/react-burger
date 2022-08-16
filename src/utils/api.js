@@ -57,12 +57,55 @@ export function getProfile(token) {
   }).then(checkResponse);
 }
 
+export function patchNewProfile(token, email, password, name) {
+  return fetch(config.baseUrl + "/auth/user", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", authorization: token },
+    body: JSON.stringify({
+      email,
+      password,
+      name,
+    }),
+  }).then(checkResponse);
+}
+
 export function getNewToken(token) {
   return fetch(config.baseUrl + "/auth/token", {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       token: token,
+    }),
+  }).then(checkResponse);
+}
+
+export function logOut(token) {
+  return fetch(config.baseUrl + "/auth/logout", {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      token: token,
+    }),
+  }).then(checkResponse);
+}
+
+export function recoverPassword(mail) {
+  return fetch(config.baseUrl + "/password-reset", {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      mail,
+    }),
+  }).then(checkResponse);
+}
+
+export function postNewPassword(password, token) {
+  return fetch(config.baseUrl + "/password-reset/reset", {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      password,
+      token,
     }),
   }).then(checkResponse);
 }
@@ -99,4 +142,10 @@ export function getCookie(name) {
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+export function deleteCookie(name) {
+  // Находим куку по ключу token, удаляем её значение,
+  // устанавливаем отрицательное время жизни, чтобы удалить сам ключ token
+  setCookie(name, null, { expires: -1 });
 }

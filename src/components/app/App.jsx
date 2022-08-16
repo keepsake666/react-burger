@@ -16,6 +16,8 @@ import ResetPassword from "../../pages/ResetPassword";
 import Profile from "../../pages/Profile";
 import { getCookie } from "../../utils/api";
 import { getUser, newToken } from "../../services/action/authorization";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import Ingredients from "../../pages/Ingredients";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -63,8 +65,11 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
-          <Route path="/profile" exact={true}>
+          <ProtectedRoute path="/profile">
             <Profile />
+          </ProtectedRoute>
+          <Route path="/ingredient">
+            <Ingredients />
           </Route>
         </Switch>
         <Modal

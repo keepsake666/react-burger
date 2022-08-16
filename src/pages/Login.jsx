@@ -5,12 +5,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./Login.module.css";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../services/action/authorization";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const { state } = useLocation();
+
   const { isAuthenticated } = useSelector(
     (store) => store.authorizationReducer
   );
@@ -23,14 +25,15 @@ export default function Login() {
     setValuePassword(e.target.value);
   };
 
-  const history = useHistory();
   const LogIn = (e) => {
     e.preventDefault();
     dispatch(logIn(valueEmail, valuePassword));
   };
+
   if (isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to={state?.from || "/"} />;
   }
+
   return (
     <main className={styles.main__page}>
       <div className={styles.container}>
@@ -65,7 +68,7 @@ export default function Login() {
         </p>
         <p className={"text text_type_main-default"}>
           Забыли пароль?
-          <Link to="/forgot-password " className={styles.span}>
+          <Link to="/forgot-password" className={styles.span}>
             Восстановить пароль
           </Link>
         </p>

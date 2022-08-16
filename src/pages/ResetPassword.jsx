@@ -4,24 +4,36 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import { useRef, useState } from "react";
+import {postNewPassword} from "../utils/api";
+import {useSelector} from "react-redux";
 
 export default function ResetPassword() {
   const history = useHistory();
-  const onClick = () => {
-    history.replace({ pathname: "/" });
+  const { isAuthenticated } = useSelector((store) => store.authorizationReducer);
+  const newPassword = (e) => {
+    e.preventDefault()
+    postNewPassword(valuePassword, code)
+      .then((res) => {
+        if (res.success) {
+          history.replace({ pathname: "/" });
+        }
+      })
+      .catch((err) => console.log(err));
   };
   const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
-  const [valueName, setValueName] = useState("");
-  const inputRef = useRef(null);
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert("Icon Click Callback");
-  };
+  const [code, setCode] = useState("");
+  const changeCode = (e) => {
+    setCode(e.target.value)
+  }
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+  console.log(Redirect)
   return (
     <main className={styles.main__page}>
       <div className={styles.container}>
@@ -34,24 +46,21 @@ export default function ResetPassword() {
               onChange={onChangePassword}
               value={valuePassword}
               name={"password"}
-              placeholder={"Введите код из письма"}
             />
           </div>
           <div className={"mb-6"}>
             <Input
               type={"text"}
               placeholder={"Введите код из письма"}
-              onChange={(e) => setValueName(e.target.value)}
-              value={valueName}
+              onChange={changeCode}
               name={"name"}
               error={false}
-              ref={inputRef}
-              onIconClick={onIconClick}
               errorText={"Ошибка"}
               size={"default"}
+              value={code}
             />
           </div>
-          <Button onClick={onClick} type="primary" size="medium">
+          <Button onClick={newPassword} type="primary" size="medium">
             Сохранить
           </Button>
         </form>

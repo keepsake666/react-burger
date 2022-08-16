@@ -5,14 +5,16 @@ import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import { useState } from "react";
 import { registration } from "../services/action/authorization";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Register() {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((store) => store.authorizationReducer);
+  const { isAuthenticated } = useSelector(
+    (store) => store.authorizationReducer
+  );
   const [valueEmail, setValueEmail] = useState("");
   const onChangeMail = (e) => {
     setValueEmail(e.target.value);
@@ -25,7 +27,7 @@ export default function Register() {
   const onChangeName = (e) => {
     setValueName(e.target.value);
   };
-  const history = useHistory();
+
   const onRegistration = (e) => {
     e.preventDefault();
     dispatch(registration(valueEmail, valuePassword, valueName));

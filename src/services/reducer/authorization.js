@@ -7,7 +7,13 @@ import {
   GET_LOGIN_FAILED,
   GET_TOKEN_REQUEST,
   GET_TOKEN_SUCCESS,
-  GET_TOKEN_FAILED, GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED,
+  GET_TOKEN_FAILED,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILED,
+  GET_LOGOUT_REQUEST,
+  GET_LOGOUT_SUCCESS,
+  GET_LOGOUT_FAILED, GET_CHANGEPROFILE_REQUEST, GET_CHANGEPROFILE_SUCCESS, GET_CHANGEPROFILE_FAILED,
 } from "../action/authorization";
 
 const initialState = {
@@ -20,6 +26,8 @@ const initialState = {
   tokenRequest: false,
   getUserRequest: false,
   getUserFailed: false,
+  logOutRequest: false,
+  logOutFailed: false,
   isAuthenticated: false,
   user: {},
 };
@@ -116,6 +124,51 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: true,
+      };
+    }
+    case GET_LOGOUT_REQUEST: {
+      return {
+        ...state,
+        logOutFailed: false,
+        logOutRequest: true,
+      };
+    }
+    case GET_LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutFailed: false,
+        isAuthenticated: false,
+        user: {}
+      };
+    }
+    case GET_LOGOUT_FAILED: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutFailed: true,
+      };
+    }
+    case GET_CHANGEPROFILE_REQUEST: {
+      return {
+        ...state,
+        logOutFailed: false,
+        logOutRequest: true,
+      };
+    }
+    case GET_CHANGEPROFILE_SUCCESS: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutFailed: false,
+        user: action.payload.user,
+      };
+    }
+    case GET_CHANGEPROFILE_FAILED: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutFailed: true,
       };
     }
     default: {
