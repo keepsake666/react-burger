@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import BurgerConstructorItem from "../BurgerConstructorItem/BurgerConstructorItem";
 import styles from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
@@ -12,14 +12,18 @@ import { getOrder } from "../../services/action/orderBurger";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient, addBun } from "../../services/action/burgerConstructor";
+import { useHistory } from "react-router-dom";
 
 export default function BurgerConstructor({ setModalAtive }) {
   const [totalPrice, setTotalPrice] = useState(null);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
-
+  const { isAuthenticated } = useSelector(
+    (store) => store.authorizationReducer
+  );
   const { ingredientsConstructor, bunConstructor } = useSelector(
     (store) => store.BurgerConstructorReducer
   );
@@ -71,10 +75,21 @@ export default function BurgerConstructor({ setModalAtive }) {
     totalPriceBun,
   ]);
 
-  function creatOrderAndSetModal() {
-    setModalAtive(true);
-    dispatch(getOrder(orderIngredients, orderBun));
-  }
+  const creatOrderAndSetModal = useCallback(() => {
+    if (isAuthenticated) {
+      setModalAtive(true);
+      dispatch(getOrder(orderIngredients, orderBun));
+    } else {
+      history.replace({ pathname: "/login" });
+    }
+  }, [
+    dispatch,
+    history,
+    isAuthenticated,
+    orderBun,
+    orderIngredients,
+    setModalAtive,
+  ]);
 
   return (
     <section className={styles.section} ref={dropTarget}>

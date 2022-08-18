@@ -18,6 +18,7 @@ import { getCookie } from "../../utils/api";
 import { getUser, newToken } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
+import {NotFound404} from "../../pages/NotFound404";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -25,7 +26,6 @@ function App() {
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
-
   const location = useLocation();
   const background = location.state?.background;
   const history = useHistory();
@@ -78,6 +78,9 @@ function App() {
         </ProtectedRoute>
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
+        </Route>
+        <Route>
+          <NotFound404 />
         </Route>
       </Switch>
       <Modal

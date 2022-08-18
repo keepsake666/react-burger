@@ -5,14 +5,9 @@ import { useLocation } from "react-router-dom";
 
 export default function Ingredients() {
   const location = useLocation();
-
   const id = location.pathname.slice(12);
-  console.log(id);
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
-  );
-  const { getIngredientDetails } = useSelector(
-    (store) => store.IngredientdetailsReducer
   );
   let ingredient;
   ingredient = useMemo(
@@ -23,7 +18,7 @@ export default function Ingredients() {
   return ingredient.length >= 1 ? (
     <main className={styles.main__page}>
       <div className={styles.main}>
-        <h2 className={`text text_type_main-medium mb-6 ${styles.title}`}>
+        <h2 className={`text text_type_main-medium mb-6 `}>
           Детали ингредиента
         </h2>
         <div className={styles.container}>
@@ -73,9 +68,7 @@ export default function Ingredients() {
       {" "}
       <div className={styles.main}>
         {" "}
-        <h2 className={`text text_type_main-medium mb-6 ${styles.title}`}>
-          Загрузка...
-        </h2>{" "}
+        <h2 className={`text text_type_main-medium mb-6 `}>Загрузка...</h2>{" "}
       </div>
     </main>
   );

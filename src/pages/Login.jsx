@@ -12,7 +12,6 @@ import { logIn } from "../services/action/authorization";
 export default function Login() {
   const dispatch = useDispatch();
   const { state } = useLocation();
-
   const { isAuthenticated } = useSelector(
     (store) => store.authorizationReducer
   );

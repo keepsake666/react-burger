@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import styles from "./IngredientDetails.module.css";
 import { useSelector } from "react-redux";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function IngredientDetails() {
-  const location = useLocation()
-  const id = location.pathname.slice(12)
+  const location = useLocation();
+  const id = location.pathname.slice(12);
 
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer

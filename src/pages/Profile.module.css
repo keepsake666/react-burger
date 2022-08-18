@@ -53,7 +53,7 @@
 }
 
 .link__active {
-  color: #F2F2F3;
+  color: #f2f2f3;
 }
 
 .text {
@@ -66,4 +66,22 @@
 }
 .form svg {
   margin-left: 190px;
+}
+
+.button_container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #4c4cff;
+  cursor: pointer;
+  margin-right: 28px;
+}
+
+.button:hover {
+  opacity: 0.6;
 }

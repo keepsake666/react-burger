@@ -4,9 +4,9 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie, logOut } from "../utils/api";
+import { getCookie } from "../utils/api";
 import { actionLogOut, getNewProfile } from "../services/action/authorization";
 export default function Profile() {
   const { user } = useSelector((store) => store.authorizationReducer);
@@ -35,10 +35,25 @@ export default function Profile() {
       pathname: "/login",
     });
   };
-  const postNewProfile = (e) => {
-    e.preventDefault();
-    dispatch(getNewProfile(accessToken, valueEmail, valuePassword, valueName));
-  };
+  const cancelChange = useCallback(
+    (e) => {
+      e.preventDefault();
+      setValueEmail(`${user.email}`);
+      setValueName(`${user.name}`);
+      setValuePassword("");
+    },
+    [user.email, user.name]
+  );
+
+  const postNewProfile = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(
+        getNewProfile(accessToken, valueEmail, valuePassword, valueName)
+      );
+    },
+    [accessToken, dispatch, valueEmail, valueName, valuePassword]
+  );
 
   return (
     <main className={styles.main__page}>
@@ -105,9 +120,18 @@ export default function Profile() {
               size={"default"}
             />
           </div>
-          <Button onClick={postNewProfile} type="primary" size="medium">
-            Изменить
-          </Button>
+          <div className={styles.button_container}>
+            <Button onClick={postNewProfile} type="primary" size="medium">
+              Сохранить
+            </Button>
+            <button
+              type={"button"}
+              className={`text text_type_main-default ${styles.button}`}
+              onClick={cancelChange}
+            >
+              Отмена
+            </button>
+          </div>
         </form>
       </div>
     </main>
