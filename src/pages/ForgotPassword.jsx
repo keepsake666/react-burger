@@ -1,7 +1,7 @@
 import styles from "./ForgotPassword.module.css";
 import {
   Button,
-  EmailInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function ForgotPassword() {
     setValueEmail(e.target.value);
   };
   const history = useHistory();
-  const onClick = (e) => {
+  const recover = (e) => {
     e.preventDefault();
     recoverPassword(valueEmail)
       .then((res) => {
@@ -33,16 +33,19 @@ export default function ForgotPassword() {
   return (
     <main className={styles.main__page}>
       <div className={styles.container}>
-        <h2 className={`text text_type_main-medium mb-6`}></h2>
-        <form className={styles.form} action="">
+        <form onSubmit={recover} className={styles.form} action="">
           <div className={"mb-6"}>
-            <EmailInput
-              onChange={onChangeMail}
+            <Input
               value={valueEmail}
-              name={"E-mail"}
+              onChange={onChangeMail}
+              name={"email"}
+              placeholder={"Укажите e-mail"}
+              type={"email"}
+              errorText={"Ошибка"}
+              size={"default"}
             />
           </div>
-          <Button onClick={onClick} type="primary" size="medium">
+          <Button type="primary" size="medium">
             Восстановить
           </Button>
         </form>

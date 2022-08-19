@@ -28,6 +28,8 @@ const initialState = {
   getUserFailed: false,
   logOutRequest: false,
   logOutFailed: false,
+  changeProfileRequest: false,
+  changeProfileFailed: false,
   isAuthenticated: false,
   user: {},
 };
@@ -152,23 +154,23 @@ export const authorizationReducer = (state = initialState, action) => {
     case GET_CHANGEPROFILE_REQUEST: {
       return {
         ...state,
-        logOutFailed: false,
-        logOutRequest: true,
+        changeProfileFailed: false,
+        changeProfileRequest: true,
       };
     }
     case GET_CHANGEPROFILE_SUCCESS: {
       return {
         ...state,
-        logOutRequest: false,
-        logOutFailed: false,
+        changeProfileRequest: false,
+        changeProfileFailed: false,
         user: action.payload.user,
       };
     }
     case GET_CHANGEPROFILE_FAILED: {
       return {
         ...state,
-        logOutRequest: false,
-        logOutFailed: true,
+        changeProfileRequest: false,
+        changeProfileFailed: true,
       };
     }
     default: {

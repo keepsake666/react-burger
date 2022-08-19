@@ -1,11 +1,10 @@
 import styles from "./Register.module.css";
 import {
   Button,
-  EmailInput,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useState } from "react";
 import { registration } from "../services/action/authorization";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,28 +14,23 @@ export default function Register() {
   const { isAuthenticated } = useSelector(
     (store) => store.authorizationReducer
   );
-  const [valueEmail, setValueEmail] = useState("");
-  const onChangeMail = (e) => {
-    setValueEmail(e.target.value);
-  };
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
-  };
-  const [valueName, setValueName] = useState("");
-  const onChangeName = (e) => {
-    setValueName(e.target.value);
+
+  const [form, setForm] = useState({
+    mail: "",
+    password: "",
+    name: "",
+  });
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const onRegistration = (e) => {
     e.preventDefault();
-    dispatch(registration(valueEmail, valuePassword, valueName));
+    dispatch(registration(form.mail, form.password, form.name));
   };
 
   if (isAuthenticated) {
-    return (
-        <Redirect to='/' />
-    )
+    return <Redirect to="/" />;
   }
 
   return (
@@ -45,13 +39,13 @@ export default function Register() {
         <h2 className={`text text_type_main-medium mb-6 ${styles.title}`}>
           Регистрация
         </h2>
-        <form className={styles.form} action="">
+        <form onSubmit={onRegistration} className={styles.form} action="">
           <div className={"mb-6"}>
             <Input
               type={"text"}
               placeholder={"Имя"}
-              onChange={onChangeName}
-              value={valueName}
+              onChange={onChange}
+              value={form.name}
               name={"name"}
               error={false}
               errorText={"Ошибка"}
@@ -59,21 +53,25 @@ export default function Register() {
             />
           </div>
           <div className={"mb-6"}>
-            <EmailInput
-              onChange={onChangeMail}
-              value={valueEmail}
-              name={"E-mail"}
+            <Input
+              value={form.mail}
+              onChange={onChange}
+              name={"mail"}
+              placeholder={"E-mail"}
+              type={"email"}
+              errorText={"Ошибка"}
+              size={"default"}
             />
           </div>
           <div className={"mb-6"}>
             {" "}
             <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
-              name={"Пароль"}
+              onChange={onChange}
+              value={form.password}
+              name={"password"}
             />
           </div>
-          <Button onClick={onRegistration} type="primary" size="medium">
+          <Button type="primary" size="medium">
             Зарегистрироваться
           </Button>
         </form>

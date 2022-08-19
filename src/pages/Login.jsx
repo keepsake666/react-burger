@@ -1,7 +1,7 @@
 import {
-  EmailInput,
   PasswordInput,
   Button,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./Login.module.css";
@@ -15,18 +15,17 @@ export default function Login() {
   const { isAuthenticated } = useSelector(
     (store) => store.authorizationReducer
   );
-  const [valueEmail, setValueEmail] = useState("");
-  const onChangeMail = (e) => {
-    setValueEmail(e.target.value);
-  };
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
+  const [form, setForm] = useState({
+    mail: "",
+    password: "",
+  });
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const LogIn = (e) => {
     e.preventDefault();
-    dispatch(logIn(valueEmail, valuePassword));
+    dispatch(logIn(form.mail, form.password));
   };
 
   if (isAuthenticated) {
@@ -39,23 +38,27 @@ export default function Login() {
         <h2 className={`text text_type_main-medium mb-6 ${styles.title}`}>
           Вход
         </h2>
-        <form className={styles.form} action="">
+        <form onSubmit={LogIn} className={styles.form} action="">
           <div className={"mb-6"}>
-            <EmailInput
-              onChange={onChangeMail}
-              value={valueEmail}
-              name={"E-mail"}
+            <Input
+              value={form.mail}
+              onChange={onChange}
+              name={"mail"}
+              placeholder={"E-mail"}
+              type={"email"}
+              errorText={"Ошибка"}
+              size={"default"}
             />
           </div>
           <div className={"mb-6"}>
             {" "}
             <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
+              onChange={onChange}
+              value={form.password}
               name={"password"}
             />
           </div>
-          <Button onClick={LogIn} type="primary" size="medium">
+          <Button type="primary" size="medium">
             Войти
           </Button>
         </form>

@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
@@ -18,7 +18,8 @@ import { getCookie } from "../../utils/api";
 import { getUser, newToken } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
-import {NotFound404} from "../../pages/NotFound404";
+import { NotFound404 } from "../../pages/NotFound404";
+import { Order } from "../../pages/Order";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -29,13 +30,20 @@ function App() {
   const location = useLocation();
   const background = location.state?.background;
   const history = useHistory();
+ const {getUserFailed} = useSelector(store => store.authorizationReducer)
 
   useEffect(() => {
     if (!accessToken && refreshToken) {
       dispatch(newToken(refreshToken));
     }
-    if (accessToken && refreshToken) dispatch(getUser(accessToken));
-  }, [accessToken, dispatch, refreshToken]);
+    if (accessToken && refreshToken) {
+      dispatch(getUser(accessToken));
+      if(getUserFailed) {
+        dispatch(newToken(refreshToken));
+        dispatch(getUser(accessToken));
+      }
+    }
+  }, [accessToken, dispatch, getUserFailed, refreshToken]);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -78,6 +86,9 @@ function App() {
         </ProtectedRoute>
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
+        </Route>
+        <Route path="/profile/orders" exact={true}>
+          <Order />
         </Route>
         <Route>
           <NotFound404 />

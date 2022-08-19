@@ -4,17 +4,29 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect, useHistory} from "react-router-dom";
-import { useRef, useState } from "react";
-import {postNewPassword} from "../utils/api";
-import {useSelector} from "react-redux";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { postNewPassword } from "../utils/api";
+import { useSelector } from "react-redux";
 
 export default function ResetPassword() {
   const history = useHistory();
-  const { isAuthenticated } = useSelector((store) => store.authorizationReducer);
+  const { isAuthenticated } = useSelector(
+    (store) => store.authorizationReducer
+  );
+
+  const [form, setForm] = useState({
+    password: "",
+    code: "",
+  });
+
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   const newPassword = (e) => {
-    e.preventDefault()
-    postNewPassword(valuePassword, code)
+    e.preventDefault();
+    postNewPassword(form.password, form.code)
       .then((res) => {
         if (res.success) {
           history.replace({ pathname: "/" });
@@ -22,29 +34,22 @@ export default function ResetPassword() {
       })
       .catch((err) => console.log(err));
   };
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
-  };
-  const [code, setCode] = useState("");
-  const changeCode = (e) => {
-    setCode(e.target.value)
-  }
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
-  console.log(Redirect)
+
   return (
     <main className={styles.main__page}>
       <div className={styles.container}>
         <h2 className={`text text_type_main-medium mb-6`}>
           Восстановление пароля
         </h2>
-        <form className={styles.form} action="">
+        <form onSubmit={newPassword} className={styles.form} action="">
           <div className={"mb-6"}>
             <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
+              onChange={onChange}
+              value={form.password}
               name={"password"}
             />
           </div>
@@ -52,15 +57,15 @@ export default function ResetPassword() {
             <Input
               type={"text"}
               placeholder={"Введите код из письма"}
-              onChange={changeCode}
-              name={"name"}
+              onChange={onChange}
+              name={"code"}
               error={false}
               errorText={"Ошибка"}
               size={"default"}
-              value={code}
+              value={form.code}
             />
           </div>
-          <Button onClick={newPassword} type="primary" size="medium">
+          <Button type="primary" size="medium">
             Сохранить
           </Button>
         </form>

@@ -3,44 +3,46 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../utils/api";
-import { actionLogOut, getNewProfile } from "../services/action/authorization";
+import {
+  actionLogOut,
+  getNewProfile,
+  newToken,
+} from "../services/action/authorization";
+// @ts-ignore
 export default function Profile() {
-  const { user } = useSelector((store) => store.authorizationReducer);
+  const { user, changeProfileFailed } = useSelector(
+    (store) => store.authorizationReducer
+  );
   const dispatch = useDispatch();
-  const history = useHistory();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
 
-  const [valueEmail, setValueEmail] = useState(`${user.email}`);
-  const onChangeMail = (e) => {
-    setValueEmail(e.target.value);
-  };
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
-  };
-  const [valueName, setValueName] = useState(`${user.name}`);
-  const onChangeName = (e) => {
-    setValueName(e.target.value);
+  const [form, setForm] = useState({
+    mail: `${user.email}`,
+    password: "",
+    name: `${user.name}`,
+  });
+  const onChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handlerLogOut = (e) => {
     e.preventDefault();
     dispatch(actionLogOut(refreshToken));
-    history.replace({
-      pathname: "/login",
-    });
   };
+
   const cancelChange = useCallback(
     (e) => {
       e.preventDefault();
-      setValueEmail(`${user.email}`);
-      setValueName(`${user.name}`);
-      setValuePassword("");
+      setForm({
+        mail: `${user.email}`,
+        password: "",
+        name: `${user.name}`,
+      });
     },
     [user.email, user.name]
   );
@@ -48,11 +50,15 @@ export default function Profile() {
   const postNewProfile = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(
-        getNewProfile(accessToken, valueEmail, valuePassword, valueName)
-      );
+      dispatch(getNewProfile(accessToken, form.mail, form.password, form.name));
+      if (changeProfileFailed) {
+        dispatch(newToken(refreshToken));
+        dispatch(
+          getNewProfile(accessToken, form.mail, form.password, form.name)
+        );
+      }
     },
-    [accessToken, dispatch, valueEmail, valueName, valuePassword]
+    [accessToken, changeProfileFailed, dispatch, form.mail, form.name, form.password, refreshToken]
   );
 
   return (
@@ -65,28 +71,31 @@ export default function Profile() {
         >
           Профиль
         </NavLink>
-        <NavLink to="/" className={`text text_type_main-medium ${styles.link}`}>
+        <NavLink
+          to="/profile/orders"
+          className={`text text_type_main-medium ${styles.link}`}
+        >
           История заказов
         </NavLink>
-        <a
+        <button
           className={`text text_type_main-medium ${styles.link}`}
           onClick={handlerLogOut}
         >
           Выход
-        </a>
+        </button>
         <p className={`text text_type_main-default ${styles.text}`}>
           В этом разделе вы можете изменить свои персональные данные{" "}
         </p>
       </div>
       <div className={styles.container}>
-        <form className={styles.form} action="">
+        <form onSubmit={postNewProfile} className={styles.form} action="">
           <div className={`mb-6`}>
             <Input
               type={"text"}
               placeholder={"Имя"}
-              onChange={onChangeName}
+              onChange={onChange}
               icon={"EditIcon"}
-              value={valueName}
+              value={form.name}
               name={"name"}
               error={false}
               errorText={"Ошибка"}
@@ -97,10 +106,10 @@ export default function Profile() {
             <Input
               type={"email"}
               placeholder={"Логин"}
-              onChange={onChangeMail}
+              onChange={onChange}
               icon={"EditIcon"}
-              value={valueEmail}
-              name={"email"}
+              value={form.mail}
+              name={"mail"}
               error={false}
               errorText={"Ошибка"}
               size={"default"}
@@ -111,9 +120,9 @@ export default function Profile() {
             <Input
               type={"password"}
               placeholder={"Пароль"}
-              onChange={onChangePassword}
+              onChange={onChange}
               icon={"EditIcon"}
-              value={valuePassword}
+              value={form.password}
               name={"password"}
               error={false}
               errorText={"Ошибка"}
@@ -121,7 +130,7 @@ export default function Profile() {
             />
           </div>
           <div className={styles.button_container}>
-            <Button onClick={postNewProfile} type="primary" size="medium">
+            <Button type="primary" size="medium">
               Сохранить
             </Button>
             <button
