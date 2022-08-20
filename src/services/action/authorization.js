@@ -89,6 +89,11 @@ export function newToken(token) {
           type: GET_TOKEN_SUCCESS,
           payload: res,
         });
+        if (res) {
+          // Сохраняем токен в куку token
+          setCookie("token", res.accessToken);
+          localStorage.setItem("refreshToken", res.refreshToken);
+        }
       })
       .catch(() => {
         dispatch({

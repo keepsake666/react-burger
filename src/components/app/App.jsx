@@ -35,12 +35,12 @@ function App() {
   );
 
   useEffect(() => {
-    if (accessToken && refreshToken) {
+      if (accessToken && refreshToken) {
       dispatch(getUser(accessToken));
       if (errorNumber === "Ошибка: 403") {
         dispatch(newToken(refreshToken));
         if (tokenFailed === false) {
-          tokenFailed === false && dispatch(getUser(accessToken));
+          dispatch(getUser(accessToken));
         }
       }
     }
