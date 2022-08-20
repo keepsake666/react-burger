@@ -132,9 +132,10 @@ export function getUser(token) {
           payload: res,
         });
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_USER_FAILED,
+          failed: err,
         });
       });
   };
@@ -152,9 +153,10 @@ export function getNewProfile(token, email, password, name) {
           payload: res,
         });
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_CHANGEPROFILE_FAILED,
+          failed: err,
         });
       });
   };

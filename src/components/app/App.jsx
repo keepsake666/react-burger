@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
@@ -30,20 +30,21 @@ function App() {
   const location = useLocation();
   const background = location.state?.background;
   const history = useHistory();
- const {getUserFailed} = useSelector(store => store.authorizationReducer)
+  const { errorNumber, tokenFailed } = useSelector(
+    (store) => store.authorizationReducer
+  );
 
   useEffect(() => {
-    if (!accessToken && refreshToken) {
-      dispatch(newToken(refreshToken));
-    }
     if (accessToken && refreshToken) {
       dispatch(getUser(accessToken));
-      if(getUserFailed) {
+      if (errorNumber === "Ошибка: 403") {
         dispatch(newToken(refreshToken));
-        dispatch(getUser(accessToken));
+        if (tokenFailed === false) {
+          tokenFailed === false && dispatch(getUser(accessToken));
+        }
       }
     }
-  }, [accessToken, dispatch, getUserFailed, refreshToken]);
+  }, [accessToken, dispatch, errorNumber, refreshToken, tokenFailed]);
 
   useEffect(() => {
     dispatch(getIngredients());

@@ -31,6 +31,8 @@ const initialState = {
   changeProfileRequest: false,
   changeProfileFailed: false,
   isAuthenticated: false,
+  errorNumber: '',
+  errorNumberUpdateProfile: '',
   user: {},
 };
 
@@ -126,6 +128,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: true,
+        errorNumber:action.failed,
       };
     }
     case GET_LOGOUT_REQUEST: {
@@ -171,6 +174,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         changeProfileRequest: false,
         changeProfileFailed: true,
+        errorNumberUpdateProfile : action.failed
       };
     }
     default: {

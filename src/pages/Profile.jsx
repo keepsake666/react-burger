@@ -14,7 +14,7 @@ import {
 } from "../services/action/authorization";
 // @ts-ignore
 export default function Profile() {
-  const { user, changeProfileFailed } = useSelector(
+  const { user, errorNumberUpdateProfile, tokenFailed } = useSelector(
     (store) => store.authorizationReducer
   );
   const dispatch = useDispatch();
@@ -51,14 +51,25 @@ export default function Profile() {
     (e) => {
       e.preventDefault();
       dispatch(getNewProfile(accessToken, form.mail, form.password, form.name));
-      if (changeProfileFailed) {
+      if (errorNumberUpdateProfile === "Ошибка: 403") {
         dispatch(newToken(refreshToken));
-        dispatch(
-          getNewProfile(accessToken, form.mail, form.password, form.name)
-        );
+        if (tokenFailed === false) {
+          dispatch(
+            getNewProfile(accessToken, form.mail, form.password, form.name)
+          );
+        }
       }
     },
-    [accessToken, changeProfileFailed, dispatch, form.mail, form.name, form.password, refreshToken]
+    [
+      accessToken,
+      dispatch,
+      errorNumberUpdateProfile,
+      form.mail,
+      form.name,
+      form.password,
+      refreshToken,
+      tokenFailed,
+    ]
   );
 
   return (
