@@ -1,47 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import AppHeader from '../AppHeader/AppHeader'
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import styles from './App.module.css'
-import { useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/action/burgerIngredients'
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { RESET_ORDER } from '../../services/action/burgerConstructor';
+import React, { useEffect, useState } from "react";
+import AppHeader from "../AppHeader/AppHeader";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import styles from "./App.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/action/burgerIngredients";
+import { RESET_ORDER } from "../../services/action/burgerConstructor";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import Login from "../../pages/Login";
+import Home from "../../pages/Home";
+import Register from "../../pages/Register";
+import ForgotPassword from "../../pages/ForgotPassword";
+import ResetPassword from "../../pages/ResetPassword";
+import Profile from "../../pages/Profile";
+import { getCookie } from "../../utils/api";
+import { getUser, newToken } from "../../services/action/authorization";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import Ingredients from "../../pages/Ingredients";
+import { NotFound404 } from "../../pages/NotFound404";
+import { Order } from "../../pages/Order";
 
 function App() {
-  const [modatOrderActive, setModalOrderAtive] = useState(false)
-  const [modalIngredientActive, setmodalIngredientActive] = useState(false)
+  const [modalOrderActive, setModalOrderActive] = useState(false);
+  const [modalIngredientActive, setModalIngredientActive] = useState(false);
   const dispatch = useDispatch();
+  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = getCookie("token");
+  const location = useLocation();
+  const background = location.state?.background;
+  const history = useHistory();
+  const { errorNumber, tokenFailed } = useSelector(
+    (store) => store.authorizationReducer
+  );
 
   useEffect(() => {
-    dispatch(getIngredients())
-    if (modatOrderActive === false) {
-      dispatch({
-        type: RESET_ORDER
-      })
+      if (accessToken && refreshToken) {
+      dispatch(getUser(accessToken));
+      if (errorNumber === "Ошибка: 403") {
+        dispatch(newToken(refreshToken));
+        if (tokenFailed === false) {
+          dispatch(getUser(accessToken));
+        }
+      }
     }
-  }, [dispatch, modatOrderActive])
+  }, [accessToken, dispatch, errorNumber, refreshToken, tokenFailed]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+    if (modalOrderActive === false) {
+      dispatch({
+        type: RESET_ORDER,
+      });
+    }
+  }, [dispatch, modalOrderActive]);
+
+  const handlerCloseModal = () => {
+    setModalIngredientActive(false);
+    history.go(-1);
+  };
 
   return (
     <div className={styles.page}>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients setModalAtive={setmodalIngredientActive} />
-          <BurgerConstructor setModalAtive={setModalOrderAtive} />
-        </DndProvider>
-      </main>
-      <Modal active={modatOrderActive} title={''} setActive={setModalOrderAtive}  >
+      <Switch location={background || location}>
+        <Route path="/" exact={true}>
+          <Home
+            setModalIngredient={setModalIngredientActive}
+            setModalOrder={setModalOrderActive}
+          />
+        </Route>
+        <Route path="/login" exact={true}>
+          <Login />
+        </Route>
+        <Route path="/register" exact={true}>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/ingredient/:id" exact={true}>
+          <Ingredients />
+        </Route>
+        <Route path="/profile/orders" exact={true}>
+          <Order />
+        </Route>
+        <Route>
+          <NotFound404 />
+        </Route>
+      </Switch>
+      <Modal
+        active={modalOrderActive}
+        title={""}
+        setActive={setModalOrderActive}
+      >
         <OrderDetails />
       </Modal>
-      <Modal active={modalIngredientActive} setActive={setmodalIngredientActive} title={'Детали ингредиента'} >
-        <IngredientDetails />
-      </Modal>
-    </div >
+      {background && (
+        <Route path="/ingredient/:id" exact={true}>
+          <Modal
+            active={modalIngredientActive}
+            setActive={handlerCloseModal}
+            title={"Детали ингредиента"}
+          >
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+    </div>
   );
 }
 

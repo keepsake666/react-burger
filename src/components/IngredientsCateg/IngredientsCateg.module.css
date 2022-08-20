@@ -21,11 +21,16 @@
 }
 
 .list::-webkit-scrollbar-track {
-  background-color: #2F2F37;
+  background-color: #2f2f37;
 }
 
 .list::-webkit-scrollbar-thumb {
   height: 492px;
   background-clip: content-box;
-  background-color: #8585AD;
+  background-color: #8585ad;
+}
+
+.link {
+  text-decoration: none;
+  color: #f2f2f3;
 }
