@@ -7,16 +7,10 @@ import { NavLink } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../utils/api";
-import {
-  actionLogOut,
-  getNewProfile,
-  newToken,
-} from "../services/action/authorization";
+import { actionLogOut, getNewProfile } from "../services/action/authorization";
 // @ts-ignore
 export default function Profile() {
-  const { user, errorNumberUpdateProfile, tokenFailed } = useSelector(
-    (store) => store.authorizationReducer
-  );
+  const { user } = useSelector((store) => store.authorizationReducer);
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
@@ -51,25 +45,8 @@ export default function Profile() {
     (e) => {
       e.preventDefault();
       dispatch(getNewProfile(accessToken, form.mail, form.password, form.name));
-      if (errorNumberUpdateProfile === "Ошибка: 403") {
-        dispatch(newToken(refreshToken));
-        if (tokenFailed === false) {
-          dispatch(
-            getNewProfile(accessToken, form.mail, form.password, form.name)
-          );
-        }
-      }
     },
-    [
-      accessToken,
-      dispatch,
-      errorNumberUpdateProfile,
-      form.mail,
-      form.name,
-      form.password,
-      refreshToken,
-      tokenFailed,
-    ]
+    [accessToken, dispatch, form.mail, form.name, form.password]
   );
 
   return (

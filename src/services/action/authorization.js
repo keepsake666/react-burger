@@ -1,5 +1,6 @@
 import {
   deleteCookie,
+  getCookie,
   getNewToken,
   getProfile,
   logOut,
@@ -138,6 +139,23 @@ export function getUser(token) {
         });
       })
       .catch((err) => {
+        if (err === "Ошибка: 403") {
+          return getNewToken(localStorage.getItem("refreshToken")).then(
+            (res) => {
+              setCookie("token", res.accessToken);
+              localStorage.setItem("refreshToken", res.refreshToken);
+              return getProfile(getCookie("token")).then((res) => {
+                dispatch({
+                  type: GET_USER_SUCCESS,
+                  payload: res,
+                });
+              });
+            }
+          );
+        } else {
+          deleteCookie("token");
+          localStorage.removeItem("refreshToken");
+        }
         dispatch({
           type: GET_USER_FAILED,
           failed: err,
@@ -159,6 +177,23 @@ export function getNewProfile(token, email, password, name) {
         });
       })
       .catch((err) => {
+        if (err === "Ошибка: 403") {
+          return getNewToken(localStorage.getItem("refreshToken")).then(
+            (res) => {
+              setCookie("token", res.accessToken);
+              localStorage.setItem("refreshToken", res.refreshToken);
+              return getProfile(getCookie("token")).then((res) => {
+                dispatch({
+                  type: GET_USER_SUCCESS,
+                  payload: res,
+                });
+              });
+            }
+          );
+        } else {
+          deleteCookie("token");
+          localStorage.removeItem("refreshToken");
+        }
         dispatch({
           type: GET_CHANGEPROFILE_FAILED,
           failed: err,
