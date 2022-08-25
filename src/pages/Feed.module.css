@@ -1,0 +1,37 @@
+.main {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1240px;
+  width: 100%;
+  column-gap: 40px;
+}
+
+.feed__container {
+  max-width: 580px;
+}
+
+.detail__container {
+  max-width: 580px;
+}
+
+.list {
+  margin: 0;
+  padding: 0 8px 0 0;
+  height: 812px;
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+}
+
+.list::-webkit-scrollbar-thumb {
+  height: 640px;
+  background-clip: content-box;
+  background-color: #8585ad;
+}

@@ -20,6 +20,7 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
 import { Order } from "../../pages/Order";
+import Feed from "../../pages/Feed";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -81,6 +82,9 @@ function App() {
         </Route>
         <Route path="/profile/orders" exact={true}>
           <Order />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
         </Route>
         <Route>
           <NotFound404 />
