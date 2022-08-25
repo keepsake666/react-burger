@@ -21,6 +21,7 @@ import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
 import { Order } from "../../pages/Order";
 import Feed from "../../pages/Feed";
+import FeedId from "../../pages/FeedId";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -85,6 +86,9 @@ function App() {
         </Route>
         <Route path="/feed" exact={true}>
           <Feed />
+        </Route>
+        <Route path="/feedId" exact={true}>
+         <FeedId />
         </Route>
         <Route>
           <NotFound404 />

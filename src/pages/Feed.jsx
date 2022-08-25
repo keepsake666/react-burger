@@ -2,6 +2,7 @@ import styles from "./Feed.module.css";
 import React from "react";
 import FeedItem from "../components/FeedItem/FeedItem";
 import FeedDetails from "../components/FeedDetails/FeedDetails";
+import {Link} from "react-router-dom";
 
 export default function Feed() {
   return (
@@ -9,6 +10,9 @@ export default function Feed() {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
+        <Link to='/feedId'> <FeedItem /> </Link>
+            <FeedItem />
+          <FeedItem />
           <FeedItem />
         </ul>
       </div>
