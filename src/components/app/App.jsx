@@ -19,7 +19,6 @@ import { getUser } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
-import { Order } from "../../pages/Order";
 import Feed from "../../pages/Feed";
 import FeedId from "../../pages/FeedId";
 
@@ -81,14 +80,14 @@ function App() {
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
         </Route>
-        <Route path="/profile/orders" exact={true}>
-          <Order />
-        </Route>
+        <ProtectedRoute path="/profile/orders" exact={true}>
+          <Profile />
+        </ProtectedRoute>
         <Route path="/feed" exact={true}>
           <Feed />
         </Route>
-        <Route path="/feedId" exact={true}>
-         <FeedId />
+        <Route path="/feed/:id" exact={true}>
+          <FeedId />
         </Route>
         <Route>
           <NotFound404 />

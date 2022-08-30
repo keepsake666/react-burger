@@ -10,7 +10,7 @@ export default function Feed() {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
-        <Link to='/feedId'> <FeedItem /> </Link>
+        <Link to='/feed/55' className={styles.link}> <FeedItem /> </Link>
             <FeedItem />
           <FeedItem />
           <FeedItem />

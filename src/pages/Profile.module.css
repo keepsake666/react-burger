@@ -88,3 +88,34 @@
 .button:hover {
   opacity: 0.6;
 }
+
+.list {
+  width: 844px ;
+  margin: 40px 0 0;
+  padding: 0 8px 0 0;
+  height: 915px;
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+}
+
+.list::-webkit-scrollbar-thumb {
+  height: 640px;
+  background-clip: content-box;
+  background-color: #8585ad;
+}
+
+.link__feed {
+  text-decoration: none;
+  color:  #F2F2F3;
+}
+
+.link__feed:hover {
+  opacity: 0.6;
+}
