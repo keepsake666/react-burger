@@ -7,7 +7,12 @@ import styles from "./App.module.css";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import Login from "../../pages/Login";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
@@ -21,6 +26,7 @@ import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
 import Feed from "../../pages/Feed";
 import FeedId from "../../pages/FeedId";
+import { GET_ORDER_RESET } from "../../services/action/orderBurger";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
@@ -44,6 +50,7 @@ function App() {
       dispatch({
         type: RESET_ORDER,
       });
+      dispatch({ type: GET_ORDER_RESET });
     }
   }, [dispatch, modalOrderActive]);
 
@@ -74,19 +81,19 @@ function App() {
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
         </Route>
-        <ProtectedRoute path="/profile/orders" exact={true}>
-          <Profile />
-        </ProtectedRoute>
         <Route path="/feed" exact={true}>
           <Feed />
         </Route>
         <Route path="/feed/:id" exact={true}>
+          <FeedId />
+        </Route>
+        <Route path="/profile/orders/:id">
           <FeedId />
         </Route>
         <Route>

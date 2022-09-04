@@ -12,10 +12,10 @@ const config = {
   },
 };
 
-export function apiOrder(ingredients) {
+export function apiOrder(ingredients, token) {
   return fetch(config.baseUrl + "/orders", {
     method: "POST",
-    headers: config.headers,
+    headers: { "Content-Type": "application/json", authorization: token },
     body: JSON.stringify({
       ingredients,
     }),

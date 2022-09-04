@@ -83,3 +83,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.created {
+  color: #F2F2F3;
+  margin: 0 0 60px;
+}
