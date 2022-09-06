@@ -2,14 +2,14 @@ import styles from "./Feed.module.css";
 import React, { useEffect } from "react";
 import FeedItem from "../components/FeedItem/FeedItem";
 import FeedDetails from "../components/FeedDetails/FeedDetails";
-import {Link, useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
 
-export default function Feed() {
+export default function Feed({active}) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store) => store.wsReducer);
@@ -24,14 +24,16 @@ export default function Feed() {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
-          {orders.map((item, index) => (
+          {orders?.map((item, index) => (
             <Link
-                  to={{
-                    pathname: `/feed/${item._id}`,
-                      state: {id: item._id}
-                    // state: { background: location },
-                  }}
-                  className={styles.link} key={index}>
+              to={{
+                pathname: `/feed/${item._id}`,
+                state: { background: location },
+              }}
+              className={styles.link}
+              key={index}
+              onClick={()=> active(true)}
+            >
               {" "}
               <FeedItem
                 name={item.name}
@@ -46,6 +48,7 @@ export default function Feed() {
       <div className={styles.detail__container}>
         <FeedDetails total={total} totalToday={totalToday} />
       </div>
+
     </main>
   );
 }

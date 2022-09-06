@@ -3,7 +3,14 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, NavLink, Route, Switch, useRouteMatch} from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Route,
+  Switch,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../utils/api";
@@ -19,19 +26,18 @@ import {
 } from "../services/action/socketAction";
 import FeedId from "./FeedId";
 // @ts-ignore
-export default function Profile() {
+export default function Profile({ setActive }) {
   const { authOrders } = useSelector((store) => store.wsReducer);
   const { user } = useSelector((store) => store.authorizationReducer);
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
-  const match = useRouteMatch({ path: '/profile/orders/:id' })
+  const match = useRouteMatch({ path: "/profile/orders/:id" });
+  const location = useLocation();
 
   useEffect(() => {
-    if (accessToken && refreshToken) {
-      dispatch(getUser(accessToken));
-    }
-  }, [accessToken, dispatch, refreshToken]);
+    dispatch(getUser(accessToken));
+  }, [accessToken, dispatch]);
 
   const [form, setForm] = useState({
     mail: `${user.email}`,
@@ -74,34 +80,36 @@ export default function Profile() {
 
   return (
     <>
-     <main className={styles.main__page}>
-       {!match && <div className={styles.navigate}>
-          <NavLink
-            to="/profile"
-            activeClassName={styles.link__active}
-            className={`text text_type_main-medium ${styles.link}`}
-            exact
-          >
-            Профиль
-          </NavLink>
-          <NavLink
-            to="/profile/orders"
-            activeClassName={styles.link__active}
-            className={`text text_type_main-medium ${styles.link}`}
-            exact
-          >
-            История заказов
-          </NavLink>
-          <button
-            className={`text text_type_main-medium ${styles.link}`}
-            onClick={handlerLogOut}
-          >
-            Выход
-          </button>
-          <p className={`text text_type_main-default ${styles.text}`}>
-            В этом разделе вы можете изменить свои персональные данные{" "}
-          </p>
-        </div> }
+      <main className={styles.main__page}>
+        {!match && (
+          <div className={styles.navigate}>
+            <NavLink
+              to="/profile"
+              activeClassName={styles.link__active}
+              className={`text text_type_main-medium ${styles.link}`}
+              exact
+            >
+              Профиль
+            </NavLink>
+            <NavLink
+              to="/profile/orders"
+              activeClassName={styles.link__active}
+              className={`text text_type_main-medium ${styles.link}`}
+              exact
+            >
+              История заказов
+            </NavLink>
+            <button
+              className={`text text_type_main-medium ${styles.link}`}
+              onClick={handlerLogOut}
+            >
+              Выход
+            </button>
+            <p className={`text text_type_main-default ${styles.text}`}>
+              В этом разделе вы можете изменить свои персональные данные{" "}
+            </p>
+          </div>
+        )}
         <Switch>
           <Route path="/profile" exact={true}>
             <div className={styles.container}>
@@ -166,25 +174,25 @@ export default function Profile() {
               {authOrders?.map((item, index) => (
                 <Link
                   to={{
-                    pathname: `/profile/orders/${item._id}`,
-                    state: {id: item._id}
-                    // state: { background: location },
+                    pathname: `/profile/orders/${item?._id}`,
+                    state: { background: location },
                   }}
                   className={styles.link__feed}
                   key={index}
+                  onClick={() => setActive(true)}
                 >
                   <FeedItem
-                    name={item.name}
-                    time={item.createdAt}
-                    number={item.number}
-                    ingredient={item.ingredients}
+                    name={item?.name}
+                    time={item?.createdAt}
+                    number={item?.number}
+                    ingredient={item?.ingredients}
                   />
                 </Link>
               ))}
             </ul>
           </Route>
           <Route path="/profile/orders/:id" exact={true}>
-            <FeedId />
+            <FeedId modal={true} />
           </Route>
         </Switch>
       </main>

@@ -7,12 +7,7 @@ import styles from "./App.module.css";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
-import {
-  Switch,
-  Route,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import Login from "../../pages/Login";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
@@ -31,6 +26,8 @@ import { GET_ORDER_RESET } from "../../services/action/orderBurger";
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(false);
+  const [modalOrderDetails, setModalOrderDetails] = useState(false);
+  const [modalAuthOrderDetails, setModalAuthOrderDetails] = useState(false);
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
@@ -58,7 +55,14 @@ function App() {
     setModalIngredientActive(false);
     history.go(-1);
   };
-
+  const handlerCloseModalOrder = () => {
+    setModalOrderDetails(false);
+    history.go(-1);
+  };
+  const handlerCloseModalAuthOrder = () => {
+    setModalAuthOrderDetails(false);
+    history.go(-1);
+  };
   return (
     <div className={styles.page}>
       <AppHeader />
@@ -82,16 +86,16 @@ function App() {
           <ResetPassword />
         </Route>
         <ProtectedRoute path="/profile">
-          <Profile />
+          <Profile setActive={setModalAuthOrderDetails} />
         </ProtectedRoute>
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
         </Route>
         <Route path="/feed" exact={true}>
-          <Feed />
+          <Feed active={setModalOrderDetails} />
         </Route>
         <Route path="/feed/:id" exact={true}>
-          <FeedId />
+          <FeedId modal={true} />
         </Route>
         <Route path="/profile/orders/:id">
           <FeedId />
@@ -115,6 +119,28 @@ function App() {
             title={"Детали ингредиента"}
           >
             <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/feed/:id" exact={true}>
+          <Modal
+            active={modalOrderDetails}
+            setActive={handlerCloseModalOrder}
+            title={""}
+          >
+            <FeedId modal={false} />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/profile/orders/:id" exact={true}>
+          <Modal
+            active={modalAuthOrderDetails}
+            setActive={handlerCloseModalAuthOrder}
+            title={""}
+          >
+            <FeedId modal={false} />
           </Modal>
         </Route>
       )}

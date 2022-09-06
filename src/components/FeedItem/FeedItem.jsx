@@ -2,6 +2,7 @@ import styles from "./FeedItem.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
+import { date } from "../../utils/const";
 
 export default function FeedItem({ name, time, number, ingredient }) {
   const { burgerIgredients } = useSelector(
@@ -22,7 +23,7 @@ export default function FeedItem({ name, time, number, ingredient }) {
       <div className={styles.title}>
         <p className="text text_type_digits-default">{number}</p>
         <p className="text text_type_main-default text_color_inactive">
-          {time}
+          {date(time)}
         </p>
       </div>
       <h3 className={`text text_type_main-medium ${styles.name}`}>{name}</h3>

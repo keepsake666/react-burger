@@ -3,6 +3,10 @@
   display: flex;
   flex-direction: column;
   align-content: center;
+  margin: 0 auto 0;
+}
+
+.main__modal {
   margin: 122px auto 0;
 }
 
@@ -33,7 +37,10 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: 312px;
+  height: 180px;
+}
+.list__modal {
+  height: 322px;
 }
 
 .list::-webkit-scrollbar {

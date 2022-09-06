@@ -33,6 +33,7 @@ export const OrderBurgerReducer = (state = initialState, action) => {
         ...state,
         orderRequest: false,
         orderFailed: true,
+        numberOrder: 'failed',
       };
     }
     case GET_ORDER_RESET: {
