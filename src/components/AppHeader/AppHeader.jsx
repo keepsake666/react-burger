@@ -29,10 +29,10 @@ function AppHeader() {
           >
             <ListIcon type="secondary" />
             <NavLink
-                to="/feed"
-                exact
-                activeClassName={styles.link__active}
-                className={`text text_type_main-default block ml-2 ${styles.link}`}
+              to="/feed"
+              exact
+              activeClassName={styles.link__active}
+              className={`text text_type_main-default block ml-2 ${styles.link}`}
             >
               Лента заказов
             </NavLink>

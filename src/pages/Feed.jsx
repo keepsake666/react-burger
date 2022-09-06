@@ -8,8 +8,10 @@ import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
-export default function Feed({active}) {
+export default function Feed({ active }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store) => store.wsReducer);
@@ -24,15 +26,15 @@ export default function Feed({active}) {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
-          {orders?.map((item, index) => (
+          {orders?.map((item) => (
             <Link
               to={{
                 pathname: `/feed/${item._id}`,
                 state: { background: location },
               }}
               className={styles.link}
-              key={index}
-              onClick={()=> active(true)}
+              key={uuidv4()}
+              onClick={() => active(true)}
             >
               {" "}
               <FeedItem
@@ -48,7 +50,10 @@ export default function Feed({active}) {
       <div className={styles.detail__container}>
         <FeedDetails total={total} totalToday={totalToday} />
       </div>
-
     </main>
   );
 }
+
+Feed.propTypes = {
+  active: PropTypes.func.isRequired,
+};

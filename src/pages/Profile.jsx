@@ -26,6 +26,9 @@ import {
 } from "../services/action/socketAction";
 import FeedId from "./FeedId";
 // @ts-ignore
+
+import { v4 as uuidv4 } from "uuid";
+
 export default function Profile({ setActive }) {
   const { authOrders } = useSelector((store) => store.wsReducer);
   const { user } = useSelector((store) => store.authorizationReducer);
@@ -74,9 +77,11 @@ export default function Profile({ setActive }) {
   );
 
   useEffect(() => {
-    dispatch({ type: WS_AUTH_CONNECTION_START });
+    if (accessToken) {
+      dispatch({ type: WS_AUTH_CONNECTION_START });
+    }
     return () => dispatch({ type: WS_AUTH_CONNECTION_CLOSED });
-  }, [dispatch]);
+  }, [accessToken, dispatch]);
 
   return (
     <>
@@ -171,14 +176,14 @@ export default function Profile({ setActive }) {
           </Route>
           <Route path="/profile/orders" exact={true}>
             <ul className={styles.list}>
-              {authOrders?.map((item, index) => (
+              {authOrders?.map((item) => (
                 <Link
                   to={{
                     pathname: `/profile/orders/${item?._id}`,
                     state: { background: location },
                   }}
                   className={styles.link__feed}
-                  key={index}
+                  key={uuidv4()}
                   onClick={() => setActive(true)}
                 >
                   <FeedItem

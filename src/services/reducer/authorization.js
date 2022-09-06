@@ -13,7 +13,10 @@ import {
   GET_USER_FAILED,
   GET_LOGOUT_REQUEST,
   GET_LOGOUT_SUCCESS,
-  GET_LOGOUT_FAILED, GET_CHANGEPROFILE_REQUEST, GET_CHANGEPROFILE_SUCCESS, GET_CHANGEPROFILE_FAILED,
+  GET_LOGOUT_FAILED,
+  GET_CHANGEPROFILE_REQUEST,
+  GET_CHANGEPROFILE_SUCCESS,
+  GET_CHANGEPROFILE_FAILED,
 } from "../action/authorization";
 
 const initialState = {
@@ -31,8 +34,8 @@ const initialState = {
   changeProfileRequest: false,
   changeProfileFailed: false,
   isAuthenticated: false,
-  errorNumber: '',
-  errorNumberUpdateProfile: '',
+  errorNumber: "",
+  errorNumberUpdateProfile: "",
   user: {},
 };
 
@@ -128,7 +131,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: true,
-        errorNumber:action.failed,
+        errorNumber: action.failed,
       };
     }
     case GET_LOGOUT_REQUEST: {
@@ -144,7 +147,7 @@ export const authorizationReducer = (state = initialState, action) => {
         logOutRequest: false,
         logOutFailed: false,
         isAuthenticated: false,
-        user: {}
+        user: {},
       };
     }
     case GET_LOGOUT_FAILED: {
@@ -174,7 +177,7 @@ export const authorizationReducer = (state = initialState, action) => {
         ...state,
         changeProfileRequest: false,
         changeProfileFailed: true,
-        errorNumberUpdateProfile : action.failed
+        errorNumberUpdateProfile: action.failed,
       };
     }
     default: {

@@ -10,7 +10,7 @@ export const NotFound404 = () => {
           PAGE NOT FOUND
         </p>
         <Link to="/" className={`text text_type_digits-large ${styles.link}`}>
-        back to HomePage{" "}
+          back to HomePage{" "}
         </Link>
       </div>
     </div>

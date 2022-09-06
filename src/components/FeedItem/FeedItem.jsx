@@ -3,16 +3,20 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { date } from "../../utils/const";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
 export default function FeedItem({ name, time, number, ingredient }) {
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
+
   const orderItems = ingredient?.map((item) => {
     return burgerIgredients?.find((elem) => {
       return item === elem._id;
     });
   });
+
   const totalPrice = useMemo(
     () => orderItems?.reduce((total, item) => total + item.price, 0),
     [orderItems]
@@ -31,8 +35,8 @@ export default function FeedItem({ name, time, number, ingredient }) {
         <ul className={styles.list}>
           {orderItems?.length >= 6 ? (
             <>
-              {orderItems?.slice(0, 5).map((item, index) => (
-                <li className={styles.item} key={index}>
+              {orderItems?.slice(0, 5).map((item) => (
+                <li className={styles.item} key={uuidv4()}>
                   <img
                     src={item.image}
                     alt={item.name}
@@ -54,8 +58,8 @@ export default function FeedItem({ name, time, number, ingredient }) {
               </li>
             </>
           ) : (
-            orderItems?.map((item, index) => (
-              <li className={styles.item} key={index}>
+            orderItems?.map((item) => (
+              <li className={styles.item} key={uuidv4()}>
                 <img
                   src={item.image}
                   alt={item.name}
@@ -74,3 +78,10 @@ export default function FeedItem({ name, time, number, ingredient }) {
     </li>
   );
 }
+
+FeedItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  ingredient: PropTypes.array.isRequired,
+};

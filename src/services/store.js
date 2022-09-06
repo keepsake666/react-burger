@@ -2,8 +2,12 @@ import { applyMiddleware, createStore, compose } from "redux";
 import { rootReducer } from "./reducer";
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import {
-  WS_AUTH_CONNECTION_CLOSED, WS_AUTH_CONNECTION_ERROR,
-  WS_AUTH_CONNECTION_START, WS_AUTH_CONNECTION_SUCCESS, WS_AUTH_GET_ORDERS, WS_AUTH_SEND_ORDERS,
+  WS_AUTH_CONNECTION_CLOSED,
+  WS_AUTH_CONNECTION_ERROR,
+  WS_AUTH_CONNECTION_START,
+  WS_AUTH_CONNECTION_SUCCESS,
+  WS_AUTH_GET_ORDERS,
+  WS_AUTH_SEND_ORDERS,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
@@ -34,6 +38,10 @@ const authWsActions = {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions, false),socketMiddleware(AuthWsUrl, authWsActions, true) )
+  applyMiddleware(
+    thunk,
+    socketMiddleware(wsUrl, wsActions, false),
+    socketMiddleware(AuthWsUrl, authWsActions, true)
+  )
 );
 export const store = createStore(rootReducer, enhancer);

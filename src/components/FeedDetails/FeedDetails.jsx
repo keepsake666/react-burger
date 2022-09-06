@@ -1,11 +1,12 @@
 import styles from "./FeedDetails.module.css";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
 export default function FeedDetails({ total, totalToday }) {
   const [ordersDone, setOrdersDone] = useState([]);
   const [ordersReady, setOrdersReady] = useState([]);
-
   const { orders } = useSelector((store) => store.wsReducer);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function FeedDetails({ total, totalToday }) {
             {ordersReady.map((item) => (
               <li
                 className={`text text_type_digits-default ${styles.item__right}`}
-                key={item}
+                key={uuidv4()}
               >
                 {item}
               </li>
@@ -60,3 +61,8 @@ export default function FeedDetails({ total, totalToday }) {
     </div>
   );
 }
+
+FeedDetails.propTypes = {
+  total: PropTypes.number.isRequired,
+  totalToday: PropTypes.number.isRequired,
+};

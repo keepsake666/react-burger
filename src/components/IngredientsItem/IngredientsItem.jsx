@@ -23,11 +23,11 @@ function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
   });
 
   const countIngredient = useMemo(
-    () => ingredientsConstructor.filter((item) => item[0]._id === id).length,
+    () => ingredientsConstructor?.filter((item) => item[0]._id === id).length,
     [id, ingredientsConstructor]
   );
   const countBun = useMemo(
-    () => bunConstructor.filter((item) => item._id === id).length,
+    () => bunConstructor?.filter((item) => item._id === id).length,
     [bunConstructor, id]
   );
 

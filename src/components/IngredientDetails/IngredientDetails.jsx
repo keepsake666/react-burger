@@ -12,7 +12,7 @@ export default function IngredientDetails() {
   );
 
   const ingredient = useMemo(
-    () => burgerIgredients.filter((item) => item._id === id),
+    () => burgerIgredients?.filter((item) => item._id === id),
     [burgerIgredients, id]
   );
 

@@ -9,9 +9,11 @@ import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
-import {date} from "../utils/const";
+import { date } from "../utils/const";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
-export default function FeedId({modal}) {
+export default function FeedId({ modal }) {
   const [state, setState] = useState(null);
   const match = useRouteMatch();
   const dispatch = useDispatch();
@@ -69,7 +71,9 @@ export default function FeedId({modal}) {
 
   return ingredient?.length >= 1 ? (
     <main className={styles.main__page}>
-      <div className={`${styles.main} ${modal ? styles.main__modal : styles.main}`}>
+      <div
+        className={`${styles.main} ${modal ? styles.main__modal : styles.main}`}
+      >
         <p className={`text text_type_digits-default ${styles.feed}`}>
           {ingredient[0]?.number}
         </p>
@@ -86,9 +90,13 @@ export default function FeedId({modal}) {
           </p>
         )}
         <h3 className={`text text_type_main-medium mb-6`}>Состав:</h3>
-        <ul className={`${styles.list} ${modal ? styles.list__modal : styles.list}`}>
-          {exclusiveItem?.map((item, index) => (
-            <li className={styles.item} key={index}>
+        <ul
+          className={`${styles.list} ${
+            modal ? styles.list__modal : styles.list
+          }`}
+        >
+          {exclusiveItem?.map((item) => (
+            <li className={styles.item} key={uuidv4()}>
               <div className={styles.container__ingredient}>
                 <img src={item.image} alt="" className={styles.image} />
                 <p className={`text text_type_main-default`}>{item.name}</p>
@@ -119,3 +127,7 @@ export default function FeedId({modal}) {
     </main>
   );
 }
+
+FeedId.propTypes = {
+  modal: PropTypes.bool,
+};

@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
