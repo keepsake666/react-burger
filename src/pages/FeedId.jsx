@@ -11,7 +11,6 @@ import {
 } from "../services/action/socketAction";
 import { date } from "../utils/const";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 export default function FeedId({ modal }) {
   const [state, setState] = useState(null);
@@ -96,7 +95,7 @@ export default function FeedId({ modal }) {
           }`}
         >
           {exclusiveItem?.map((item) => (
-            <li className={styles.item} key={uuidv4()}>
+            <li className={styles.item} key={item._id}>
               <div className={styles.container__ingredient}>
                 <img src={item.image} alt="" className={styles.image} />
                 <p className={`text text_type_main-default`}>{item.name}</p>

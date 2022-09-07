@@ -27,8 +27,6 @@ import {
 import FeedId from "./FeedId";
 // @ts-ignore
 
-import { v4 as uuidv4 } from "uuid";
-
 export default function Profile({ setActive }) {
   const { authOrders } = useSelector((store) => store.wsReducer);
   const { user } = useSelector((store) => store.authorizationReducer);
@@ -176,14 +174,14 @@ export default function Profile({ setActive }) {
           </Route>
           <Route path="/profile/orders" exact={true}>
             <ul className={styles.list}>
-              {authOrders?.map((item) => (
+              {authOrders?.map((item, index) => (
                 <Link
                   to={{
                     pathname: `/profile/orders/${item?._id}`,
                     state: { background: location },
                   }}
                   className={styles.link__feed}
-                  key={uuidv4()}
+                  key={index}
                   onClick={() => setActive(true)}
                 >
                   <FeedItem

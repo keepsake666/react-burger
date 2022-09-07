@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function ModalOverlay({ setActive }) {
   useEffect(() => {
     const close = (e) => {
-      if (e.keyCode === 27) {
+      if (e.key === "Escape") {
         setActive(false);
       }
     };

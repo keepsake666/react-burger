@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { date } from "../../utils/const";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 export default function FeedItem({ name, time, number, ingredient }) {
   const { burgerIgredients } = useSelector(
@@ -35,8 +34,8 @@ export default function FeedItem({ name, time, number, ingredient }) {
         <ul className={styles.list}>
           {orderItems?.length >= 6 ? (
             <>
-              {orderItems?.slice(0, 5).map((item) => (
-                <li className={styles.item} key={uuidv4()}>
+              {orderItems?.slice(0, 5).map((item, index) => (
+                <li className={styles.item} key={index}>
                   <img
                     src={item.image}
                     alt={item.name}
@@ -58,8 +57,8 @@ export default function FeedItem({ name, time, number, ingredient }) {
               </li>
             </>
           ) : (
-            orderItems?.map((item) => (
-              <li className={styles.item} key={uuidv4()}>
+            orderItems?.map((item, index) => (
+              <li className={styles.item} key={index}>
                 <img
                   src={item.image}
                   alt={item.name}

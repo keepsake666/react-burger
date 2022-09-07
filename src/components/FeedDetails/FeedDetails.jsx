@@ -2,7 +2,6 @@ import styles from "./FeedDetails.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 export default function FeedDetails({ total, totalToday }) {
   const [ordersDone, setOrdersDone] = useState([]);
@@ -24,10 +23,10 @@ export default function FeedDetails({ total, totalToday }) {
         <div>
           <h2 className="text text_type_main-medium mb-5">Готовы:</h2>
           <ul className={styles.list}>
-            {ordersDone.map((item) => (
+            {ordersDone.map((item, index) => (
               <li
                 className={`text text_type_digits-default ${styles.item__left}`}
-                key={item}
+                key={index}
               >
                 {item}
               </li>
@@ -37,10 +36,10 @@ export default function FeedDetails({ total, totalToday }) {
         <div>
           <h2 className="text text_type_main-medium mb-5">В работе:</h2>
           <ul className={styles.list}>
-            {ordersReady.map((item) => (
+            {ordersReady.map((item, index) => (
               <li
                 className={`text text_type_digits-default ${styles.item__right}`}
-                key={uuidv4()}
+                key={index}
               >
                 {item}
               </li>

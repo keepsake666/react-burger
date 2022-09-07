@@ -9,7 +9,6 @@ import {
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 export default function Feed({ active }) {
   const location = useLocation();
@@ -33,7 +32,7 @@ export default function Feed({ active }) {
                 state: { background: location },
               }}
               className={styles.link}
-              key={uuidv4()}
+              key={item._id}
               onClick={() => active(true)}
             >
               {" "}

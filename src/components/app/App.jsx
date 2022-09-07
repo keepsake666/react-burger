@@ -32,7 +32,7 @@ function App() {
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
   const location = useLocation();
-  const background = location.state?.background;
+  let background = location.state && location.state.background;
   const history = useHistory();
 
   useEffect(() => {
@@ -63,6 +63,7 @@ function App() {
     setModalAuthOrderDetails(false);
     history.go(-1);
   };
+
   return (
     <div className={styles.page}>
       <AppHeader />
