@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
@@ -32,7 +32,7 @@ function App() {
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
   const location = useLocation();
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
   const history = useHistory();
 
   useEffect(() => {
@@ -113,7 +113,7 @@ function App() {
         <OrderDetails />
       </Modal>
       {background && (
-        <Route path="/ingredient/:id" exact={true}>
+        <Route path="/ingredient/:id">
           <Modal
             active={modalIngredientActive}
             setActive={handlerCloseModal}
