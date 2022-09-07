@@ -147,11 +147,11 @@ export default function BurgerConstructor({ setModalAtive }) {
         </div>
         {bunConstructor.length >= 1 && ingredientsConstructor.length >= 1 ? (
           <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
-             Оформить заказ
+            {orderRequest ? "..загрузка" : "Оформить заказ"}
           </Button>
         ) : (
           <Button type="primary" size="medium" disabled={true}>
-            {orderRequest ? "..загрузка" : "Оформить заказ"}
+            Оформить заказ
           </Button>
         )}
       </div>
