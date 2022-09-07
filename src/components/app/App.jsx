@@ -25,9 +25,9 @@ import { GET_ORDER_RESET } from "../../services/action/orderBurger";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
-  const [modalIngredientActive, setModalIngredientActive] = useState(false);
-  const [modalOrderDetails, setModalOrderDetails] = useState(false);
-  const [modalAuthOrderDetails, setModalAuthOrderDetails] = useState(false);
+  const [modalIngredientActive, setModalIngredientActive] = useState(true);
+  const [modalOrderDetails, setModalOrderDetails] = useState(true);
+  const [modalAuthOrderDetails, setModalAuthOrderDetails] = useState(true);
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
@@ -135,7 +135,7 @@ function App() {
         </Route>
       )}
       {background && (
-        <ProtectedRoute path="/profile/orders/:id" >
+        <ProtectedRoute path="/profile/orders/:id">
           <Modal
             active={modalAuthOrderDetails}
             setActive={handlerCloseModalAuthOrder}
