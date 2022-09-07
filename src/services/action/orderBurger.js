@@ -1,20 +1,19 @@
-import { apiOrder, getCookie } from "../../utils/api";
+import { apiOrder } from "../../utils/api";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const GET_ORDER_RESET = "GET_ORDER_RESET";
 
-const accessToken = getCookie("token");
-export function getOrder(ingredients) {
+export function getOrder(accessToken, ...ingredients) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    apiOrder(ingredients, accessToken)
+    apiOrder(accessToken, ...ingredients)
       .then((res) => {
         dispatch({
           type: GET_ORDER_SUCCESS,
-          payload: res.order.number,
+          payload: res.order.number
         });
       })
       .catch((err) => {

@@ -16,8 +16,8 @@ export const OrderBurgerReducer = (state = initialState, action) => {
     case GET_ORDER_REQUEST: {
       return {
         ...state,
-        orderRequest: false,
-        orderFailed: true,
+        orderRequest: true,
+        orderFailed: false,
       };
     }
     case GET_ORDER_SUCCESS: {

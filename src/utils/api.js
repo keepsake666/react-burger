@@ -12,7 +12,7 @@ const config = {
   },
 };
 
-export function apiOrder(ingredients, token) {
+export function apiOrder(token, ...ingredients) {
   return fetch(config.baseUrl + "/orders", {
     method: "POST",
     headers: { "Content-Type": "application/json", authorization: token },
