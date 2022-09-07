@@ -98,7 +98,7 @@ function App() {
         <Route path="/feed/:id" exact={true}>
           <FeedId modal={true} />
         </Route>
-        <Route path="/profile/orders/:id">
+        <Route path="/profile/orders/:id" exact={true}>
           <FeedId />
         </Route>
         <Route>
@@ -113,7 +113,7 @@ function App() {
         <OrderDetails />
       </Modal>
       {background && (
-        <Route path="/ingredient/:id">
+        <Route path="/ingredient/:id" exact={true}>
           <Modal
             active={modalIngredientActive}
             setActive={handlerCloseModal}
@@ -135,7 +135,7 @@ function App() {
         </Route>
       )}
       {background && (
-        <Route path="/profile/orders/:id" exact={true}>
+        <ProtectedRoute path="/profile/orders/:id" >
           <Modal
             active={modalAuthOrderDetails}
             setActive={handlerCloseModalAuthOrder}
@@ -143,7 +143,7 @@ function App() {
           >
             <FeedId modal={false} />
           </Modal>
-        </Route>
+        </ProtectedRoute>
       )}
     </div>
   );
