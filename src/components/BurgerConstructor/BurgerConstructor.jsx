@@ -13,8 +13,10 @@ import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { addIngredient, addBun } from "../../services/action/burgerConstructor";
 import { useHistory } from "react-router-dom";
+import { getCookie } from "../../utils/api";
 
 export default function BurgerConstructor({ setModalAtive }) {
+  const accessToken = getCookie("token");
   const [totalPrice, setTotalPrice] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,6 +29,7 @@ export default function BurgerConstructor({ setModalAtive }) {
   const { ingredientsConstructor, bunConstructor } = useSelector(
     (store) => store.BurgerConstructorReducer
   );
+  const { orderRequest } = useSelector((store) => store.OrderBurgerReducer);
   const totalPriceIngredients = useMemo(
     () =>
       ingredientsConstructor.reduce((total, item) => total + item[0].price, 0),
@@ -76,9 +79,9 @@ export default function BurgerConstructor({ setModalAtive }) {
   ]);
 
   const creatOrderAndSetModal = useCallback(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && accessToken) {
+      dispatch(getOrder(accessToken, ...orderIngredients, ...orderBun));
       setModalAtive(true);
-      dispatch(getOrder(orderIngredients, orderBun));
     } else {
       history.replace({ pathname: "/login" });
     }
@@ -144,7 +147,7 @@ export default function BurgerConstructor({ setModalAtive }) {
         </div>
         {bunConstructor.length >= 1 && ingredientsConstructor.length >= 1 ? (
           <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
-            Оформить заказ
+            {orderRequest ? "..загрузка" : "Оформить заказ"}
           </Button>
         ) : (
           <Button type="primary" size="medium" disabled={true}>

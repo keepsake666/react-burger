@@ -28,9 +28,14 @@ function AppHeader() {
             className={`mb-4 mt-4 ml-2 pb-4 pt-4 pl-5 pr-5 ${styles.container}`}
           >
             <ListIcon type="secondary" />
-            <p className="text text_type_main-default text_color_inactive ml-2">
+            <NavLink
+              to="/feed"
+              exact
+              activeClassName={styles.link__active}
+              className={`text text_type_main-default block ml-2 ${styles.link}`}
+            >
               Лента заказов
-            </p>
+            </NavLink>
           </div>
         </div>
         <Link to="/">

@@ -4,7 +4,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
@@ -15,36 +15,31 @@ import ForgotPassword from "../../pages/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword";
 import Profile from "../../pages/Profile";
 import { getCookie } from "../../utils/api";
-import { getUser, newToken } from "../../services/action/authorization";
+import { getUser } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
-import { Order } from "../../pages/Order";
+import Feed from "../../pages/Feed";
+import FeedId from "../../pages/FeedId";
+import { GET_ORDER_RESET } from "../../services/action/orderBurger";
 
 function App() {
   const [modalOrderActive, setModalOrderActive] = useState(false);
-  const [modalIngredientActive, setModalIngredientActive] = useState(false);
+  const [modalIngredientActive, setModalIngredientActive] = useState(true);
+  const [modalOrderDetails, setModalOrderDetails] = useState(true);
+  const [modalAuthOrderDetails, setModalAuthOrderDetails] = useState(true);
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
   const location = useLocation();
-  const background = location.state?.background;
+  const background = location.state && location.state.background;
   const history = useHistory();
-  const { errorNumber, tokenFailed } = useSelector(
-    (store) => store.authorizationReducer
-  );
 
   useEffect(() => {
-      if (accessToken && refreshToken) {
+    if (accessToken && refreshToken) {
       dispatch(getUser(accessToken));
-      if (errorNumber === "Ошибка: 403") {
-        dispatch(newToken(refreshToken));
-        if (tokenFailed === false) {
-          dispatch(getUser(accessToken));
-        }
-      }
     }
-  }, [accessToken, dispatch, errorNumber, refreshToken, tokenFailed]);
+  }, [accessToken, dispatch, refreshToken]);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -52,11 +47,20 @@ function App() {
       dispatch({
         type: RESET_ORDER,
       });
+      dispatch({ type: GET_ORDER_RESET });
     }
   }, [dispatch, modalOrderActive]);
 
   const handlerCloseModal = () => {
     setModalIngredientActive(false);
+    history.go(-1);
+  };
+  const handlerCloseModalOrder = () => {
+    setModalOrderDetails(false);
+    history.go(-1);
+  };
+  const handlerCloseModalAuthOrder = () => {
+    setModalAuthOrderDetails(false);
     history.go(-1);
   };
 
@@ -82,14 +86,20 @@ function App() {
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
-          <Profile />
+        <ProtectedRoute path="/profile">
+          <Profile setActive={setModalAuthOrderDetails} />
         </ProtectedRoute>
         <Route path="/ingredient/:id" exact={true}>
           <Ingredients />
         </Route>
-        <Route path="/profile/orders" exact={true}>
-          <Order />
+        <Route path="/feed" exact={true}>
+          <Feed active={setModalOrderDetails} />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <FeedId modal={true} />
+        </Route>
+        <Route path="/profile/orders/:id" exact={true}>
+          <FeedId />
         </Route>
         <Route>
           <NotFound404 />
@@ -112,6 +122,28 @@ function App() {
             <IngredientDetails />
           </Modal>
         </Route>
+      )}
+      {background && (
+        <Route path="/feed/:id" exact={true}>
+          <Modal
+            active={modalOrderDetails}
+            setActive={handlerCloseModalOrder}
+            title={""}
+          >
+            <FeedId modal={false} />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <ProtectedRoute path="/profile/orders/:id">
+          <Modal
+            active={modalAuthOrderDetails}
+            setActive={handlerCloseModalAuthOrder}
+            title={""}
+          >
+            <FeedId modal={false} />
+          </Modal>
+        </ProtectedRoute>
       )}
     </div>
   );

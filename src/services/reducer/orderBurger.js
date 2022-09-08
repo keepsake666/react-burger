@@ -8,7 +8,7 @@ import {
 const initialState = {
   orderRequest: false,
   orderFailed: false,
-  numberOrder: 0,
+  numberOrder: "...loading",
 };
 
 export const OrderBurgerReducer = (state = initialState, action) => {
@@ -16,8 +16,8 @@ export const OrderBurgerReducer = (state = initialState, action) => {
     case GET_ORDER_REQUEST: {
       return {
         ...state,
-        orderRequest: false,
-        orderFailed: true,
+        orderRequest: true,
+        orderFailed: false,
       };
     }
     case GET_ORDER_SUCCESS: {
@@ -33,12 +33,13 @@ export const OrderBurgerReducer = (state = initialState, action) => {
         ...state,
         orderRequest: false,
         orderFailed: true,
+        numberOrder: "failed",
       };
     }
     case GET_ORDER_RESET: {
       return {
         ...state,
-        numberOrder: 0,
+        numberOrder: "...loading",
       };
     }
     default: {

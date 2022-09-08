@@ -4,16 +4,16 @@ export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const GET_ORDER_RESET = "GET_ORDER_RESET";
 
-export function getOrder(ingredients) {
+export function getOrder(accessToken, ...ingredients) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    apiOrder(ingredients)
+    apiOrder(accessToken, ...ingredients)
       .then((res) => {
         dispatch({
           type: GET_ORDER_SUCCESS,
-          payload: res.order.number,
+          payload: res.order.number
         });
       })
       .catch((err) => {

@@ -12,15 +12,15 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
     (store) => store.BurgerIngredientsReducer
   );
   const main = useMemo(
-    () => burgerIgredients.filter((elem) => elem.type === "main"),
+    () => burgerIgredients?.filter((elem) => elem.type === "main"),
     [burgerIgredients]
   );
   const bun = useMemo(
-    () => burgerIgredients.filter((elem) => elem.type === "bun"),
+    () => burgerIgredients?.filter((elem) => elem.type === "bun"),
     [burgerIgredients]
   );
   const sauce = useMemo(
-    () => burgerIgredients.filter((elem) => elem.type === "sauce"),
+    () => burgerIgredients?.filter((elem) => elem.type === "sauce"),
     [burgerIgredients]
   );
 
