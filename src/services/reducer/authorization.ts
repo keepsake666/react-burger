@@ -19,7 +19,27 @@ import {
   GET_CHANGEPROFILE_FAILED,
 } from "../action/authorization";
 
-const initialState = {
+type TInitialState = {
+  data: any;
+  authorizationFailed: boolean;
+  authorizationRequest: boolean;
+  logInFailed: boolean;
+  logInRequest: boolean;
+  tokenFailed: boolean;
+  tokenRequest: boolean;
+  getUserRequest: boolean;
+  getUserFailed: boolean;
+  logOutRequest: boolean;
+  logOutFailed: boolean;
+  changeProfileRequest: boolean;
+  changeProfileFailed: boolean;
+  isAuthenticated: boolean;
+  errorNumber: string;
+  errorNumberUpdateProfile: string;
+  user: any,
+};
+
+const initialState:TInitialState = {
   data: {},
   authorizationFailed: false,
   authorizationRequest: false,
@@ -39,7 +59,7 @@ const initialState = {
   user: {},
 };
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authorizationReducer = (state = initialState, action:any):TInitialState => {
   switch (action.type) {
     case GET_REGISTRATION_REQUEST: {
       return {

@@ -1,4 +1,4 @@
-const checkResponse = (res) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
   } else {
@@ -12,14 +12,14 @@ const config = {
   },
 };
 
-export function apiOrder(token, ...ingredients) {
+export function apiOrder(token: string, ...ingredients: string[]) {
   return fetch(config.baseUrl + "/orders", {
     method: "POST",
     headers: { "Content-Type": "application/json", authorization: token },
     body: JSON.stringify({
       ingredients,
     }),
-  }).then(checkResponse);
+  }).then(res => checkResponse<any>(res));
 }
 
 export function apiData() {
@@ -28,7 +28,7 @@ export function apiData() {
   }).then(checkResponse);
 }
 
-export function setRegistration(email, password, name) {
+export function setRegistration(email: string, password: string, name: string) {
   return fetch(config.baseUrl + "/auth/register", {
     method: "POST",
     headers: config.headers,
@@ -40,7 +40,7 @@ export function setRegistration(email, password, name) {
   }).then(checkResponse);
 }
 
-export function setLogIn(email, password) {
+export function setLogIn(email: string, password: string) {
   return fetch(config.baseUrl + "/auth/login", {
     method: "POST",
     headers: config.headers,
@@ -51,13 +51,18 @@ export function setLogIn(email, password) {
   }).then(checkResponse);
 }
 
-export function getProfile(token) {
+export function getProfile(token: string) {
   return fetch(config.baseUrl + "/auth/user", {
     headers: { "Content-Type": "application/json", authorization: token },
   }).then(checkResponse);
 }
 
-export function patchNewProfile(token, email, password, name) {
+export function patchNewProfile(
+  token: string,
+  email: string,
+  password: string,
+  name: string
+) {
   return fetch(config.baseUrl + "/auth/user", {
     method: "PATCH",
     headers: { "Content-Type": "application/json", authorization: token },
@@ -69,7 +74,7 @@ export function patchNewProfile(token, email, password, name) {
   }).then(checkResponse);
 }
 
-export function getNewToken(token) {
+export function getNewToken(token: string) {
   return fetch(config.baseUrl + "/auth/token", {
     method: "POST",
     headers: config.headers,
@@ -79,7 +84,7 @@ export function getNewToken(token) {
   }).then(checkResponse);
 }
 
-export function logOut(token) {
+export function logOut(token: string) {
   return fetch(config.baseUrl + "/auth/logout", {
     method: "POST",
     headers: config.headers,
@@ -89,7 +94,7 @@ export function logOut(token) {
   }).then(checkResponse);
 }
 
-export function recoverPassword(mail) {
+export function recoverPassword(mail: string) {
   return fetch(config.baseUrl + "/password-reset", {
     method: "POST",
     headers: config.headers,
@@ -99,7 +104,7 @@ export function recoverPassword(mail) {
   }).then(checkResponse);
 }
 
-export function postNewPassword(password, token) {
+export function postNewPassword(password: string, token: string) {
   return fetch(config.baseUrl + "/password-reset/reset", {
     method: "POST",
     headers: config.headers,
@@ -110,7 +115,7 @@ export function postNewPassword(password, token) {
   }).then(checkResponse);
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props?: any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -133,7 +138,7 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -144,8 +149,8 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
   // Находим куку по ключу token, удаляем её значение,
   // устанавливаем отрицательное время жизни, чтобы удалить сам ключ token
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, "", { expires: -1 });
 }

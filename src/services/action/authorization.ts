@@ -9,27 +9,28 @@ import {
   setLogIn,
   setRegistration,
 } from "../../utils/api";
-export const GET_REGISTRATION_REQUEST = "GET_REGISTRATION_REQUEST";
-export const GET_REGISTRATION_SUCCESS = "GET_REGISTRATION_SUCCESS";
-export const GET_REGISTRATION_FAILED = "GET_REGISTRATION_FAILED";
-export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
-export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
-export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
-export const GET_TOKEN_REQUEST = "GET_TOKEN_REQUEST";
-export const GET_TOKEN_SUCCESS = "GET_TOKEN_SUCCESS";
-export const GET_TOKEN_FAILED = "GET_TOKEN_FAILED";
-export const GET_USER_REQUEST = "GET_USER_REQUEST";
-export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
-export const GET_USER_FAILED = "GET_USER_FAILED";
-export const GET_LOGOUT_REQUEST = "GET_LOGOUT_REQUEST";
-export const GET_LOGOUT_SUCCESS = "GET_LOGOUT_SUCCESS";
-export const GET_LOGOUT_FAILED = "GET_LOGOUT_FAILED";
-export const GET_CHANGEPROFILE_REQUEST = "GET_CHANGEPROFILE_REQUEST";
-export const GET_CHANGEPROFILE_SUCCESS = "GET_CHANGEPROFILE_SUCCESS";
-export const GET_CHANGEPROFILE_FAILED = "GET_CHANGEPROFILE_FAILED";
+import {AppDispatch} from "../types";
+export const GET_REGISTRATION_REQUEST:"GET_REGISTRATION_REQUEST" = "GET_REGISTRATION_REQUEST";
+export const GET_REGISTRATION_SUCCESS:"GET_REGISTRATION_SUCCESS" = "GET_REGISTRATION_SUCCESS";
+export const GET_REGISTRATION_FAILED:"GET_REGISTRATION_FAILED" = "GET_REGISTRATION_FAILED";
+export const GET_LOGIN_REQUEST:"GET_LOGIN_REQUEST" = "GET_LOGIN_REQUEST";
+export const GET_LOGIN_SUCCESS:"GET_LOGIN_SUCCESS" = "GET_LOGIN_SUCCESS";
+export const GET_LOGIN_FAILED:"GET_LOGIN_FAILED" = "GET_LOGIN_FAILED";
+export const GET_TOKEN_REQUEST:"GET_TOKEN_REQUEST" = "GET_TOKEN_REQUEST";
+export const GET_TOKEN_SUCCESS:"GET_TOKEN_SUCCESS" = "GET_TOKEN_SUCCESS";
+export const GET_TOKEN_FAILED:"GET_TOKEN_FAILED" = "GET_TOKEN_FAILED";
+export const GET_USER_REQUEST:"GET_USER_REQUEST" = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS:"GET_USER_SUCCESS" = "GET_USER_SUCCESS";
+export const GET_USER_FAILED:"GET_USER_FAILED" = "GET_USER_FAILED";
+export const GET_LOGOUT_REQUEST:"GET_LOGOUT_REQUEST" = "GET_LOGOUT_REQUEST";
+export const GET_LOGOUT_SUCCESS:"GET_LOGOUT_SUCCESS" = "GET_LOGOUT_SUCCESS";
+export const GET_LOGOUT_FAILED:"GET_LOGOUT_FAILED" = "GET_LOGOUT_FAILED";
+export const GET_CHANGEPROFILE_REQUEST:"GET_CHANGEPROFILE_REQUEST" = "GET_CHANGEPROFILE_REQUEST";
+export const GET_CHANGEPROFILE_SUCCESS:"GET_CHANGEPROFILE_SUCCESS" = "GET_CHANGEPROFILE_SUCCESS";
+export const GET_CHANGEPROFILE_FAILED:"GET_CHANGEPROFILE_FAILED" = "GET_CHANGEPROFILE_FAILED";
 
-export function registration(email, password, name) {
-  return function (dispatch) {
+export function registration(email:string, password:string, name:string): any {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_REGISTRATION_REQUEST,
     });
@@ -54,8 +55,8 @@ export function registration(email, password, name) {
   };
 }
 
-export function logIn(email, password) {
-  return function (dispatch) {
+export function logIn(email:string, password:string):any {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: GET_LOGIN_REQUEST,
     });
@@ -79,8 +80,8 @@ export function logIn(email, password) {
       });
   };
 }
-export function newToken(token) {
-  return function (dispatch) {
+export function newToken(token:string):any {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_TOKEN_REQUEST,
     });
@@ -104,8 +105,8 @@ export function newToken(token) {
   };
 }
 
-export function actionLogOut(token) {
-  return function (dispatch) {
+export function actionLogOut(token:string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_LOGOUT_REQUEST,
     });
@@ -126,8 +127,8 @@ export function actionLogOut(token) {
   };
 }
 
-export function getUser(token) {
-  return function (dispatch) {
+export function getUser(token:string):any {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -164,8 +165,8 @@ export function getUser(token) {
   };
 }
 
-export function getNewProfile(token, email, password, name) {
-  return function (dispatch) {
+export function getNewProfile(token:string, email:string, password:string, name:string) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_CHANGEPROFILE_REQUEST,
     });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../AppHeader/AppHeader";
-import Modal from "../Modal/Modal";
+import {Modal} from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";

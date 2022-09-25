@@ -2,23 +2,40 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS, WS_AUTH_CONNECTION_SUCCESS, WS_AUTH_CONNECTION_ERROR, WS_AUTH_CONNECTION_CLOSED, WS_AUTH_GET_ORDERS,
+  WS_GET_ORDERS,
+  WS_AUTH_CONNECTION_SUCCESS,
+  WS_AUTH_CONNECTION_ERROR,
+  WS_AUTH_CONNECTION_CLOSED,
+  WS_AUTH_GET_ORDERS,
+  TSocketActions,
 } from "../action/socketAction";
 
-const initialState = {
+type IInitialState = {
+  wsConnected: boolean;
+  orders: string[];
+  error: undefined;
+  total: number;
+  totalToday: number;
+  authWsConnected: boolean;
+  authOrders: string[];
+  authError: undefined;
+  authTotal: number;
+  authTotalToday: number;
+};
+const initialState: IInitialState = {
   wsConnected: false,
   orders: [],
   error: undefined,
   total: 0,
   totalToday: 0,
   authWsConnected: false,
-  authOrders:[],
+  authOrders: [],
   authError: undefined,
   authTotal: 0,
   authTotalToday: 0,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TSocketActions): IInitialState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

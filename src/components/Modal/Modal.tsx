@@ -1,12 +1,18 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, FC, ReactNode } from "react";
 import styles from "./Modal.module.css";
-import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import { ModalOverlay } from "../ModalOverlay/ModalOverlay";
 
-const modalElement = document.querySelector("#modal");
+const modalElement = document.querySelector("#modal") as HTMLElement;
 
-export default function Modal({ children, title, setActive, active }) {
+interface IModal {
+  children: ReactNode;
+  title: string;
+  setActive: any;
+  active: boolean;
+}
+
+export const Modal: FC<IModal> = ({ children, title, setActive, active }) => {
   const element = useMemo(() => document.createElement("div"), []);
 
   useEffect(() => {
@@ -17,7 +23,6 @@ export default function Modal({ children, title, setActive, active }) {
       };
     }
   });
-
 
   return createPortal(
     <>
@@ -35,10 +40,4 @@ export default function Modal({ children, title, setActive, active }) {
     </>,
     element
   );
-}
-
-Modal.propTypes = {
-  active: PropTypes.bool.isRequired,
-  title: PropTypes.string,
-  setModalAtive: PropTypes.func,
 };

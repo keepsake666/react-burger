@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, {FC, useEffect} from "react";
 import styles from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
 
-export default function ModalOverlay({ setActive }) {
+export const ModalOverlay: FC<any>=({ setActive }) =>{
   useEffect(() => {
-    const close = (e) => {
+    const close = (e:KeyboardEvent) => {
       if (e.key === "Escape") {
         setActive(false);
       }
@@ -16,6 +15,3 @@ export default function ModalOverlay({ setActive }) {
   return <div className={styles.popup} onClick={() => setActive(false)}></div>;
 }
 
-ModalOverlay.propTypes = {
-  setActive: PropTypes.func,
-};
