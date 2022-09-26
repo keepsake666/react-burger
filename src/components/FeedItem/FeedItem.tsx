@@ -1,23 +1,29 @@
 import styles from "./FeedItem.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import {FC, useMemo} from "react";
 import { date } from "../../utils/const";
-import PropTypes from "prop-types";
+import {useSelector} from "../../services/hooks";
 
-export default function FeedItem({ name, time, number, ingredient }) {
+interface IFeedItem {
+  name: string;
+  time: Date;
+  number: number;
+  ingredient: any;
+}
+
+export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient }) =>{
   const { burgerIgredients } = useSelector(
-    (store) => store.BurgerIngredientsReducer
+    (state) => state.BurgerIngredientsReducer
   );
 
-  const orderItems = ingredient?.map((item) => {
-    return burgerIgredients?.find((elem) => {
+  const orderItems = ingredient?.map((item:any) => {
+    return burgerIgredients?.find((elem:any) => {
       return item === elem._id;
     });
   });
 
   const totalPrice = useMemo(
-    () => orderItems?.reduce((total, item) => total + item.price, 0),
+    () => orderItems?.reduce((total:number, item:any) => total + item.price, 0),
     [orderItems]
   );
 
@@ -34,7 +40,7 @@ export default function FeedItem({ name, time, number, ingredient }) {
         <ul className={styles.list}>
           {orderItems?.length >= 6 ? (
             <>
-              {orderItems?.slice(0, 5).map((item, index) => (
+              {orderItems?.slice(0, 5).map((item:any, index:number) => (
                 <li className={styles.item} key={index}>
                   <img
                     src={item.image}
@@ -57,7 +63,7 @@ export default function FeedItem({ name, time, number, ingredient }) {
               </li>
             </>
           ) : (
-            orderItems?.map((item, index) => (
+            orderItems?.map((item:any, index:number) => (
               <li className={styles.item} key={index}>
                 <img
                   src={item.image}
@@ -77,10 +83,3 @@ export default function FeedItem({ name, time, number, ingredient }) {
     </li>
   );
 }
-
-FeedItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-  ingredient: PropTypes.array.isRequired,
-};

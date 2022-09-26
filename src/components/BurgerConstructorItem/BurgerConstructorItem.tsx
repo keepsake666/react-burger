@@ -1,34 +1,41 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
+import React, {FC, useRef} from "react";
 import styles from "./BurgerConstructorItem.module.css";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+
 import { DELETE_INGREDIEN } from "../../services/action/burgerConstructor";
 import { useDrag, useDrop } from "react-dnd";
 import { dporIngredient } from "../../services/action/burgerConstructor";
+import {useDispatch} from "../../services/hooks";
 
-export default function BurgerConstructorItem({
+interface IBurgerConstructorItem{
+  text: string,
+  price: number,
+  image:string,
+  indexItem:number,
+  id:string,
+}
+export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
   text,
   price,
   image,
   indexItem,
   id,
-}) {
+}) => {
   const dispatch = useDispatch();
   const ref = useRef(null);
-  const deleteIngredient = (index) => {
+  const deleteIngredient = (index:number) => {
     dispatch({
       type: DELETE_INGREDIEN,
       deleteItem: index,
     });
   };
 
-  const [{ handlerId }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "item",
-    hover(item) {
+    hover(item:any) {
       if (!ref.current) {
         return;
       }
@@ -57,9 +64,8 @@ export default function BurgerConstructorItem({
       className={styles.item}
       ref={ref}
       style={{ opacity }}
-      data-handler-id={handlerId}
     >
-      <DragIcon />
+      <DragIcon type="secondary" />
       <ConstructorElement
         text={text}
         price={price}
@@ -69,11 +75,3 @@ export default function BurgerConstructorItem({
     </li>
   );
 }
-
-BurgerConstructorItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  indexItem: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-};

@@ -16,7 +16,7 @@ import {
   GET_LOGOUT_FAILED,
   GET_CHANGEPROFILE_REQUEST,
   GET_CHANGEPROFILE_SUCCESS,
-  GET_CHANGEPROFILE_FAILED,
+  GET_CHANGEPROFILE_FAILED, TAuthorization,
 } from "../action/authorization";
 
 type TInitialState = {
@@ -59,7 +59,7 @@ const initialState:TInitialState = {
   user: {},
 };
 
-export const authorizationReducer = (state = initialState, action:any):TInitialState => {
+export const authorizationReducer = (state = initialState, action:TAuthorization):TInitialState => {
   switch (action.type) {
     case GET_REGISTRATION_REQUEST: {
       return {

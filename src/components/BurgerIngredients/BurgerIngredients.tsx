@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import IngredientsCateg from "../IngredientsCateg/IngredientsCateg";
+import React, { useState, useEffect, FC } from "react";
+import {IngredientsCateg} from "../IngredientsCateg/IngredientsCateg";
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useInView } from "react-intersection-observer";
 
-export default function BurgerIngredients({ setModalAtive }) {
+interface IModal {
+  setModalAtive: (bool: boolean) => void;
+}
+
+export const BurgerIngredients: FC<IModal> = ({ setModalAtive }) => {
   const [current, setCurrent] = useState("bun");
   const { ref: refBun, inView: bunView } = useInView();
   const { ref: refMain, inView: mainView } = useInView();
@@ -29,11 +32,11 @@ export default function BurgerIngredients({ setModalAtive }) {
 
   useEffect(() => {
     scrollIngredient();
-  });
+  }, [scrollIngredient]);
 
-  const onTabClick = (tab) => {
+  const onTabClick = (tab: string) => {
     setCurrent(tab);
-    const element = document.getElementById(tab);
+    const element: HTMLElement | null = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -77,8 +80,4 @@ export default function BurgerIngredients({ setModalAtive }) {
       />
     </section>
   );
-}
-
-BurgerIngredients.propTypes = {
-  setModalAtive: PropTypes.func.isRequired,
 };

@@ -1,19 +1,23 @@
 import styles from "./FeedDetails.module.css";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import React, {FC, useEffect, useState} from "react";
+import { useSelector } from "../../services/hooks";
 
-export default function FeedDetails({ total, totalToday }) {
-  const [ordersDone, setOrdersDone] = useState([]);
-  const [ordersReady, setOrdersReady] = useState([]);
-  const { orders } = useSelector((store) => store.wsReducer);
+interface IFeedDetails {
+  total: number;
+  totalToday: number;
+}
+
+export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
+  const [ordersDone, setOrdersDone] = useState<any>([]);
+  const [ordersReady, setOrdersReady] = useState<any>([]);
+  const { orders } = useSelector((state) => state.wsReducer);
 
   useEffect(() => {
     setOrdersDone(
-      orders.filter((item) => item.status === "done").map((item) => item.number)
+      orders.filter((item:any) => item.status === "done").map((item:any) => item.number)
     );
     setOrdersReady(
-      orders.filter((item) => item.status !== "done").map((item) => item.number)
+      orders.filter((item:any) => item.status !== "done").map((item:any) => item.number)
     );
   }, [orders]);
 
@@ -23,7 +27,7 @@ export default function FeedDetails({ total, totalToday }) {
         <div>
           <h2 className="text text_type_main-medium mb-5">Готовы:</h2>
           <ul className={styles.list}>
-            {ordersDone.map((item, index) => (
+            {ordersDone.map((item:any, index:number) => (
               <li
                 className={`text text_type_digits-default ${styles.item__left}`}
                 key={index}
@@ -36,7 +40,7 @@ export default function FeedDetails({ total, totalToday }) {
         <div>
           <h2 className="text text_type_main-medium mb-5">В работе:</h2>
           <ul className={styles.list}>
-            {ordersReady.map((item, index) => (
+            {ordersReady.map((item:any, index:number) => (
               <li
                 className={`text text_type_digits-default ${styles.item__right}`}
                 key={index}
@@ -60,8 +64,3 @@ export default function FeedDetails({ total, totalToday }) {
     </div>
   );
 }
-
-FeedDetails.propTypes = {
-  total: PropTypes.number.isRequired,
-  totalToday: PropTypes.number.isRequired,
-};

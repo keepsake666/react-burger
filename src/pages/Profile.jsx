@@ -19,12 +19,12 @@ import {
   getNewProfile,
   getUser,
 } from "../services/action/authorization";
-import FeedItem from "../components/FeedItem/FeedItem";
+import {FeedItem} from "../components/FeedItem/FeedItem";
 import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_CONNECTION_START,
 } from "../services/action/socketAction";
-import FeedId from "./FeedId";
+import {FeedId} from "./FeedId";
 // @ts-ignore
 
 export default function Profile({ setActive }) {

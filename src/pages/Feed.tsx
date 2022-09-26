@@ -1,23 +1,28 @@
 import styles from "./Feed.module.css";
-import React, { useEffect } from "react";
-import FeedItem from "../components/FeedItem/FeedItem";
-import FeedDetails from "../components/FeedDetails/FeedDetails";
+import React, {FC, useEffect} from "react";
+import {FeedItem} from "../components/FeedItem/FeedItem";
+import {FeedDetails} from "../components/FeedDetails/FeedDetails";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
-import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "../services/hooks";
 
-export default function Feed({ active }) {
+interface IFeed {
+  active:(bool:boolean) => void;
+}
+
+export const Feed:FC<IFeed> = ({ active }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store) => store.wsReducer);
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    return () => dispatch({ type: WS_CONNECTION_CLOSED });
+    dispatch({type:WS_CONNECTION_START})
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    }
   }, [dispatch]);
 
   return (
@@ -25,7 +30,7 @@ export default function Feed({ active }) {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
-          {orders?.map((item) => (
+          {orders?.map((item:any) => (
             <Link
               to={{
                 pathname: `/feed/${item._id}`,
@@ -52,7 +57,3 @@ export default function Feed({ active }) {
     </main>
   );
 }
-
-Feed.propTypes = {
-  active: PropTypes.func.isRequired,
-};

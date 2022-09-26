@@ -1,26 +1,37 @@
-import React, { useMemo } from "react";
-import PropTypes from "prop-types";
-import IngredientsItem from "../IngredientsItem/IngredientsItem";
+import React, { FC, useMemo } from "react";
+import {IngredientsItem} from "../IngredientsItem/IngredientsItem";
 import styles from "./IngredientsCateg.module.css";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "../../services/hooks";
 
-function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
+interface IIngredientsCateg {
+  setModalAtive: (bool: boolean) => void;
+  refBun: any;
+  refMain: any;
+  refSauce: any;
+}
+
+export const IngredientsCateg: FC<IIngredientsCateg> = ({
+  setModalAtive,
+  refBun,
+  refMain,
+  refSauce,
+}) => {
   const location = useLocation();
 
   const { burgerIgredients } = useSelector(
-    (store) => store.BurgerIngredientsReducer
+    (state) => state.BurgerIngredientsReducer
   );
   const main = useMemo(
-    () => burgerIgredients?.filter((elem) => elem.type === "main"),
+    () => burgerIgredients?.filter((elem: any) => elem.type === "main"),
     [burgerIgredients]
   );
   const bun = useMemo(
-    () => burgerIgredients?.filter((elem) => elem.type === "bun"),
+    () => burgerIgredients?.filter((elem:any) => elem.type === "bun"),
     [burgerIgredients]
   );
   const sauce = useMemo(
-    () => burgerIgredients?.filter((elem) => elem.type === "sauce"),
+    () => burgerIgredients?.filter((elem: any) => elem.type === "sauce"),
     [burgerIgredients]
   );
 
@@ -31,7 +42,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
           Булка
         </h2>
         <ul className={styles.list_item}>
-          {bun.map((elem) => (
+          {bun.map((elem: any) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
@@ -58,7 +69,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
           Соусы
         </h2>
         <ul className={styles.list_item}>
-          {sauce.map((elem) => (
+          {sauce.map((elem: any) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
@@ -84,7 +95,7 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
           Начинка
         </h2>
         <ul className={styles.list_item}>
-          {main.map((elem) => (
+          {main.map((elem: any) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
@@ -107,9 +118,4 @@ function IngredientsCateg({ setModalAtive, refBun, refMain, refSauce }) {
       </li>
     </ul>
   );
-}
-export default IngredientsCateg;
-
-IngredientsCateg.propTypes = {
-  setModalAtive: PropTypes.func.isRequired,
 };

@@ -1,15 +1,29 @@
-import React, { useMemo } from "react";
+import React, { useMemo, FC } from "react";
 import styles from "./IngredientsItem.module.css";
-import PropTypes from "prop-types";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { GET_INGREDIENTS_DETAILS } from "../../services/action/ingredientDetails";
 import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "../../services/hooks";
 
-function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
+interface IIngredientsItem {
+  name: string;
+  price: number;
+  image: string;
+  setModalAtive: (bool: boolean) => void;
+  id: any;
+  type?: any;
+}
+
+export const IngredientsItem: FC<IIngredientsItem> = ({
+  name,
+  price,
+  image,
+  setModalAtive,
+  id,
+  type,
+}) => {
   const dispatch = useDispatch();
   const { ingredientsConstructor, bunConstructor } = useSelector(
     (store) => store.BurgerConstructorReducer
@@ -23,11 +37,12 @@ function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
   });
 
   const countIngredient = useMemo(
-    () => ingredientsConstructor?.filter((item) => item[0]._id === id).length,
+    () =>
+      ingredientsConstructor?.filter((item: any) => item[0]._id === id).length,
     [id, ingredientsConstructor]
   );
   const countBun = useMemo(
-    () => bunConstructor?.filter((item) => item._id === id).length,
+    () => bunConstructor?.filter((item: any) => item._id === id).length,
     [bunConstructor, id]
   );
 
@@ -38,12 +53,7 @@ function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
         src={image}
         alt={name}
         className={styles.item_image}
-        onClick={(e) =>
-          `${setModalAtive(true)}  ${dispatch({
-            type: GET_INGREDIENTS_DETAILS,
-            details: e.target.id,
-          })}`
-        }
+        onClick={() => setModalAtive(true)}
       />
       <Counter
         count={type === "bun" ? countBun * 2 : countIngredient}
@@ -56,14 +66,4 @@ function IngredientsItem({ name, price, image, setModalAtive, id, type }) {
       <p className="text text_type_main-default">{name}</p>
     </li>
   );
-}
-export default IngredientsItem;
-
-IngredientsItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  setModalAtive: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string,
 };

@@ -1,8 +1,7 @@
 import styles from "./FeedId.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useParams, useRouteMatch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_CONNECTION_START,
@@ -10,10 +9,14 @@ import {
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
 import { date } from "../utils/const";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "../services/hooks";
 
-export default function FeedId({ modal }) {
-  const [state, setState] = useState(null);
+interface IFeedId {
+  modal: boolean;
+}
+
+export const FeedId: FC<IFeedId> = ({ modal }) => {
+  const [state, setState] = useState<any>(null);
   const match = useRouteMatch();
   const dispatch = useDispatch();
   const { orders } = useSelector((store) => store.wsReducer);
@@ -21,35 +24,37 @@ export default function FeedId({ modal }) {
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
-  const id = useParams().id;
+  const params: any = useParams();
+
+  const { id } = params;
 
   let data = match.path === "/feed/:id" ? orders : authOrders;
 
-  let ingredient;
+  let ingredient: any;
   ingredient = useMemo(
-    () => data?.filter((item) => item._id === id),
+    () => data?.filter((item: any) => item._id === id),
     [id, data]
   );
 
   useEffect(() => {
     setState(
-      ingredient[0]?.ingredients.map((item) => {
-        return burgerIgredients?.find((elem) => {
+      ingredient[0]?.ingredients.map((item: any) => {
+        return burgerIgredients?.find((elem: any) => {
           return item === elem._id;
         });
       })
     );
   }, [ingredient[0]?.ingredients, burgerIgredients]);
 
+  // @ts-ignore
   const exclusiveItem = [...new Set(state)];
-
-  const countIngredient = (id) => {
-    const count = state?.filter((item) => item === id).length;
+  const countIngredient = (id: any): any => {
+    const count = state?.filter((item: any) => item === id).length;
     return count;
   };
 
   const totalPrice = useMemo(
-    () => state?.reduce((total, item) => total + item.price, 0),
+    () => state?.reduce((total: any, item: any) => total + item.price, 0),
     [state]
   );
 
@@ -94,7 +99,7 @@ export default function FeedId({ modal }) {
             modal ? styles.list__modal : styles.list
           }`}
         >
-          {exclusiveItem?.map((item) => (
+          {exclusiveItem?.map((item: any) => (
             <li className={styles.item} key={item._id}>
               <div className={styles.container__ingredient}>
                 <img src={item.image} alt="" className={styles.image} />
@@ -125,8 +130,4 @@ export default function FeedId({ modal }) {
       <div className={styles.main}>...загрузка</div>
     </main>
   );
-}
-
-FeedId.propTypes = {
-  modal: PropTypes.bool,
 };

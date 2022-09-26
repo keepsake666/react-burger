@@ -8,7 +8,7 @@ const modalElement = document.querySelector("#modal") as HTMLElement;
 interface IModal {
   children: ReactNode;
   title: string;
-  setActive: any;
+  setActive: (bool:boolean) => void;
   active: boolean;
 }
 

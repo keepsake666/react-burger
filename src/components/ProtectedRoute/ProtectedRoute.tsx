@@ -1,9 +1,15 @@
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
+import { FC, ReactNode } from "react";
 
-export function ProtectedRoute({ children, ...rest }) {
+interface IProtectedRoute {
+  children: ReactNode;
+  rest?: any;
+}
+
+export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   const { isAuthenticated } = useSelector(
-    (store) => store.authorizationReducer
+    (state) => state.authorizationReducer
   );
 
   return (
@@ -23,4 +29,4 @@ export function ProtectedRoute({ children, ...rest }) {
       }
     />
   );
-}
+};

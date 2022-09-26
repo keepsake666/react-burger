@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./OrderDetails.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 
-export default function OrderDetails() {
-  const { numberOrder } = useSelector((store) => store.OrderBurgerReducer);
+export const OrderDetails: FC = () => {
+  const { numberOrder } = useSelector((state) => state.OrderBurgerReducer);
 
   return (
     <div className={styles.container}>
@@ -20,4 +20,4 @@ export default function OrderDetails() {
       </p>
     </div>
   );
-}
+};

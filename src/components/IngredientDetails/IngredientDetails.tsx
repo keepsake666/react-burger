@@ -1,18 +1,18 @@
-import React, { useMemo } from "react";
+import React, {FC, useMemo} from "react";
 import styles from "./IngredientDetails.module.css";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import {useSelector} from "../../services/hooks";
 
-export default function IngredientDetails() {
+export const IngredientDetails:FC =() => {
   const location = useLocation();
   const id = location.pathname.slice(12);
 
   const { burgerIgredients } = useSelector(
-    (store) => store.BurgerIngredientsReducer
+    (state) => state.BurgerIngredientsReducer
   );
 
-  const ingredient = useMemo(
-    () => burgerIgredients?.filter((item) => item._id === id),
+  const ingredient:any = useMemo(
+    () => burgerIgredients?.filter((item:any) => item._id === id),
     [burgerIgredients, id]
   );
 

@@ -7,6 +7,7 @@ import { TBurgerIngredients } from "../action/burgerIngredients";
 import { TIngredientDetails } from "../action/ingredientDetails";
 import { TOrderBurger } from "../action/orderBurger";
 import { TSocketActions } from "../action/socketAction";
+import { TAuthorization } from "../action/authorization";
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -15,7 +16,8 @@ type TApplicationActions =
   | TBurgerIngredients
   | TIngredientDetails
   | TOrderBurger
-  | TSocketActions;
+  | TSocketActions
+  | TAuthorization;
 
 // Типизация thunk в нашем приложении
 export type AppThunk<ReturnType = void> = ActionCreator<
@@ -24,4 +26,3 @@ export type AppThunk<ReturnType = void> = ActionCreator<
 
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = typeof store.dispatch;
-

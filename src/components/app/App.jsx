@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import {Modal} from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import {OrderDetails} from "../OrderDetails/OrderDetails";
+import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
@@ -19,8 +19,8 @@ import { getUser } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Ingredients from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
-import Feed from "../../pages/Feed";
-import FeedId from "../../pages/FeedId";
+import {Feed} from "../../pages/Feed";
+import {FeedId} from "../../pages/FeedId";
 import { GET_ORDER_RESET } from "../../services/action/orderBurger";
 
 function App() {
