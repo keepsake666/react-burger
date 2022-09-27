@@ -5,10 +5,11 @@ import {
   DROP_INGREDIENTS,
   RESET_ORDER, TBurgerConstructor,
 } from "../action/burgerConstructor";
+import {IConstructorBurger, IIngredients} from "../types/types";
 
 type TInitialState = {
   ingredientsConstructor: any;
-  bunConstructor: any;
+  bunConstructor: IIngredients[];
 };
 
 const initialState:TInitialState = {

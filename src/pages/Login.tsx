@@ -3,27 +3,28 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
 import styles from "./Login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../services/action/authorization";
+import { useDispatch, useSelector } from "../services/hooks";
 
-export default function Login() {
+export const Login: FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
+  const location: any = useLocation();
+  const { state } = location;
   const { isAuthenticated } = useSelector(
-    (store) => store.authorizationReducer
+    (state) => state.authorizationReducer
   );
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{mail:string, password:string}>({
     mail: "",
     password: "",
   });
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const LogIn = (e) => {
+  const LogIn = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(logIn(form.mail, form.password));
   };
@@ -77,4 +78,4 @@ export default function Login() {
       </div>
     </main>
   );
-}
+};

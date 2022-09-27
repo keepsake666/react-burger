@@ -9,15 +9,16 @@ import {
   WS_AUTH_GET_ORDERS,
   TSocketActions,
 } from "../action/socketAction";
+import {IGetOrdersWebSokect} from "../types/types";
 
 type IInitialState = {
   wsConnected: boolean;
-  orders: string[];
+  orders: IGetOrdersWebSokect[];
   error: undefined;
   total: number;
   totalToday: number;
   authWsConnected: boolean;
-  authOrders: string[];
+  authOrders: IGetOrdersWebSokect[];
   authError: undefined;
   authTotal: number;
   authTotalToday: number;

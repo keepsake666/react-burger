@@ -1,5 +1,6 @@
 import { apiData } from "../../utils/api";
 import {AppDispatch, AppThunk} from "../types";
+import {IIngredients} from "../types/types";
 
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" =
   "GET_INGREDIENTS_REQUEST";
@@ -14,7 +15,7 @@ interface IGetIngredientsReqest {
 
 interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  ingredients: any;
+  ingredients: IIngredients[];
 }
 
 interface IGetIngredientsFailed {

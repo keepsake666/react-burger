@@ -11,23 +11,33 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {
+  ChangeEvent,
+  FC,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { getCookie } from "../utils/api";
 import {
   actionLogOut,
   getNewProfile,
   getUser,
 } from "../services/action/authorization";
-import {FeedItem} from "../components/FeedItem/FeedItem";
+import { FeedItem } from "../components/FeedItem/FeedItem";
 import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_CONNECTION_START,
 } from "../services/action/socketAction";
-import {FeedId} from "./FeedId";
-// @ts-ignore
+import { FeedId } from "./FeedId";
+import { useDispatch, useSelector } from "../services/hooks";
 
-export default function Profile({ setActive }) {
+interface IProfile {
+  setActive: (bool: boolean) => void;
+}
+
+export const Profile: FC<IProfile> = ({ setActive }) => {
   const { authOrders } = useSelector((store) => store.wsReducer);
   const { user } = useSelector((store) => store.authorizationReducer);
   const dispatch = useDispatch();
@@ -45,17 +55,17 @@ export default function Profile({ setActive }) {
     password: "",
     name: `${user.name}`,
   });
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handlerLogOut = (e) => {
+  const handlerLogOut = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(actionLogOut(refreshToken));
   };
 
   const cancelChange = useCallback(
-    (e) => {
+    (e: SyntheticEvent) => {
       e.preventDefault();
       setForm({
         mail: `${user.email}`,
@@ -67,7 +77,7 @@ export default function Profile({ setActive }) {
   );
 
   const postNewProfile = useCallback(
-    (e) => {
+    (e: SyntheticEvent) => {
       e.preventDefault();
       dispatch(getNewProfile(accessToken, form.mail, form.password, form.name));
     },
@@ -78,7 +88,9 @@ export default function Profile({ setActive }) {
     if (accessToken) {
       dispatch({ type: WS_AUTH_CONNECTION_START });
     }
-    return () => dispatch({ type: WS_AUTH_CONNECTION_CLOSED });
+    return () => {
+      dispatch({ type: WS_AUTH_CONNECTION_CLOSED });
+    };
   }, [accessToken, dispatch]);
 
   return (
@@ -174,7 +186,7 @@ export default function Profile({ setActive }) {
           </Route>
           <Route path="/profile/orders" exact={true}>
             <ul className={styles.list}>
-              {authOrders?.map((item, index) => (
+              {authOrders?.map((item:any, index:number) => (
                 <Link
                   to={{
                     pathname: `/profile/orders/${item?._id}`,
@@ -201,4 +213,4 @@ export default function Profile({ setActive }) {
       </main>
     </>
   );
-}
+};

@@ -34,6 +34,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
   const { ingredientsConstructor, bunConstructor } = useSelector(
     (state) => state.BurgerConstructorReducer
   );
+
   const { orderRequest } = useSelector((state) => state.OrderBurgerReducer);
 
   const totalPriceIngredients = useMemo(
@@ -44,6 +45,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
       ),
     [ingredientsConstructor]
   );
+
   const totalPriceBun = useMemo(
     () => (bunConstructor.length >= 1 ? bunConstructor[0].price * 2 : 0),
     [bunConstructor]
@@ -59,18 +61,19 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId: any) {
+    drop(itemId: { id: string }) {
+
       const typeIngredient = burgerIgredients
-        .filter((item: any) => item._id === itemId.id)
-        .map((item: any) => item.type);
+        .filter((item) => item._id === itemId.id)
+        .map((item) => item.type);
       if (typeIngredient[0] !== "bun") {
         const ingredientItem = burgerIgredients.filter(
-          (item: any) => item._id === itemId.id && item.type !== "bun"
+          (item) => item._id === itemId.id && item.type !== "bun"
         );
-        dispatch(addIngredient(ingredientItem, uuidv4()));
+        dispatch(addIngredient({...ingredientItem, "id": uuidv4()}));
       } else if (typeIngredient[0] === "bun") {
         const bunItem = burgerIgredients.filter(
-          (item: any) => item._id === itemId.id && item.type === "bun"
+          (item) => item._id === itemId.id && item.type === "bun"
         );
         dispatch(addBun(bunItem));
       }
@@ -109,7 +112,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
     <section className={styles.section} ref={dropTarget}>
       {bunConstructor.length >= 1 ? (
         <div className="ml-9">
-          {bunConstructor.map((elem: any, index: number) => (
+          {bunConstructor.map((elem, index: number) => (
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -127,7 +130,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
         <ul className={styles.section__block}>
           {ingredientsConstructor.map((elem: any, index: number) => (
             <BurgerConstructorItem
-              key={elem.uuid}
+              key={elem.id}
               text={elem[0].name}
               image={elem[0].image}
               price={elem[0].price}
@@ -140,7 +143,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
         <h2 className="text text_type_digits-medium">Добавте ингредиент</h2>
       )}
       <div className="ml-9">
-        {bunConstructor.map((elem: any, index: number) => (
+        {bunConstructor.map((elem, index: number) => (
           <ConstructorElement
             type="bottom"
             isLocked={true}

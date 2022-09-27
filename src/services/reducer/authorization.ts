@@ -18,9 +18,9 @@ import {
   GET_CHANGEPROFILE_SUCCESS,
   GET_CHANGEPROFILE_FAILED, TAuthorization,
 } from "../action/authorization";
+import {IRegistration, IUser} from "../types/types";
 
 type TInitialState = {
-  data: any;
   authorizationFailed: boolean;
   authorizationRequest: boolean;
   logInFailed: boolean;
@@ -36,11 +36,10 @@ type TInitialState = {
   isAuthenticated: boolean;
   errorNumber: string;
   errorNumberUpdateProfile: string;
-  user: any,
+  user: IUser,
 };
 
 const initialState:TInitialState = {
-  data: {},
   authorizationFailed: false,
   authorizationRequest: false,
   logInFailed: false,
@@ -56,7 +55,7 @@ const initialState:TInitialState = {
   isAuthenticated: false,
   errorNumber: "",
   errorNumberUpdateProfile: "",
-  user: {},
+  user: {email: '', name: ''},
 };
 
 export const authorizationReducer = (state = initialState, action:TAuthorization):TInitialState => {
@@ -94,7 +93,6 @@ export const authorizationReducer = (state = initialState, action:TAuthorization
     case GET_LOGIN_SUCCESS: {
       return {
         ...state,
-        data: action.payload,
         logInRequest: false,
         logInFailed: false,
         user: action.payload.user,
@@ -167,7 +165,7 @@ export const authorizationReducer = (state = initialState, action:TAuthorization
         logOutRequest: false,
         logOutFailed: false,
         isAuthenticated: false,
-        user: {},
+        user: {email:'', name: ''},
       };
     }
     case GET_LOGOUT_FAILED: {

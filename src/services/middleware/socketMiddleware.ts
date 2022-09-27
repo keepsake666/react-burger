@@ -1,10 +1,11 @@
 import { getCookie } from "../../utils/api";
+import { Middleware, MiddlewareAPI } from "redux";
+import {IWebSocket} from "../types/types";
+export const socketMiddleware = (wsUrl:string, wsActions:IWebSocket, auth:boolean): Middleware => {
+  return (store:MiddlewareAPI) => {
+    let socket:WebSocket | null = null;
 
-export const socketMiddleware = (wsUrl, wsActions, auth) => {
-  return (store) => {
-    let socket = null;
-
-    return (next) => (action) => {
+    return next => action => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, onOpen, onClose, onError, onOrders, wsSendOrders } =
@@ -15,7 +16,7 @@ export const socketMiddleware = (wsUrl, wsActions, auth) => {
       } else if (type === wsInit && auth === true && accessToken) {
         const accessToken = getCookie("token");
         socket = new WebSocket(
-          `${wsUrl}?token=${accessToken.replace("Bearer ", "")}`
+          `${wsUrl}?token=${accessToken?.replace("Bearer ", "")}`
         );
       }
       if (socket) {

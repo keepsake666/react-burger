@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react";
 
 interface IProtectedRoute {
   children: ReactNode;
-  rest?: any;
+  path: string;
 }
 
 export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {

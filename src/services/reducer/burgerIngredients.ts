@@ -4,9 +4,10 @@ import {
   GET_INGREDIENTS_FAILED,
   TBurgerIngredients,
 } from "../action/burgerIngredients";
+import {IIngredients} from "../types/types";
 
 type IInitialState = {
-  burgerIgredients: string[];
+  burgerIgredients: IIngredients[];
   igredientsRequest: boolean;
   igredientsFailed: boolean;
 };

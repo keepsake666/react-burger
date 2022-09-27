@@ -10,7 +10,7 @@ type TGetOrderRequest = {
 };
 type TGetOrderSuccess = {
   readonly type: typeof GET_ORDER_SUCCESS;
-  payload: any;
+  payload: number;
 };
 type TGetOrderFailed = {
   readonly type: typeof GET_ORDER_FAILED;

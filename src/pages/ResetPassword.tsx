@@ -5,26 +5,26 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
 import { postNewPassword } from "../utils/api";
-import { useSelector } from "react-redux";
+import { useSelector } from "../services/hooks";
 
-export default function ResetPassword() {
+export const ResetPassword: FC = () => {
   const history = useHistory();
   const { isAuthenticated } = useSelector(
-    (store) => store.authorizationReducer
+    (state) => state.authorizationReducer
   );
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ password: string; code: string }>({
     password: "",
     code: "",
   });
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const newPassword = (e) => {
+  const newPassword = (e: SyntheticEvent) => {
     e.preventDefault();
     postNewPassword(form.password, form.code)
       .then((res) => {
@@ -78,4 +78,4 @@ export default function ResetPassword() {
       </div>
     </main>
   );
-}
+};

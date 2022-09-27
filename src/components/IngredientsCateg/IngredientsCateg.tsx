@@ -22,6 +22,7 @@ export const IngredientsCateg: FC<IIngredientsCateg> = ({
   const { burgerIgredients } = useSelector(
     (state) => state.BurgerIngredientsReducer
   );
+
   const main = useMemo(
     () => burgerIgredients?.filter((elem: any) => elem.type === "main"),
     [burgerIgredients]

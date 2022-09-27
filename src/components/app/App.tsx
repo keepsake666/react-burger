@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from "react";
-import AppHeader from "../AppHeader/AppHeader";
+import React, {FC, useEffect, useState} from "react";
+import {AppHeader} from "../AppHeader/AppHeader";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../OrderDetails/OrderDetails";
 import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import styles from "./App.module.css";
-import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/action/burgerIngredients";
 import { RESET_ORDER } from "../../services/action/burgerConstructor";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
-import Login from "../../pages/Login";
-import Home from "../../pages/Home";
-import Register from "../../pages/Register";
-import ForgotPassword from "../../pages/ForgotPassword";
-import ResetPassword from "../../pages/ResetPassword";
-import Profile from "../../pages/Profile";
+import {Login} from "../../pages/Login";
+import {Home} from "../../pages/Home";
+import {Register} from "../../pages/Register";
+import {ForgotPassword} from "../../pages/ForgotPassword";
+import {ResetPassword} from "../../pages/ResetPassword";
+import {Profile} from "../../pages/Profile";
 import { getCookie } from "../../utils/api";
 import { getUser } from "../../services/action/authorization";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import Ingredients from "../../pages/Ingredients";
+import {Ingredients} from "../../pages/Ingredients";
 import { NotFound404 } from "../../pages/NotFound404";
 import {Feed} from "../../pages/Feed";
 import {FeedId} from "../../pages/FeedId";
 import { GET_ORDER_RESET } from "../../services/action/orderBurger";
+import {useDispatch} from "../../services/hooks";
+import {TLocation} from "../../services/types/types";
 
-function App() {
+const App: FC = () => {
   const [modalOrderActive, setModalOrderActive] = useState(false);
   const [modalIngredientActive, setModalIngredientActive] = useState(true);
   const [modalOrderDetails, setModalOrderDetails] = useState(true);
@@ -31,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
-  const location = useLocation();
+  const location = useLocation<TLocation>();
   const background = location.state && location.state.background;
   const history = useHistory();
 

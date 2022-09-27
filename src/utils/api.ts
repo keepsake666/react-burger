@@ -1,3 +1,12 @@
+import {
+  IGetIngredients,
+  IGetNewToken,
+  IGetProfile,
+  IOkRes,
+  IOrderBurger,
+  IRegistration
+} from "../services/types/types";
+
 const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
@@ -19,13 +28,13 @@ export function apiOrder(token: string, ...ingredients: string[]) {
     body: JSON.stringify({
       ingredients,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IOrderBurger>(res));
 }
 
 export function apiData() {
   return fetch(config.baseUrl + "/ingredients", {
     headers: config.headers,
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IGetIngredients>(res));
 }
 
 export function setRegistration(email: string, password: string, name: string) {
@@ -37,7 +46,7 @@ export function setRegistration(email: string, password: string, name: string) {
       password,
       name,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IRegistration>(res));
 }
 
 export function setLogIn(email: string, password: string) {
@@ -48,13 +57,13 @@ export function setLogIn(email: string, password: string) {
       email,
       password,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IRegistration>(res));
 }
 
 export function getProfile(token: any) {
   return fetch(config.baseUrl + "/auth/user", {
     headers: { "Content-Type": "application/json", authorization: token },
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IGetProfile>(res));
 }
 
 export function patchNewProfile(
@@ -71,7 +80,7 @@ export function patchNewProfile(
       password,
       name,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IGetProfile>(res));
 }
 
 export function getNewToken(token: any) {
@@ -81,7 +90,7 @@ export function getNewToken(token: any) {
     body: JSON.stringify({
       token: token,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IGetNewToken>(res));
 }
 
 export function logOut(token: string) {
@@ -91,7 +100,7 @@ export function logOut(token: string) {
     body: JSON.stringify({
       token: token,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IOkRes>(res));
 }
 
 export function recoverPassword(mail: string) {
@@ -101,7 +110,7 @@ export function recoverPassword(mail: string) {
     body: JSON.stringify({
       mail,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IOkRes>(res));
 }
 
 export function postNewPassword(password: string, token: string) {
@@ -112,7 +121,7 @@ export function postNewPassword(password: string, token: string) {
       password,
       token,
     }),
-  }).then((res) => checkResponse<any>(res));
+  }).then((res) => checkResponse<IOkRes>(res));
 }
 
 export function setCookie(name: string, value: string, props?: any) {

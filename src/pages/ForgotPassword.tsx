@@ -4,20 +4,20 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
 import { recoverPassword } from "../utils/api";
-import { useSelector } from "react-redux";
+import { useSelector } from "../services/hooks";
 
-export default function ForgotPassword() {
-  const [valueEmail, setValueEmail] = useState("");
+export const ForgotPassword: FC = () => {
+  const [valueEmail, setValueEmail] = useState<string>("");
   const { isAuthenticated } = useSelector(
-    (store) => store.authorizationReducer
+    (state) => state.authorizationReducer
   );
-  const onChangeMail = (e) => {
+  const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
     setValueEmail(e.target.value);
   };
   const history = useHistory();
-  const recover = (e) => {
+  const recover = (e: SyntheticEvent) => {
     e.preventDefault();
     recoverPassword(valueEmail)
       .then((res) => {
@@ -58,4 +58,4 @@ export default function ForgotPassword() {
       </div>
     </main>
   );
-}
+};

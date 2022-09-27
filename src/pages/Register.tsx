@@ -5,11 +5,11 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { useState } from "react";
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
 import { registration } from "../services/action/authorization";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/hooks";
 
-export default function Register() {
+export const Register: FC = () => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(
     (store) => store.authorizationReducer
@@ -20,11 +20,11 @@ export default function Register() {
     password: "",
     name: "",
   });
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onRegistration = (e) => {
+  const onRegistration = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(registration(form.mail, form.password, form.name));
   };
@@ -84,4 +84,4 @@ export default function Register() {
       </div>
     </main>
   );
-}
+};

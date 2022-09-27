@@ -1,3 +1,5 @@
+import { IIngredients} from "../types/types";
+
 export const ADD_ITNGREDIENTS: "ADD_ITNGREDIENTS" = "ADD_ITNGREDIENTS";
 export const ADD_BUN: "ADD_BUN" = "ADD_BUN";
 export const DELETE_INGREDIEN: "DELETE_INGREDIEN" = "DELETE_INGREDIEN";
@@ -6,15 +8,12 @@ export const RESET_ORDER: "RESET_ORDER" = "RESET_ORDER";
 
 interface IAddIngredient {
   readonly type: typeof ADD_ITNGREDIENTS;
-  item: {
-    item: any;
-    uuid: string;
-  };
+  item: any;
 }
 
 interface IAddBun {
   readonly type: typeof ADD_BUN;
-  addBun: any;
+  addBun: IIngredients[];
 }
 
 interface IDporIngredient {
@@ -24,24 +23,21 @@ interface IDporIngredient {
 }
 interface IDeleteIngredient {
   readonly type: typeof DELETE_INGREDIEN;
-  deleteItem: any;
+  deleteItem: number;
 }
 
 interface IResetOrder {
   readonly type: typeof RESET_ORDER;
 }
 
-export function addIngredient(item: any, id: string): IAddIngredient {
+export function addIngredient(item: any): IAddIngredient {
   return {
     type: ADD_ITNGREDIENTS,
-    item: {
-      ...item,
-      uuid: id,
-    },
+    item: item,
   };
 }
 
-export function addBun(item: any): IAddBun {
+export function addBun(item: IIngredients[]): IAddBun {
   return {
     type: ADD_BUN,
     addBun: item,

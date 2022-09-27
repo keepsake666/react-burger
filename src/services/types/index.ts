@@ -4,7 +4,6 @@ import { Action, ActionCreator } from "redux";
 import { store } from "../store";
 import { TBurgerConstructor } from "../action/burgerConstructor";
 import { TBurgerIngredients } from "../action/burgerIngredients";
-import { TIngredientDetails } from "../action/ingredientDetails";
 import { TOrderBurger } from "../action/orderBurger";
 import { TSocketActions } from "../action/socketAction";
 import { TAuthorization } from "../action/authorization";
@@ -14,7 +13,6 @@ export type RootState = ReturnType<typeof store.getState>;
 type TApplicationActions =
   | TBurgerConstructor
   | TBurgerIngredients
-  | TIngredientDetails
   | TOrderBurger
   | TSocketActions
   | TAuthorization;

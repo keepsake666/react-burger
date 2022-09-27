@@ -10,7 +10,7 @@ import {
   setRegistration,
 } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../types";
-import { ADD_ITNGREDIENTS } from "./burgerConstructor";
+import {IGetNewToken, IGetProfile, IOkRes, IRegistration} from "../types/types";
 export const GET_REGISTRATION_REQUEST: "GET_REGISTRATION_REQUEST" =
   "GET_REGISTRATION_REQUEST";
 export const GET_REGISTRATION_SUCCESS: "GET_REGISTRATION_SUCCESS" =
@@ -41,7 +41,7 @@ interface IGetRegistrationRequest {
 }
 interface IGetRegistrationSuccess {
   readonly type: typeof GET_REGISTRATION_SUCCESS;
-  payload: any;
+  payload: IRegistration;
 }
 interface IGetRegistrationFailed {
   readonly type: typeof GET_REGISTRATION_FAILED;
@@ -51,7 +51,7 @@ interface IGetLoginRequest {
 }
 interface IGetLoginSuccess {
   readonly type: typeof GET_LOGIN_SUCCESS;
-  payload: any;
+  payload: IRegistration;
 }
 interface IGetLoginFailed {
   readonly type: typeof GET_LOGIN_FAILED;
@@ -61,7 +61,7 @@ interface IGetTokenRequest {
 }
 interface IGetTokenSuccess {
   readonly type: typeof GET_TOKEN_SUCCESS;
-  payload: any;
+  payload: IGetNewToken;
 }
 interface IGetTokenFailed {
   readonly type: typeof GET_TOKEN_FAILED;
@@ -71,18 +71,18 @@ interface IGetUserRequest {
 }
 interface IGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
-  payload: any;
+  payload: IGetProfile;
 }
 interface IGetUserFailed {
   readonly type: typeof GET_USER_FAILED;
-  failed: any;
+  failed: string;
 }
 interface IGetLogoutRequest {
   readonly type: typeof GET_LOGOUT_REQUEST;
 }
 interface IGetLogoutSuccess {
   readonly type: typeof GET_LOGOUT_SUCCESS;
-  payload: any;
+  payload: IOkRes;
 }
 interface IGetLogoutFailed {
   readonly type: typeof GET_LOGOUT_FAILED;
@@ -92,11 +92,11 @@ interface IGetChangeProfileRequest {
 }
 interface IGetChangeProfileSuccess {
   readonly type: typeof GET_CHANGEPROFILE_SUCCESS;
-  payload: any;
+  payload: IGetProfile;
 }
 interface IGetChangeProfileFailed {
   readonly type: typeof GET_CHANGEPROFILE_FAILED;
-  failed: any;
+  failed: string;
 }
 
 export type TAuthorization =

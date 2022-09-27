@@ -1,6 +1,6 @@
 import styles from "./FeedId.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { useParams, useRouteMatch } from "react-router-dom";
 import {
   WS_AUTH_CONNECTION_CLOSED,
@@ -10,13 +10,13 @@ import {
 } from "../services/action/socketAction";
 import { date } from "../utils/const";
 import { useDispatch, useSelector } from "../services/hooks";
+import { IGetOrdersWebSokect, IIngredients } from "../services/types/types";
 
 interface IFeedId {
-  modal: boolean;
+  modal?: boolean;
 }
 
 export const FeedId: FC<IFeedId> = ({ modal }) => {
-  const [state, setState] = useState<any>(null);
   const match = useRouteMatch();
   const dispatch = useDispatch();
   const { orders } = useSelector((store) => store.wsReducer);
@@ -24,38 +24,32 @@ export const FeedId: FC<IFeedId> = ({ modal }) => {
   const { burgerIgredients } = useSelector(
     (store) => store.BurgerIngredientsReducer
   );
-  const params: any = useParams();
-
+  const params: { id: string } = useParams();
   const { id } = params;
 
   let data = match.path === "/feed/:id" ? orders : authOrders;
 
-  let ingredient: any;
+  let ingredient: IGetOrdersWebSokect[];
   ingredient = useMemo(
-    () => data?.filter((item: any) => item._id === id),
+    () => data?.filter((item) => item._id === id),
     [id, data]
   );
 
-  useEffect(() => {
-    setState(
-      ingredient[0]?.ingredients.map((item: any) => {
-        return burgerIgredients?.find((elem: any) => {
-          return item === elem._id;
-        });
-      })
-    );
-  }, [ingredient[0]?.ingredients, burgerIgredients]);
+  const stateIngredient = ingredient[0]?.ingredients.map((item) => {
+    return burgerIgredients?.find((elem) => {
+      return item === elem._id;
+    });
+  });
 
-  // @ts-ignore
-  const exclusiveItem = [...new Set(state)];
-  const countIngredient = (id: any): any => {
-    const count = state?.filter((item: any) => item === id).length;
+  const exclusiveItem = [...new Set(stateIngredient)];
+  const countIngredient = (id: IIngredients): number => {
+    const count = stateIngredient?.filter((item: any) => item === id).length;
     return count;
   };
 
   const totalPrice = useMemo(
-    () => state?.reduce((total: any, item: any) => total + item.price, 0),
-    [state]
+    () => stateIngredient?.reduce((total, item: any) => total + item.price, 0),
+    [stateIngredient]
   );
 
   useEffect(() => {

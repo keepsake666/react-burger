@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "./AppHeader.module.css";
 import {
   Logo,
@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink } from "react-router-dom";
 
-function AppHeader() {
+export const AppHeader:FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -57,4 +57,3 @@ function AppHeader() {
     </header>
   );
 }
-export default AppHeader;
