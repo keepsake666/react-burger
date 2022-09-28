@@ -35,11 +35,13 @@ export const FeedId: FC<IFeedId> = ({ modal }) => {
     [id, data]
   );
 
-  const stateIngredient = ingredient[0]?.ingredients.map((item) => {
-    return burgerIgredients?.find((elem) => {
-      return item === elem._id;
+  const stateIngredient = useMemo<IIngredients[]>((): any => {
+    return ingredient[0]?.ingredients.map((item) => {
+      return burgerIgredients?.find((elem) => {
+        return item === elem._id;
+      });
     });
-  });
+  }, [burgerIgredients, ingredient]);
 
   const exclusiveItem = [...new Set(stateIngredient)];
   const countIngredient = (id: IIngredients): number => {
@@ -47,7 +49,7 @@ export const FeedId: FC<IFeedId> = ({ modal }) => {
   };
 
   const totalPrice = useMemo(
-    () => stateIngredient?.reduce((total, item: any) => total + item.price, 0),
+    () => stateIngredient?.reduce((total, item) => total + item.price, 0),
     [stateIngredient]
   );
 
@@ -92,7 +94,7 @@ export const FeedId: FC<IFeedId> = ({ modal }) => {
             modal ? styles.list__modal : styles.list
           }`}
         >
-          {exclusiveItem?.map((item: any) => (
+          {exclusiveItem?.map((item) => (
             <li className={styles.item} key={item._id}>
               <div className={styles.container__ingredient}>
                 <img src={item.image} alt="" className={styles.image} />

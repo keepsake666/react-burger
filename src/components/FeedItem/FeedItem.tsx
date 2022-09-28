@@ -1,8 +1,9 @@
 import styles from "./FeedItem.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import {FC, useMemo} from "react";
+import { FC, useMemo } from "react";
 import { date } from "../../utils/const";
-import {useSelector} from "../../services/hooks";
+import { useSelector } from "../../services/hooks";
+import {IIngredients} from "../../services/types/types";
 
 interface IFeedItem {
   name: string;
@@ -11,20 +12,27 @@ interface IFeedItem {
   ingredient: Array<string>;
 }
 
-export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) =>{
+export const FeedItem: FC<IFeedItem> = ({
+  name,
+  time,
+  number,
+  ingredient = [],
+}) => {
   const { burgerIgredients } = useSelector(
     (state) => state.BurgerIngredientsReducer
   );
 
-  const orderItems =  ingredient?.map((item) => {
-    return burgerIgredients?.find((elem) => {
-      return item === elem._id;
-    });
-  });
+  const orderItems= useMemo<IIngredients[]>(():any => {
+    return ingredient?.map((elem) => {
+      return  burgerIgredients?.find((item) => {
+        return elem === item._id;
+      })
+    })
+  }, [burgerIgredients, ingredient])
 
   const totalPrice = useMemo(
     () =>
-      orderItems?.reduce((total: number, item: any) => total + item.price, 0),
+      orderItems?.reduce((total, item) => total + item.price, 0),
     [orderItems]
   );
 
@@ -41,7 +49,7 @@ export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) 
         <ul className={styles.list}>
           {orderItems?.length >= 6 ? (
             <>
-              {orderItems?.slice(0, 5).map((item:any, index:number) => (
+              {orderItems?.slice(0, 5).map((item, index) => (
                 <li className={styles.item} key={index}>
                   <img
                     src={item.image}
@@ -64,7 +72,7 @@ export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) 
               </li>
             </>
           ) : (
-            orderItems?.map((item:any, index:number) => (
+            orderItems?.map((item, index) => (
               <li className={styles.item} key={index}>
                 <img
                   src={item.image}
@@ -83,4 +91,4 @@ export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) 
       </div>
     </li>
   );
-}
+};
