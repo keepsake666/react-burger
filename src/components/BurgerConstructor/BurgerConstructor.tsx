@@ -155,11 +155,11 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
           <CurrencyIcon type="secondary" />
         </div>
         {bunConstructor.length >= 1 && ingredientsConstructor.length >= 1 ? (
-          <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
+          <Button type="primary" size="medium" onClick={creatOrderAndSetModal} htmlType='submit'>
             {orderRequest ? "..загрузка" : "Оформить заказ"}
           </Button>
         ) : (
-          <Button type="primary" size="medium" disabled={true}>
+          <Button type="primary" size="medium" disabled={true} htmlType='submit'>
             Оформить заказ
           </Button>
         )}

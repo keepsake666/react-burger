@@ -170,7 +170,7 @@ export const Profile: FC<IProfile> = ({ setActive }) => {
                   />
                 </div>
                 <div className={styles.button_container}>
-                  <Button type="primary" size="medium">
+                  <Button htmlType='submit' type="primary" size="medium">
                     Сохранить
                   </Button>
                   <button
