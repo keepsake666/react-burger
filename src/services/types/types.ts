@@ -111,3 +111,9 @@ export interface IFeed  {
   totalToday: number;
   orders: IGetOrdersWebSokect[];
 }
+
+export interface  IDrag {
+  id: string;
+  index: number;
+  indexItem: number;
+}

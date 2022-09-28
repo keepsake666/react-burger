@@ -186,7 +186,7 @@ export const Profile: FC<IProfile> = ({ setActive }) => {
           </Route>
           <Route path="/profile/orders" exact={true}>
             <ul className={styles.list}>
-              {authOrders?.map((item:any, index:number) => (
+              {authOrders?.map((item, index) => (
                 <Link
                   to={{
                     pathname: `/profile/orders/${item?._id}`,

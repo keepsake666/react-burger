@@ -55,7 +55,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
     [ingredientsConstructor]
   );
   const orderBun = useMemo(
-    () => bunConstructor.map((item: any) => item._id),
+    () => bunConstructor.map((item) => item._id),
     [bunConstructor]
   );
 
@@ -107,12 +107,11 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
     setModalAtive,
   ]);
 
-  // @ts-ignore
   return (
     <section className={styles.section} ref={dropTarget}>
       {bunConstructor.length >= 1 ? (
         <div className="ml-9">
-          {bunConstructor.map((elem, index: number) => (
+          {bunConstructor.map((elem, index) => (
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -143,7 +142,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
         <h2 className="text text_type_digits-medium">Добавте ингредиент</h2>
       )}
       <div className="ml-9">
-        {bunConstructor.map((elem, index: number) => (
+        {bunConstructor.map((elem, index) => (
           <ConstructorElement
             type="bottom"
             isLocked={true}

@@ -12,7 +12,7 @@ export const IngredientDetails:FC =() => {
   );
 
   const ingredient:any = useMemo(
-    () => burgerIgredients?.filter((item:any) => item._id === id),
+    () => burgerIgredients?.filter((item) => item._id === id),
     [burgerIgredients, id]
   );
 

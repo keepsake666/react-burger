@@ -8,8 +8,8 @@ interface IFeedDetails {
 }
 
 export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
-  const [ordersDone, setOrdersDone] = useState<any>([]);
-  const [ordersReady, setOrdersReady] = useState<any>([]);
+  const [ordersDone, setOrdersDone] = useState<Array<number>>([]);
+  const [ordersReady, setOrdersReady] = useState<Array<number>>([]);
   const { orders } = useSelector((state) => state.wsReducer);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
         <div>
           <h2 className="text text_type_main-medium mb-5">Готовы:</h2>
           <ul className={styles.list}>
-            {ordersDone.map((item:any, index:number) => (
+            {ordersDone.map((item, index) => (
               <li
                 className={`text text_type_digits-default ${styles.item__left}`}
                 key={index}

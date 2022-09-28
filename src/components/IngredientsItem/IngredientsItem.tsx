@@ -5,15 +5,15 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useSelector } from "../../services/hooks";
 
 interface IIngredientsItem {
   name: string;
   price: number;
   image: string;
   setModalAtive: (bool: boolean) => void;
-  id: any;
-  type?: any;
+  id: string;
+  type?: string;
 }
 
 export const IngredientsItem: FC<IIngredientsItem> = ({
@@ -24,7 +24,6 @@ export const IngredientsItem: FC<IIngredientsItem> = ({
   id,
   type,
 }) => {
-  const dispatch = useDispatch();
   const { ingredientsConstructor, bunConstructor } = useSelector(
     (store) => store.BurgerConstructorReducer
   );
@@ -35,14 +34,13 @@ export const IngredientsItem: FC<IIngredientsItem> = ({
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
   });
-
   const countIngredient = useMemo(
     () =>
       ingredientsConstructor?.filter((item: any) => item[0]._id === id).length,
     [id, ingredientsConstructor]
   );
   const countBun = useMemo(
-    () => bunConstructor?.filter((item: any) => item._id === id).length,
+    () => bunConstructor?.filter((item) => item._id === id).length,
     [bunConstructor, id]
   );
 

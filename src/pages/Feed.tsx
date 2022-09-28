@@ -30,7 +30,7 @@ export const Feed:FC<IFeed> = ({ active }) => {
       <div className={styles.feed__container}>
         <h2 className="text text_type_main-large mb-5 mt-10">Лента заказов</h2>
         <ul className={styles.list}>
-          {orders?.map((item:any) => (
+          {orders?.map((item) => (
             <Link
               to={{
                 pathname: `/feed/${item._id}`,

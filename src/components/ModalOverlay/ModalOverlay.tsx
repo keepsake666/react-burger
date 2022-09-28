@@ -1,7 +1,11 @@
 import React, {FC, useEffect} from "react";
 import styles from "./ModalOverlay.module.css";
 
-export const ModalOverlay: FC<any>=({ setActive }) =>{
+interface IModalActive {
+  setActive: (bool:boolean)=> void;
+}
+
+export const ModalOverlay: FC<IModalActive>=({ setActive }) =>{
   useEffect(() => {
     const close = (e:KeyboardEvent) => {
       if (e.key === "Escape") {

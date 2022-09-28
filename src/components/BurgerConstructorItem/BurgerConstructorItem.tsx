@@ -9,6 +9,7 @@ import { DELETE_INGREDIEN } from "../../services/action/burgerConstructor";
 import { useDrag, useDrop } from "react-dnd";
 import { dporIngredient } from "../../services/action/burgerConstructor";
 import {useDispatch} from "../../services/hooks";
+import {IDrag} from "../../services/types/types";
 
 interface IBurgerConstructorItem{
   text: string,
@@ -35,7 +36,7 @@ export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
 
   const [, drop] = useDrop({
     accept: "item",
-    hover(item:any) {
+    hover(item:IDrag) {
       if (!ref.current) {
         return;
       }

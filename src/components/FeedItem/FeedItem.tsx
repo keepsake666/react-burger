@@ -8,16 +8,16 @@ interface IFeedItem {
   name: string;
   time: Date;
   number: number;
-  ingredient: any;
+  ingredient: Array<string>;
 }
 
-export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient }) =>{
+export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) =>{
   const { burgerIgredients } = useSelector(
     (state) => state.BurgerIngredientsReducer
   );
 
-  const orderItems = ingredient?.map((item:any) => {
-    return burgerIgredients?.find((elem:any) => {
+  const orderItems =  ingredient?.map((item) => {
+    return burgerIgredients?.find((elem) => {
       return item === elem._id;
     });
   });

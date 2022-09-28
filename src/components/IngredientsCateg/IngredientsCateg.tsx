@@ -6,9 +6,9 @@ import { useSelector } from "../../services/hooks";
 
 interface IIngredientsCateg {
   setModalAtive: (bool: boolean) => void;
-  refBun: any;
-  refMain: any;
-  refSauce: any;
+  refBun: ()=> void;
+  refMain: ()=> void;
+  refSauce: ()=> void;
 }
 
 export const IngredientsCateg: FC<IIngredientsCateg> = ({
@@ -18,21 +18,20 @@ export const IngredientsCateg: FC<IIngredientsCateg> = ({
   refSauce,
 }) => {
   const location = useLocation();
-
   const { burgerIgredients } = useSelector(
     (state) => state.BurgerIngredientsReducer
   );
 
   const main = useMemo(
-    () => burgerIgredients?.filter((elem: any) => elem.type === "main"),
+    () => burgerIgredients?.filter((elem) => elem.type === "main"),
     [burgerIgredients]
   );
   const bun = useMemo(
-    () => burgerIgredients?.filter((elem:any) => elem.type === "bun"),
+    () => burgerIgredients?.filter((elem) => elem.type === "bun"),
     [burgerIgredients]
   );
   const sauce = useMemo(
-    () => burgerIgredients?.filter((elem: any) => elem.type === "sauce"),
+    () => burgerIgredients?.filter((elem) => elem.type === "sauce"),
     [burgerIgredients]
   );
 
@@ -43,7 +42,7 @@ export const IngredientsCateg: FC<IIngredientsCateg> = ({
           Булка
         </h2>
         <ul className={styles.list_item}>
-          {bun.map((elem: any) => (
+          {bun.map((elem) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
@@ -70,7 +69,7 @@ export const IngredientsCateg: FC<IIngredientsCateg> = ({
           Соусы
         </h2>
         <ul className={styles.list_item}>
-          {sauce.map((elem: any) => (
+          {sauce.map((elem) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
@@ -96,7 +95,7 @@ export const IngredientsCateg: FC<IIngredientsCateg> = ({
           Начинка
         </h2>
         <ul className={styles.list_item}>
-          {main.map((elem: any) => (
+          {main.map((elem) => (
             <Link
               to={{
                 pathname: `/ingredient/${elem._id}`,
