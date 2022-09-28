@@ -1,5 +1,5 @@
 import { apiOrder } from "../../utils/api";
-import {AppDispatch, AppThunk} from "../types";
+import { AppDispatch, AppThunk } from "../types";
 export const GET_ORDER_REQUEST: "GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS: "GET_ORDER_SUCCESS" = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED: "GET_ORDER_FAILED" = "GET_ORDER_FAILED";
@@ -25,7 +25,10 @@ export type TOrderBurger =
   | TGetOrderFailed
   | TGetOrderReset;
 
-export const getOrder:AppThunk=(accessToken: string, ...ingredients: string[]) =>{
+export const getOrder: AppThunk = (
+  accessToken: string,
+  ...ingredients: string[]
+) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
@@ -44,4 +47,4 @@ export const getOrder:AppThunk=(accessToken: string, ...ingredients: string[]) =
         });
       });
   };
-}
+};

@@ -16,9 +16,10 @@ import {
   GET_LOGOUT_FAILED,
   GET_CHANGEPROFILE_REQUEST,
   GET_CHANGEPROFILE_SUCCESS,
-  GET_CHANGEPROFILE_FAILED, TAuthorization,
+  GET_CHANGEPROFILE_FAILED,
+  TAuthorization,
 } from "../action/authorization";
-import {IRegistration, IUser} from "../types/types";
+import { IUser } from "../types/types";
 
 type TInitialState = {
   authorizationFailed: boolean;
@@ -36,10 +37,10 @@ type TInitialState = {
   isAuthenticated: boolean;
   errorNumber: string;
   errorNumberUpdateProfile: string;
-  user: IUser,
+  user: IUser;
 };
 
-const initialState:TInitialState = {
+const initialState: TInitialState = {
   authorizationFailed: false,
   authorizationRequest: false,
   logInFailed: false,
@@ -55,10 +56,13 @@ const initialState:TInitialState = {
   isAuthenticated: false,
   errorNumber: "",
   errorNumberUpdateProfile: "",
-  user: {email: '', name: ''},
+  user: { email: "", name: "" },
 };
 
-export const authorizationReducer = (state = initialState, action:TAuthorization):TInitialState => {
+export const authorizationReducer = (
+  state = initialState,
+  action: TAuthorization
+): TInitialState => {
   switch (action.type) {
     case GET_REGISTRATION_REQUEST: {
       return {
@@ -165,7 +169,7 @@ export const authorizationReducer = (state = initialState, action:TAuthorization
         logOutRequest: false,
         logOutFailed: false,
         isAuthenticated: false,
-        user: {email:'', name: ''},
+        user: { email: "", name: "" },
       };
     }
     case GET_LOGOUT_FAILED: {

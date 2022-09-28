@@ -10,7 +10,12 @@ import {
   setRegistration,
 } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../types";
-import {IGetNewToken, IGetProfile, IOkRes, IRegistration} from "../types/types";
+import {
+  IGetNewToken,
+  IGetProfile,
+  IOkRes,
+  IRegistration,
+} from "../types/types";
 export const GET_REGISTRATION_REQUEST: "GET_REGISTRATION_REQUEST" =
   "GET_REGISTRATION_REQUEST";
 export const GET_REGISTRATION_SUCCESS: "GET_REGISTRATION_SUCCESS" =

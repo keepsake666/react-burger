@@ -2,7 +2,8 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
-  GET_ORDER_RESET, TOrderBurger,
+  GET_ORDER_RESET,
+  TOrderBurger,
 } from "../action/orderBurger";
 
 type TInitialState = {
@@ -11,13 +12,16 @@ type TInitialState = {
   numberOrder: string | number;
 };
 
-const initialState:TInitialState = {
+const initialState: TInitialState = {
   orderRequest: false,
   orderFailed: false,
   numberOrder: "...loading",
 };
 
-export const OrderBurgerReducer = (state = initialState, action: TOrderBurger):TInitialState => {
+export const OrderBurgerReducer = (
+  state = initialState,
+  action: TOrderBurger
+): TInitialState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

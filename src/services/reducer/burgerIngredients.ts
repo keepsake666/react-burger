@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_FAILED,
   TBurgerIngredients,
 } from "../action/burgerIngredients";
-import {IIngredients} from "../types/types";
+import { IIngredients } from "../types/types";
 
 type IInitialState = {
   burgerIgredients: IIngredients[];

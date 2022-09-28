@@ -1,4 +1,4 @@
-import React, {FC, useRef} from "react";
+import React, { FC, useRef } from "react";
 import styles from "./BurgerConstructorItem.module.css";
 import {
   ConstructorElement,
@@ -8,17 +8,17 @@ import {
 import { DELETE_INGREDIEN } from "../../services/action/burgerConstructor";
 import { useDrag, useDrop } from "react-dnd";
 import { dporIngredient } from "../../services/action/burgerConstructor";
-import {useDispatch} from "../../services/hooks";
-import {IDrag} from "../../services/types/types";
+import { useDispatch } from "../../services/hooks";
+import { IDrag } from "../../services/types/types";
 
-interface IBurgerConstructorItem{
-  text: string,
-  price: number,
-  image:string,
-  indexItem:number,
-  id:string,
+interface IBurgerConstructorItem {
+  text: string;
+  price: number;
+  image: string;
+  indexItem: number;
+  id: string;
 }
-export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
+export const BurgerConstructorItem: FC<IBurgerConstructorItem> = ({
   text,
   price,
   image,
@@ -27,7 +27,7 @@ export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
 }) => {
   const dispatch = useDispatch();
   const ref = useRef(null);
-  const deleteIngredient = (index:number) => {
+  const deleteIngredient = (index: number) => {
     dispatch({
       type: DELETE_INGREDIEN,
       deleteItem: index,
@@ -36,7 +36,7 @@ export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
 
   const [, drop] = useDrop({
     accept: "item",
-    hover(item:IDrag) {
+    hover(item: IDrag) {
       if (!ref.current) {
         return;
       }
@@ -61,11 +61,7 @@ export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
   drag(drop(ref));
 
   return (
-    <li
-      className={styles.item}
-      ref={ref}
-      style={{ opacity }}
-    >
+    <li className={styles.item} ref={ref} style={{ opacity }}>
       <DragIcon type="secondary" />
       <ConstructorElement
         text={text}
@@ -75,4 +71,4 @@ export const BurgerConstructorItem:FC<IBurgerConstructorItem> =({
       />
     </li>
   );
-}
+};

@@ -1,9 +1,9 @@
-import React, {FC, useMemo} from "react";
+import React, { FC, useMemo } from "react";
 import styles from "./IngredientDetails.module.css";
 import { useLocation } from "react-router-dom";
-import {useSelector} from "../../services/hooks";
+import { useSelector } from "../../services/hooks";
 
-export const IngredientDetails:FC =() => {
+export const IngredientDetails: FC = () => {
   const location = useLocation();
   const id = location.pathname.slice(12);
 
@@ -11,7 +11,7 @@ export const IngredientDetails:FC =() => {
     (state) => state.BurgerIngredientsReducer
   );
 
-  const ingredient:any = useMemo(
+  const ingredient = useMemo(
     () => burgerIgredients?.filter((item) => item._id === id),
     [burgerIgredients, id]
   );
@@ -60,4 +60,4 @@ export const IngredientDetails:FC =() => {
   ) : (
     <div>Ошибка</div>
   );
-}
+};

@@ -4,7 +4,7 @@ import {
   IGetProfile,
   IOkRes,
   IOrderBurger,
-  IRegistration
+  IRegistration,
 } from "../services/types/types";
 
 const checkResponse = <T>(res: Response): Promise<T> => {

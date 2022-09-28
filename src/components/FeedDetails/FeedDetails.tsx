@@ -1,5 +1,5 @@
 import styles from "./FeedDetails.module.css";
-import React, {FC, useEffect, useState} from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "../../services/hooks";
 
 interface IFeedDetails {
@@ -7,17 +7,17 @@ interface IFeedDetails {
   totalToday: number;
 }
 
-export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
+export const FeedDetails: FC<IFeedDetails> = ({ total, totalToday }) => {
   const [ordersDone, setOrdersDone] = useState<Array<number>>([]);
   const [ordersReady, setOrdersReady] = useState<Array<number>>([]);
   const { orders } = useSelector((state) => state.wsReducer);
 
   useEffect(() => {
     setOrdersDone(
-      orders.filter((item:any) => item.status === "done").map((item:any) => item.number)
+      orders.filter((item) => item.status === "done").map((item) => item.number)
     );
     setOrdersReady(
-      orders.filter((item:any) => item.status !== "done").map((item:any) => item.number)
+      orders.filter((item) => item.status !== "done").map((item) => item.number)
     );
   }, [orders]);
 
@@ -40,7 +40,7 @@ export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
         <div>
           <h2 className="text text_type_main-medium mb-5">В работе:</h2>
           <ul className={styles.list}>
-            {ordersReady.map((item:any, index:number) => (
+            {ordersReady.map((item, index: number) => (
               <li
                 className={`text text_type_digits-default ${styles.item__right}`}
                 key={index}
@@ -63,4 +63,4 @@ export const FeedDetails: FC<IFeedDetails> =({ total, totalToday }) =>{
       </div>
     </div>
   );
-}
+};

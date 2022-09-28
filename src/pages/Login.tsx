@@ -8,10 +8,11 @@ import styles from "./Login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { logIn } from "../services/action/authorization";
 import { useDispatch, useSelector } from "../services/hooks";
+import {TLocation} from "../services/types/types";
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
-  const location: any = useLocation();
+  const location = useLocation<TLocation<"from">>();
   const { state } = location;
   const { isAuthenticated } = useSelector(
     (state) => state.authorizationReducer

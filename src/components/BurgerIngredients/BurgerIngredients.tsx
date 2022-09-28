@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from "react";
-import {IngredientsCateg} from "../IngredientsCateg/IngredientsCateg";
+import { IngredientsCateg } from "../IngredientsCateg/IngredientsCateg";
 import styles from "./BurgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useInView } from "react-intersection-observer";

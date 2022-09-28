@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
 import {
   Logo,
@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink } from "react-router-dom";
 
-export const AppHeader:FC = () => {
+export const AppHeader: FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -56,4 +56,4 @@ export const AppHeader:FC = () => {
       </div>
     </header>
   );
-}
+};

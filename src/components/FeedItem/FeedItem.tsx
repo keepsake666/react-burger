@@ -23,7 +23,8 @@ export const FeedItem:FC<IFeedItem> = ({ name, time, number, ingredient = [] }) 
   });
 
   const totalPrice = useMemo(
-    () => orderItems?.reduce((total:number, item:any) => total + item.price, 0),
+    () =>
+      orderItems?.reduce((total: number, item: any) => total + item.price, 0),
     [orderItems]
   );
 

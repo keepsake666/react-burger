@@ -1,13 +1,13 @@
-import React, {FC, useEffect} from "react";
+import React, { FC, useEffect } from "react";
 import styles from "./ModalOverlay.module.css";
 
 interface IModalActive {
-  setActive: (bool:boolean)=> void;
+  setActive: (bool: boolean) => void;
 }
 
-export const ModalOverlay: FC<IModalActive>=({ setActive }) =>{
+export const ModalOverlay: FC<IModalActive> = ({ setActive }) => {
   useEffect(() => {
-    const close = (e:KeyboardEvent) => {
+    const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setActive(false);
       }
@@ -17,5 +17,4 @@ export const ModalOverlay: FC<IModalActive>=({ setActive }) =>{
   }, [setActive]);
 
   return <div className={styles.popup} onClick={() => setActive(false)}></div>;
-}
-
+};

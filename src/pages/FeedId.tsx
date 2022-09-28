@@ -1,16 +1,16 @@
 import styles from "./FeedId.module.css";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {FC, useEffect, useMemo} from "react";
-import {useParams, useRouteMatch} from "react-router-dom";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { FC, useEffect, useMemo } from "react";
+import { useParams, useRouteMatch } from "react-router-dom";
 import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_CONNECTION_START,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
-import {date} from "../utils/const";
-import {useDispatch, useSelector} from "../services/hooks";
-import {IGetOrdersWebSokect, IIngredients} from "../services/types/types";
+import { date } from "../utils/const";
+import { useDispatch, useSelector } from "../services/hooks";
+import { IGetOrdersWebSokect, IIngredients } from "../services/types/types";
 
 interface IFeedId {
   modal?: boolean;

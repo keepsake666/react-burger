@@ -1,28 +1,28 @@
 import styles from "./Feed.module.css";
-import React, {FC, useEffect} from "react";
-import {FeedItem} from "../components/FeedItem/FeedItem";
-import {FeedDetails} from "../components/FeedDetails/FeedDetails";
+import React, { FC, useEffect } from "react";
+import { FeedItem } from "../components/FeedItem/FeedItem";
+import { FeedDetails } from "../components/FeedDetails/FeedDetails";
 import { Link, useLocation } from "react-router-dom";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from "../services/action/socketAction";
-import {useDispatch, useSelector} from "../services/hooks";
+import { useDispatch, useSelector } from "../services/hooks";
 
 interface IFeed {
-  active:(bool:boolean) => void;
+  active: (bool: boolean) => void;
 }
 
-export const Feed:FC<IFeed> = ({ active }) => {
+export const Feed: FC<IFeed> = ({ active }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store) => store.wsReducer);
 
   useEffect(() => {
-    dispatch({type:WS_CONNECTION_START})
+    dispatch({ type: WS_CONNECTION_START });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
-    }
+    };
   }, [dispatch]);
 
   return (
@@ -56,4 +56,4 @@ export const Feed:FC<IFeed> = ({ active }) => {
       </div>
     </main>
   );
-}
+};

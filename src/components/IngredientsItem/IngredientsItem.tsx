@@ -35,8 +35,7 @@ export const IngredientsItem: FC<IIngredientsItem> = ({
     }),
   });
   const countIngredient = useMemo(
-    () =>
-      ingredientsConstructor?.filter((item: any) => item[0]._id === id).length,
+    () => ingredientsConstructor?.filter((item) => item[0]._id === id).length,
     [id, ingredientsConstructor]
   );
   const countBun = useMemo(

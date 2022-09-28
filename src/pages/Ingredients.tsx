@@ -10,8 +10,7 @@ export const Ingredients: FC = () => {
     (store) => store.BurgerIngredientsReducer
   );
 
-  let ingredient: any;
-  ingredient = useMemo(
+  const ingredient = useMemo(
     () => burgerIgredients.filter((item) => item._id === id),
     [burgerIgredients, id]
   );

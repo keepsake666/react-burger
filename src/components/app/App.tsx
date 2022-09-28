@@ -32,7 +32,7 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
-  const location = useLocation<TLocation>();
+  const location = useLocation<TLocation<"background">>();
   const background = location.state && location.state.background;
   const history = useHistory();
 

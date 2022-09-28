@@ -1,12 +1,13 @@
-export type TLocation = {
-  background: {
+export type TLocation<T extends string> = {
+[T:string]: {
     pathname: string;
     search: string;
     hash: string;
     state: null;
     key: string;
-  };
+  } & {
   state?: object;
+}
 };
 
 export interface IOwner {
@@ -96,24 +97,29 @@ export interface IWebSocket {
   wsSendOrders: string;
 }
 
-export  interface  IGetOrdersWebSokect {
-    createdAt: Date;
-    ingredients: string[];
-    name: string;
-    number: number;
-    status: string;
-    updatedAt: Date;
-    _id: string;
+export interface IGetOrdersWebSokect {
+  createdAt: Date;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: Date;
+  _id: string;
 }
-export interface IFeed  {
+export interface IFeed {
   success: boolean;
   total: number;
   totalToday: number;
   orders: IGetOrdersWebSokect[];
 }
 
-export interface  IDrag {
+export interface IDrag {
   id: string;
   index: number;
   indexItem: number;
+}
+
+export interface IItemIngredient {
+  0: IIngredients;
+  id: string;
 }

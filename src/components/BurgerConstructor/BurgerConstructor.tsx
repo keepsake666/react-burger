@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback, FC } from "react";
-import {BurgerConstructorItem} from "../BurgerConstructorItem/BurgerConstructorItem";
+import { BurgerConstructorItem } from "../BurgerConstructorItem/BurgerConstructorItem";
 import styles from "./BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -16,12 +16,12 @@ import { getCookie } from "../../utils/api";
 import { useDispatch, useSelector } from "../../services/hooks";
 
 interface IModal {
-  setModalAtive: (bool: boolean) => any;
+  setModalAtive: (bool: boolean) => void;
 }
 
 export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
   const accessToken = getCookie("token");
-  const [totalPrice, setTotalPrice] = useState(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -39,10 +39,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
 
   const totalPriceIngredients = useMemo(
     () =>
-      ingredientsConstructor.reduce(
-        (total: number, item: any) => total + item[0]?.price,
-        0
-      ),
+      ingredientsConstructor.reduce((total, item) => total + item[0]?.price, 0),
     [ingredientsConstructor]
   );
 
@@ -51,7 +48,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
     [bunConstructor]
   );
   const orderIngredients = useMemo(
-    () => ingredientsConstructor.map((item: any) => item[0]._id),
+    () => ingredientsConstructor.map((item) => item[0]._id),
     [ingredientsConstructor]
   );
   const orderBun = useMemo(
@@ -62,7 +59,6 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(itemId: { id: string }) {
-
       const typeIngredient = burgerIgredients
         .filter((item) => item._id === itemId.id)
         .map((item) => item.type);
@@ -70,7 +66,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
         const ingredientItem = burgerIgredients.filter(
           (item) => item._id === itemId.id && item.type !== "bun"
         );
-        dispatch(addIngredient({...ingredientItem, "id": uuidv4()}));
+        dispatch(addIngredient({ ...ingredientItem, id: uuidv4() }));
       } else if (typeIngredient[0] === "bun") {
         const bunItem = burgerIgredients.filter(
           (item) => item._id === itemId.id && item.type === "bun"
@@ -127,7 +123,7 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
       )}
       {ingredientsConstructor.length >= 1 ? (
         <ul className={styles.section__block}>
-          {ingredientsConstructor.map((elem: any, index: number) => (
+          {ingredientsConstructor.map((elem, index) => (
             <BurgerConstructorItem
               key={elem.id}
               text={elem[0].name}
@@ -159,16 +155,15 @@ export const BurgerConstructor: FC<IModal> = ({ setModalAtive }) => {
           <CurrencyIcon type="secondary" />
         </div>
         {bunConstructor.length >= 1 && ingredientsConstructor.length >= 1 ? (
-            <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
-              {orderRequest ? "..загрузка" : "Оформить заказ"}
-            </Button>
+          <Button type="primary" size="medium" onClick={creatOrderAndSetModal}>
+            {orderRequest ? "..загрузка" : "Оформить заказ"}
+          </Button>
         ) : (
-            <Button type="primary" size="medium" disabled={true}>
-              Оформить заказ
-            </Button>
+          <Button type="primary" size="medium" disabled={true}>
+            Оформить заказ
+          </Button>
         )}
       </div>
     </section>
   );
 };
-

@@ -9,39 +9,42 @@ import {
   WS_AUTH_GET_ORDERS,
   TSocketActions,
 } from "../action/socketAction";
-import {IGetOrdersWebSokect} from "../types/types";
+import { IGetOrdersWebSokect } from "../types/types";
 
 type IInitialState = {
   wsConnected: boolean;
   orders: IGetOrdersWebSokect[];
-  error: undefined;
+  error: string;
   total: number;
   totalToday: number;
   authWsConnected: boolean;
   authOrders: IGetOrdersWebSokect[];
-  authError: undefined;
+  authError: string;
   authTotal: number;
   authTotalToday: number;
 };
 const initialState: IInitialState = {
   wsConnected: false,
   orders: [],
-  error: undefined,
+  error: "",
   total: 0,
   totalToday: 0,
   authWsConnected: false,
   authOrders: [],
-  authError: undefined,
+  authError: "",
   authTotal: 0,
   authTotalToday: 0,
 };
 
-export const wsReducer = (state = initialState, action: TSocketActions): IInitialState => {
+export const wsReducer = (
+  state = initialState,
+  action: TSocketActions
+): IInitialState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        error: undefined,
+        error: "undefined",
         wsConnected: true,
       };
     case WS_CONNECTION_ERROR:
@@ -53,13 +56,13 @@ export const wsReducer = (state = initialState, action: TSocketActions): IInitia
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        error: undefined,
+        error: "undefined",
         wsConnected: false,
       };
     case WS_GET_ORDERS:
       return {
         ...state,
-        error: undefined,
+        error: "undefined",
         orders: action.payload.orders,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
@@ -67,7 +70,7 @@ export const wsReducer = (state = initialState, action: TSocketActions): IInitia
     case WS_AUTH_CONNECTION_SUCCESS:
       return {
         ...state,
-        authError: undefined,
+        authError: "undefined",
         authWsConnected: true,
       };
     case WS_AUTH_CONNECTION_ERROR:
@@ -79,13 +82,13 @@ export const wsReducer = (state = initialState, action: TSocketActions): IInitia
     case WS_AUTH_CONNECTION_CLOSED:
       return {
         ...state,
-        authError: undefined,
+        authError: "undefined",
         authWsConnected: false,
       };
     case WS_AUTH_GET_ORDERS:
       return {
         ...state,
-        authError: undefined,
+        authError: "undefined",
         authOrders: action.payload.orders,
         authTotal: action.payload.total,
         authTotalToday: action.payload.totalToday,

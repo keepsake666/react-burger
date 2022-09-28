@@ -1,14 +1,14 @@
 import React, { FC, useMemo } from "react";
-import {IngredientsItem} from "../IngredientsItem/IngredientsItem";
+import { IngredientsItem } from "../IngredientsItem/IngredientsItem";
 import styles from "./IngredientsCateg.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "../../services/hooks";
 
 interface IIngredientsCateg {
   setModalAtive: (bool: boolean) => void;
-  refBun: ()=> void;
-  refMain: ()=> void;
-  refSauce: ()=> void;
+  refBun: () => void;
+  refMain: () => void;
+  refSauce: () => void;
 }
 
 export const IngredientsCateg: FC<IIngredientsCateg> = ({

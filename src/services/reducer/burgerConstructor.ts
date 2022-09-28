@@ -3,21 +3,28 @@ import {
   ADD_BUN,
   DELETE_INGREDIEN,
   DROP_INGREDIENTS,
-  RESET_ORDER, TBurgerConstructor,
+  RESET_ORDER,
+  TBurgerConstructor,
 } from "../action/burgerConstructor";
-import {IConstructorBurger, IIngredients} from "../types/types";
+import {
+  IIngredients,
+  IItemIngredient,
+} from "../types/types";
 
 type TInitialState = {
-  ingredientsConstructor: any;
+  ingredientsConstructor: IItemIngredient[];
   bunConstructor: IIngredients[];
 };
 
-const initialState:TInitialState = {
+const initialState: TInitialState = {
   ingredientsConstructor: [],
   bunConstructor: [],
 };
 
-export const BurgerConstructorReducer = (state = initialState, action: TBurgerConstructor):TInitialState => {
+export const BurgerConstructorReducer = (
+  state = initialState,
+  action: TBurgerConstructor
+): TInitialState => {
   switch (action.type) {
     case ADD_ITNGREDIENTS: {
       return {

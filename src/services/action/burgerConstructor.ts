@@ -1,4 +1,4 @@
-import { IIngredients} from "../types/types";
+import { IIngredients, IItemIngredient } from "../types/types";
 
 export const ADD_ITNGREDIENTS: "ADD_ITNGREDIENTS" = "ADD_ITNGREDIENTS";
 export const ADD_BUN: "ADD_BUN" = "ADD_BUN";
@@ -8,7 +8,7 @@ export const RESET_ORDER: "RESET_ORDER" = "RESET_ORDER";
 
 interface IAddIngredient {
   readonly type: typeof ADD_ITNGREDIENTS;
-  item: any;
+  item: IItemIngredient;
 }
 
 interface IAddBun {

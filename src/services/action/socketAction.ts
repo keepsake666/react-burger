@@ -1,4 +1,4 @@
-import {IFeed} from "../types/types";
+import { IFeed } from "../types/types";
 
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
@@ -31,7 +31,7 @@ type TWsConnectionClose = {
 };
 type TWsConnectionError = {
   readonly type: typeof WS_CONNECTION_ERROR;
-  payload: any;
+  payload: string;
 };
 type TWsGetOrders = {
   readonly type: typeof WS_GET_ORDERS;
@@ -48,7 +48,7 @@ type TWsAuthConnectionSuccess = {
 };
 type TWsAuthConnectionError = {
   readonly type: typeof WS_AUTH_CONNECTION_ERROR;
-  payload: any;
+  payload: string;
 };
 type TWsAuthConnectionClose = {
   readonly type: typeof WS_AUTH_CONNECTION_CLOSED;

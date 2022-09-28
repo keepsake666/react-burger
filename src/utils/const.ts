@@ -1,4 +1,4 @@
-export const date = (date) => {
+export const date = (date:Date) => {
   return `${new Date(date).toLocaleString('ru', {
     weekday: "long",
     hour: 'numeric',
